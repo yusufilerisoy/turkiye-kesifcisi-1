@@ -1,0 +1,42 @@
+{
+  "name": "Türkiye'yi Keşfet",
+  "short_name": "TürkiyeKeşfet",
+  "description": "Hikayeleştirilmiş oyun tabanlı coğrafya öğrenme ortamı — TÜBİTAK 4006 Projesi",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "landscape",
+  "background_color": "#060b1a",
+  "theme_color": "#4facfe",
+  "lang": "tr",
+  "categories": ["education", "games"],
+  "icons": [
+    {
+      "src": "icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "Oyuna Başla",
+      "short_name": "Oyna",
+      "description": "Doğrudan oyuna gir",
+      "url": "./index.html"
+    }
+  ]
+}

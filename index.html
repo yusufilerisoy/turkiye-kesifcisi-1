@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Türkiye'yi Keşfet | Coğrafya Kaşifi</title>
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#4facfe">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="TürkiyeKeşfet">
+  <link rel="apple-touch-icon" href="icons/icon.svg">
+  <meta name="description" content="Hikayeleştirilmiş oyun tabanlı coğrafya öğrenme ortamı — TÜBİTAK 4006 Projesi">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;900&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="game-container">
+
+    <!-- EKRAN 1: GİRİŞ -->
+    <div id="screen-intro" class="screen active">
+      <div class="particles" id="particles-intro"></div>
+      <div class="intro-content">
+        <div class="logo-pulse">
+          <div class="logo-icon">🗺️</div>
+        </div>
+        <h1 class="game-title">TÜRKİYE'Yİ KEŞFET</h1>
+        <p class="game-subtitle">Coğrafya Kaşifi Macerası</p>
+        <div class="badge-row">
+          <span class="badge-chip">🌿 Bitki Uzmanı</span>
+          <span class="badge-chip">🌤️ İklim Dedektifi</span>
+          <span class="badge-chip">⛰️ Dağ Kaşifi</span>
+        </div>
+        <div class="intro-buttons">
+          <button class="btn-primary" id="btn-start">MACERAYA BAŞLA</button>
+          <button class="btn-secondary" id="btn-about">Proje Hakkında</button>
+          <button class="btn-install" id="btn-install" style="display:none;">📲 Uygulamayı Yükle</button>
+        </div>
+        <p class="tubitak-tag">TÜBİTAK 4006 - Bilim Fuarı Projesi</p>
+      </div>
+    </div>
+
+    <!-- EKRAN 2: AD GİRİŞİ -->
+    <div id="screen-name" class="screen">
+      <div class="modal-card">
+        <div class="modal-icon">👨‍🎓</div>
+        <h2>Kaşifin kim?</h2>
+        <p>Türkiye'nin 7 coğrafi bölgesini keşfetmek için adını gir!</p>
+        <input type="text" id="player-name-input" placeholder="Adın ve Soyadın..." maxlength="30" autocomplete="off">
+        <button class="btn-primary" id="btn-enter-game">Keşfe Çık!</button>
+        <button class="btn-ghost" id="btn-back-intro">Geri</button>
+      </div>
+    </div>
+
+    <!-- EKRAN 3: HARİTA (ANA OYUN) -->
+    <div id="screen-map" class="screen">
+      <header class="game-header">
+        <div class="header-left">
+          <span class="player-label" id="header-player-name">Kaşif</span>
+        </div>
+        <div class="header-center">
+          <span class="progress-text" id="progress-text">0/7 Bölge Tamamlandı</span>
+        </div>
+        <div class="header-right">
+          <span class="score-display">Puan: <strong id="total-score">0</strong></span>
+        </div>
+      </header>
+
+      <div class="map-wrapper">
+        <h2 class="map-title">Keşfetmek istediğin bölgeyi seç!</h2>
+        <div class="map-container">
+          <svg id="turkey-map" viewBox="0 0 1000 520" preserveAspectRatio="xMidYMid meet">
+            <defs>
+              <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+                <feDropShadow dx="2" dy="4" stdDeviation="6" flood-color="rgba(0,0,0,0.4)"/>
+              </filter>
+              <filter id="glow">
+                <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+                <feMerge>
+                  <feMergeNode in="coloredBlur"/>
+                  <feMergeNode in="SourceGraphic"/>
+                </feMerge>
+              </filter>
+            </defs>
+
+            <!-- Bölge Poligonları -->
+            <polygon id="map-marmara"
+              points="30,100 62,62 112,44 212,34 330,28 298,168 228,198 155,222 90,222 30,182"
+              class="region-polygon" data-region="marmara"/>
+
+            <polygon id="map-karadeniz"
+              points="330,28 452,22 582,17 702,17 802,22 872,37 918,60 958,86 972,126 922,156 802,166 682,156 552,162 422,166 298,168 330,28"
+              class="region-polygon" data-region="karadeniz"/>
+
+            <polygon id="map-ege"
+              points="30,182 90,222 155,222 175,332 140,442 88,416 54,386 34,346 24,302 24,182"
+              class="region-polygon" data-region="ege"/>
+
+            <polygon id="map-akdeniz"
+              points="140,442 175,332 355,400 558,416 618,494 518,494 448,500 368,498 298,490 238,480 178,464 130,444"
+              class="region-polygon" data-region="akdeniz"/>
+
+            <polygon id="map-ic-anadolu"
+              points="298,168 422,166 552,162 682,156 682,400 558,416 355,400 175,332 155,222 228,198"
+              class="region-polygon" data-region="ic-anadolu"/>
+
+            <polygon id="map-dogu-anadolu"
+              points="682,156 802,166 922,156 972,126 975,198 975,352 858,448 700,448 682,400"
+              class="region-polygon" data-region="dogu-anadolu"/>
+
+            <polygon id="map-guneydogu"
+              points="682,400 700,448 858,448 975,352 975,494 618,494 558,416"
+              class="region-polygon" data-region="guneydogu"/>
+
+            <!-- Bölge Etiketleri -->
+            <text x="155" y="118" class="region-label" data-region="marmara">Marmara</text>
+            <text x="580" y="90" class="region-label" data-region="karadeniz">Karadeniz</text>
+            <text x="62" y="310" class="region-label" data-region="ege">Ege</text>
+            <text x="355" y="460" class="region-label" data-region="akdeniz">Akdeniz</text>
+            <text x="390" y="300" class="region-label" data-region="ic-anadolu">İç Anadolu</text>
+            <text x="800" y="285" class="region-label" data-region="dogu-anadolu">Doğu Anadolu</text>
+            <text x="740" y="455" class="region-label" data-region="guneydogu">G.D. Anadolu</text>
+
+            <!-- Tamamlanan bölge rozet ikonları -->
+            <g id="region-badges-layer"></g>
+          </svg>
+        </div>
+
+        <!-- Bölge Bilgi Kartı -->
+        <div class="region-info-card" id="region-hover-card" style="display:none;">
+          <span class="region-card-icon" id="rc-icon"></span>
+          <div>
+            <strong id="rc-name"></strong>
+            <span id="rc-status"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Alt Rozet Çubuğu -->
+      <div class="badges-strip" id="badges-strip"></div>
+    </div>
+
+    <!-- EKRAN 4: BÖLGE GİRİŞ (HIKAYE) -->
+    <div id="screen-region-intro" class="screen">
+      <div class="region-intro-bg" id="ri-bg"></div>
+      <div class="region-intro-content">
+        <div class="region-intro-header">
+          <div class="region-flag" id="ri-flag"></div>
+          <div>
+            <p class="region-intro-label">Görev Bölgesi</p>
+            <h2 id="ri-name"></h2>
+          </div>
+        </div>
+        <div class="story-box" id="ri-story">
+          <p id="ri-story-text"></p>
+        </div>
+        <div class="mission-card">
+          <h3>Görevin</h3>
+          <p id="ri-mission"></p>
+        </div>
+        <div class="badge-preview-card">
+          <span id="ri-badge-icon"></span>
+          <div>
+            <small>Bu bölgeyi tamamlarsan kazanacağın unvan:</small>
+            <strong id="ri-badge-name"></strong>
+          </div>
+        </div>
+        <div class="ri-buttons">
+          <button class="btn-primary" id="btn-start-quiz">Göreve Başla!</button>
+          <button class="btn-ghost" id="btn-back-map">Haritaya Dön</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- EKRAN 5: SORU -->
+    <div id="screen-quiz" class="screen">
+      <div class="quiz-header">
+        <div class="quiz-region-name" id="q-region-name"></div>
+        <div class="quiz-progress">
+          <div class="q-dots" id="q-dots"></div>
+        </div>
+        <div class="quiz-score-live">Puan: <strong id="q-score-live">0</strong></div>
+      </div>
+
+      <div class="timer-bar-container">
+        <div class="timer-bar" id="timer-bar"></div>
+      </div>
+
+      <div class="quiz-body">
+        <div class="question-number" id="q-number">Soru 1/4</div>
+        <div class="question-text" id="q-text"></div>
+        <div class="options-grid" id="q-options"></div>
+      </div>
+
+      <div class="answer-feedback" id="answer-feedback" style="display:none;">
+        <div class="feedback-icon" id="fb-icon"></div>
+        <div class="feedback-middle">
+          <div class="feedback-text" id="fb-text"></div>
+          <div class="feedback-explanation" id="fb-explanation"></div>
+        </div>
+        <button class="btn-primary" id="btn-next-q">Devam Et</button>
+      </div>
+    </div>
+
+    <!-- EKRAN 6: BÖLGE TAMAMLANDI -->
+    <div id="screen-region-complete" class="screen">
+      <div class="complete-bg"></div>
+      <div class="complete-content">
+        <div class="stars-display" id="stars-display"></div>
+        <div class="badge-earned-anim" id="badge-earned">
+          <div class="badge-glow"></div>
+          <div class="badge-big-icon" id="bc-badge-icon"></div>
+          <h2 id="bc-badge-name"></h2>
+          <p id="bc-region-name"></p>
+        </div>
+        <div class="region-score-box">
+          <span>Bölge Puanı:</span>
+          <strong id="bc-score"></strong>
+          <span>/ 500</span>
+        </div>
+        <div class="complete-fact" id="bc-fact"></div>
+        <div class="complete-buttons">
+          <button class="btn-primary" id="btn-continue-map">Haritaya Dön</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- EKRAN 7: OYUN BİTİŞ / SERTİFİKA -->
+    <div id="screen-final" class="screen">
+      <div class="final-bg"></div>
+      <div class="final-content" id="final-content">
+        <div class="final-trophy">🏆</div>
+        <h1 class="final-title">Tebrikler!</h1>
+        <h2 class="final-player-name" id="final-player-name"></h2>
+        <p class="final-subtitle">Türkiye'nin tüm 7 coğrafi bölgesini başarıyla keşfettin!</p>
+
+        <div class="final-badges-grid" id="final-badges-grid"></div>
+
+        <div class="final-stats">
+          <div class="stat-box">
+            <strong id="fs-score">0</strong>
+            <span>Toplam Puan</span>
+          </div>
+          <div class="stat-box">
+            <strong id="fs-accuracy">0%</strong>
+            <span>Doğruluk Oranı</span>
+          </div>
+          <div class="stat-box">
+            <strong id="fs-time">0s</strong>
+            <span>Ort. Yanıt Süresi</span>
+          </div>
+        </div>
+
+        <div class="certificate-box" id="certificate-box">
+          <div class="cert-logo">🗺️</div>
+          <h3>COĞRAFİ UZMANLIK SERTİFİKASI</h3>
+          <p>Bu belge,</p>
+          <h2 id="cert-name"></h2>
+          <p>adlı öğrencinin "Türkiye'yi Keşfet" eğitsel oyununu başarıyla tamamladığını ve</p>
+          <div class="cert-score-big" id="cert-score"></div>
+          <p>puan aldığını belgeler.</p>
+          <div class="cert-badges-row" id="cert-badges-row"></div>
+          <div class="cert-footer">
+            <span>TÜBİTAK 4006 - Bilim Fuarı Projesi</span>
+            <span id="cert-date"></span>
+          </div>
+        </div>
+
+        <div class="final-buttons">
+          <button class="btn-primary" id="btn-print-cert">Sertifikayı Yazdır</button>
+          <button class="btn-secondary" id="btn-play-again">Tekrar Oyna</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- EKRAN 8: PROJE HAKKINDA -->
+    <div id="screen-about" class="screen">
+      <div class="about-content">
+        <button class="btn-back-abs" id="btn-back-from-about">← Geri</button>
+        <h2>Proje Hakkında</h2>
+        <div class="about-card">
+          <h3>Proje Adı</h3>
+          <p>Hikayeleştirilmiş Oyun Tabanlı Öğrenme: "Türkiye'yi Keşfet" Macera Senaryosu</p>
+        </div>
+        <div class="about-card">
+          <h3>Amaç</h3>
+          <p>Ortaokul öğrencilerinin Türkiye'nin coğrafi bölgelerine ilişkin temel bilgileri daha kalıcı ve anlamlı öğrenmelerini desteklemek amacıyla hikâyeleştirilmiş oyun tabanlı bir dijital öğrenme ortamı tasarlamak ve etkililiğini incelemek.</p>
+        </div>
+        <div class="about-card">
+          <h3>Özellikler</h3>
+          <ul>
+            <li>7 coğrafi bölge, her biri özgün bir görev</li>
+            <li>28 eğitsel soru + açıklayıcı geri bildirim</li>
+            <li>Unvan ve rozet sistemi (gamification)</li>
+            <li>Anlık puan takibi ve yıldız değerlendirme</li>
+            <li>Sertifika oluşturma ve yazdırma</li>
+          </ul>
+        </div>
+        <div class="about-card">
+          <h3>Kaynaklar</h3>
+          <ul>
+            <li>Gee, J. P. (2003). What Video Games Have to Teach Us About Learning and Literacy.</li>
+            <li>Prensky, M. (2001). Digital Game-Based Learning.</li>
+            <li>TÜBİTAK (2025). Proje Hazırlama Kılavuzu.</li>
+            <li>Yıldırım, A. &amp; Şimşek, H. (2021). Sosyal Bilimlerde Nitel Araştırma Yöntemleri.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /game-container -->
+
+  <!-- PWA: Güncelleme bildirimi -->
+  <div id="pwa-update-banner" style="display:none;position:fixed;bottom:16px;left:50%;transform:translateX(-50%);
+    background:rgba(10,14,39,0.97);border:1px solid rgba(255,255,255,0.15);border-radius:14px;
+    padding:12px 20px;display:none;align-items:center;gap:12px;z-index:9999;
+    font-family:'Nunito',sans-serif;font-size:0.88rem;backdrop-filter:blur(12px);">
+    <span>🔄 Yeni sürüm hazır!</span>
+    <button onclick="PWA.applyUpdate()" style="background:var(--primary,#4facfe);color:#fff;border:none;
+      border-radius:8px;padding:6px 14px;font-size:0.82rem;font-weight:700;cursor:pointer;">Güncelle</button>
+    <button onclick="this.parentElement.style.display='none'" style="background:transparent;border:none;
+      color:rgba(255,255,255,0.4);cursor:pointer;font-size:1rem;">✕</button>
+  </div>
+
+  <script src="game.js"></script>
+  <script>
+    /* ── PWA Kaydı ── */
+    const PWA = {
+      deferredPrompt: null,
+      reg: null,
+
+      init() {
+        if (!('serviceWorker' in navigator)) return;
+
+        // Service Worker kaydet
+        navigator.serviceWorker.register('./sw.js', { scope: './' })
+          .then(reg => {
+            this.reg = reg;
+            console.log('[PWA] Service Worker kayıtlı:', reg.scope);
+
+            // Yeni SW bekliyorsa güncelleme bildirimi göster
+            reg.addEventListener('updatefound', () => {
+              const newSW = reg.installing;
+              newSW.addEventListener('statechange', () => {
+                if (newSW.state === 'installed' && navigator.serviceWorker.controller) {
+                  this.showUpdateBanner();
+                }
+              });
+            });
+          })
+          .catch(err => console.warn('[PWA] SW kaydı başarısız:', err));
+
+        // SW güncellendikten sonra sayfayı yenile
+        navigator.serviceWorker.addEventListener('controllerchange', () => {
+          window.location.reload();
+        });
+
+        // Yükleme prompt'unu yakala
+        window.addEventListener('beforeinstallprompt', e => {
+          e.preventDefault();
+          this.deferredPrompt = e;
+          const btn = document.getElementById('btn-install');
+          if (btn) btn.style.display = 'flex';
+        });
+
+        // Yüklenince butonu gizle
+        window.addEventListener('appinstalled', () => {
+          this.deferredPrompt = null;
+          const btn = document.getElementById('btn-install');
+          if (btn) btn.style.display = 'none';
+          console.log('[PWA] Uygulama yüklendi!');
+        });
+
+        // İkon oluşturma
+        this.generateIcons();
+      },
+
+      async install() {
+        if (!this.deferredPrompt) return;
+        this.deferredPrompt.prompt();
+        const { outcome } = await this.deferredPrompt.userChoice;
+        console.log('[PWA] Kullanıcı seçimi:', outcome);
+        this.deferredPrompt = null;
+      },
+
+      showUpdateBanner() {
+        const banner = document.getElementById('pwa-update-banner');
+        if (banner) banner.style.display = 'flex';
+      },
+
+      applyUpdate() {
+        if (this.reg?.waiting) {
+          this.reg.waiting.postMessage({ type: 'SKIP_WAITING' });
+        }
+      },
+
+      // Canvas ile PNG ikonları oluştur ve önbelleğe al
+      generateIcons() {
+        const sizes = [192, 512];
+        sizes.forEach(size => {
+          try {
+            const canvas = document.createElement('canvas');
+            canvas.width = canvas.height = size;
+            const ctx = canvas.getContext('2d');
+
+            // Arkaplan
+            const r = size * 0.188;
+            ctx.beginPath();
+            ctx.moveTo(r, 0);
+            ctx.lineTo(size - r, 0);
+            ctx.quadraticCurveTo(size, 0, size, r);
+            ctx.lineTo(size, size - r);
+            ctx.quadraticCurveTo(size, size, size - r, size);
+            ctx.lineTo(r, size);
+            ctx.quadraticCurveTo(0, size, 0, size - r);
+            ctx.lineTo(0, r);
+            ctx.quadraticCurveTo(0, 0, r, 0);
+            ctx.closePath();
+            const bg = ctx.createLinearGradient(0, 0, size, size);
+            bg.addColorStop(0, '#0d1b4b');
+            bg.addColorStop(1, '#060b1a');
+            ctx.fillStyle = bg;
+            ctx.fill();
+
+            // Harita emoji
+            ctx.font = `${size * 0.45}px serif`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('🗺️', size / 2, size * 0.42);
+
+            // Metin
+            ctx.font = `900 ${size * 0.1}px Arial`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'alphabetic';
+            const grad = ctx.createLinearGradient(0, 0, size, 0);
+            grad.addColorStop(0, '#4facfe');
+            grad.addColorStop(1, '#43e97b');
+            ctx.fillStyle = grad;
+            ctx.fillText('TÜRKİYE\'Yİ KEŞFET', size / 2, size * 0.88);
+
+            // Cache'e kaydet
+            canvas.toBlob(blob => {
+              if (!blob || !navigator.serviceWorker.controller) return;
+              const path = `./icons/icon-${size}.png`;
+              caches.open('tkf-v1').then(cache => {
+                cache.put(path, new Response(blob, {
+                  headers: { 'Content-Type': 'image/png' }
+                }));
+              });
+            }, 'image/png');
+          } catch (e) { /* canvas erişim hatası yoksay */ }
+        });
+      }
+    };
+
+    // Install butonu
+    document.getElementById('btn-install')?.addEventListener('click', () => PWA.install());
+
+    // PWA'yı başlat
+    PWA.init();
+  </script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0d1b4b"/>
+      <stop offset="100%" style="stop-color:#060b1a"/>
+    </linearGradient>
+    <linearGradient id="textGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#4facfe"/>
+      <stop offset="100%" style="stop-color:#43e97b"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="45%" r="50%">
+      <stop offset="0%" style="stop-color:#4facfe;stop-opacity:0.25"/>
+      <stop offset="100%" style="stop-color:#4facfe;stop-opacity:0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Arkaplan -->
+  <rect width="512" height="512" rx="96" fill="url(#bg)"/>
+  <rect width="512" height="512" rx="96" fill="url(#glow)"/>
+
+  <!-- Türkiye Haritası - 7 bölge (scale 0.46, translate 28, 130) -->
+  <g transform="translate(28,130) scale(0.462)">
+    <!-- Marmara -->
+    <polygon points="30,100 62,62 112,44 212,34 330,28 298,168 228,198 155,222 90,222 30,182"
+             fill="#6366f1" opacity="0.9"/>
+    <!-- Karadeniz -->
+    <polygon points="330,28 452,22 582,17 702,17 802,22 872,37 918,60 958,86 972,126 922,156 802,166 682,156 552,162 422,166 298,168 330,28"
+             fill="#22c55e" opacity="0.9"/>
+    <!-- Ege -->
+    <polygon points="30,182 90,222 155,222 175,332 140,442 88,416 54,386 34,346 24,302 24,182"
+             fill="#06b6d4" opacity="0.9"/>
+    <!-- Akdeniz -->
+    <polygon points="140,442 175,332 355,400 558,416 618,494 518,494 448,500 368,498 298,490 238,480 178,464 130,444"
+             fill="#f97316" opacity="0.9"/>
+    <!-- İç Anadolu -->
+    <polygon points="298,168 422,166 552,162 682,156 682,400 558,416 355,400 175,332 155,222 228,198"
+             fill="#eab308" opacity="0.9"/>
+    <!-- Doğu Anadolu -->
+    <polygon points="682,156 802,166 922,156 972,126 975,198 975,352 858,448 700,448 682,400"
+             fill="#ef4444" opacity="0.9"/>
+    <!-- Güneydoğu -->
+    <polygon points="682,400 700,448 858,448 975,352 975,494 618,494 558,416"
+             fill="#a855f7" opacity="0.9"/>
+    <!-- Bölge sınırları -->
+    <polygon points="30,100 62,62 112,44 212,34 330,28 298,168 228,198 155,222 90,222 30,182"
+             fill="none" stroke="rgba(0,0,0,0.3)" stroke-width="2"/>
+    <polygon points="330,28 452,22 582,17 702,17 802,22 872,37 918,60 958,86 972,126 922,156 802,166 682,156 552,162 422,166 298,168 330,28"
+             fill="none" stroke="rgba(0,0,0,0.3)" stroke-width="2"/>
+    <polygon points="30,182 90,222 155,222 175,332 140,442 88,416 54,386 34,346 24,302 24,182"
+             fill="none" stroke="rgba(0,0,0,0.3)" stroke-width="2"/>
+    <polygon points="140,442 175,332 355,400 558,416 618,494 518,494 448,500 368,498 298,490 238,480 178,464 130,444"
+             fill="none" stroke="rgba(0,0,0,0.3)" stroke-width="2"/>
+    <polygon points="298,168 422,166 552,162 682,156 682,400 558,416 355,400 175,332 155,222 228,198"
+             fill="none" stroke="rgba(0,0,0,0.3)" stroke-width="2"/>
+    <polygon points="682,156 802,166 922,156 972,126 975,198 975,352 858,448 700,448 682,400"
+             fill="none" stroke="rgba(0,0,0,0.3)" stroke-width="2"/>
+    <polygon points="682,400 700,448 858,448 975,352 975,494 618,494 558,416"
+             fill="none" stroke="rgba(0,0,0,0.3)" stroke-width="2"/>
+  </g>
+
+  <!-- Alt başlık metni -->
+  <text x="256" y="438"
+        font-family="'Arial Black', 'Arial', sans-serif"
+        font-size="44" font-weight="900"
+        text-anchor="middle"
+        fill="url(#textGrad)">TÜRKİYE'Yİ</text>
+  <text x="256" y="486"
+        font-family="'Arial Black', 'Arial', sans-serif"
+        font-size="34" font-weight="900"
+        text-anchor="middle"
+        fill="rgba(255,255,255,0.55)"
+        letter-spacing="6">KEŞFET</text>
+</svg>
