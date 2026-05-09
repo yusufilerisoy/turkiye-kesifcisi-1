@@ -9,235 +9,235 @@ const REGIONS = [
   {
     id: 'karadeniz', number: 1,
     name: 'Karadeniz Bölgesi',
-    icon: '🌿', color: '#72B841',
-    badge: 'Bitki Örtüsü Uzmanı',
+    icon: '🏛️', color: '#72B841',
+    badge: 'Osmanlı Mirası Koruyucusu',
     infoCards: [
-      { label: 'İklim',         value: 'Her mevsim yağışlı' },
-      { label: 'Bitki Örtüsü', value: 'Gür ormanlar' },
-      { label: 'Ürünler',      value: 'Çay, fındık, mısır' },
-      { label: 'Yer Şekilleri',value: 'Dağlık ve engebeli' },
+      { label: 'UNESCO Mirası',  value: 'Safranbolu (1994)' },
+      { label: 'Bizans Eseri',  value: 'Sümela Manastırı' },
+      { label: 'Hitit Mirası',  value: 'Hattuşaş yakınları' },
+      { label: 'Geleneksel',    value: 'Osmanlı konakları' },
     ],
-    story: 'Profesör Coğraf sana telgraf çekti: "Kaşif! Karadeniz kıyılarına ulaştın. Burada yağmur hiç dinmez, ormanlar o kadar yoğun ki bazen güneş zemine ulaşamaz. Çay bahçeleri yamaçlara serpilmiş, fındık ağaçları dağları boydan boya kaplamış. Görevin: bu yeşil bölgenin sırlarını çöz!"',
-    mission: 'Karadeniz Bölgesi\'nin iklim özelliklerini, bitki örtüsünü ve tarım ürünlerini öğrenerek Bitki Örtüsü Uzmanı unvanını kazan!',
-    funFact: 'Türkiye\'nin çay üretiminin %95\'i Rize\'de yapılır. Dünyanın en çok çay tüketen ülkeleri arasında Türkiye ilk sıralarda yer alır!',
+    story: 'Profesör Tarih sana şifreli mesaj gönderdi: "Kaşif, Karadeniz ormanlarının derinliklerine hoş geldin! Kaya yüzüne inşa edilmiş Sümela Manastırı\'nı buldun mu? Safranbolu\'nun Osmanlı sokakları seni çağırıyor. Bu bölge binlerce yıllık kültürel mirasın bekçisi — sırlarını çöz!"',
+    mission: 'Karadeniz Bölgesi\'nin somut kültürel mirasını — Safranbolu\'yu, Sümela Manastırı\'nı ve geleneksel Osmanlı mimarisini — keşfederek Osmanlı Mirası Koruyucusu unvanını kazan!',
+    funFact: 'Safranbolu, 17. yüzyıldan kalma 2000\'den fazla tescilli Osmanlı evi ile UNESCO Dünya Mirası Listesi\'ndedir (1994). Ahşap ve taş birlikte kullanılan "cumbalı evler" bu şehrin simgesidir!',
     questions: [
       {
-        text: 'Karadeniz Bölgesi\'nin iklim özelliği nedir?',
-        options: ['Yaz sıcak ve kurak, kış soğuk', 'Her mevsim düzenli ve bol yağış alır', 'Çok kurak ve sıcaktır', 'Dört mevsim karlı ve soğuktur'],
+        text: 'Safranbolu\'nun UNESCO Dünya Mirası listesine alınmasının sebebi nedir?',
+        options: ['Doğal güzellikleri ve ormanları', 'Osmanlı döneminden kalma geleneksel mimarisi ve kentsel dokusu', 'Büyük sanayi fabrikaları', 'Deniz kıyısındaki plajları'],
         correct: 1,
-        explanation: 'Karadeniz iklimi Türkiye\'nin en yağışlı iklimidir. Yılın her mevsiminde yağış alır; bu nedenle gür ormanlar oluşmuştur.'
+        explanation: 'Safranbolu (Karabük), 1994\'te UNESCO Dünya Mirası listesine girdi. Geç Osmanlı döneminden kalma 2000\'den fazla tescilli ahşap ve taş kâgir konağıyla özgün kentsel dokusunu koruyan ender şehirlerden biridir.'
       },
       {
-        text: 'Karadeniz Bölgesi\'nde çay üretimi neden bu kadar yaygındır?',
-        options: ['Toprak çok düz ve verimlidir', 'Bol yağış ve ılıman hava çay için idealdir', 'Kışlar çok sıcaktır', 'Göller çok fazladır'],
+        text: 'Sümela Manastırı nerede bulunur ve hangi uygarlığa aittir?',
+        options: ['İstanbul — Roma dönemine', 'Trabzon — Bizans İmparatorluğu\'na', 'Bursa — Osmanlı\'ya', 'Ankara — Hitit\'lere'],
         correct: 1,
-        explanation: 'Çay bitkisi nem ve ılıman iklimsever bir bitkidir. Karadeniz\'in bol yağışlı ve ılıman iklimi çay yetiştiriciliği için mükemmel koşullar sağlar.'
+        explanation: 'Sümela Manastırı, Trabzon\'un Maçka ilçesinde kayalıklara inşa edilmiştir. MS 386 yılında Bizans döneminde kurulan manastır, Trabzon\'un en önemli kültürel miraslarından biridir.'
       },
       {
-        text: 'Karadeniz Bölgesi\'ndeki doğal bitki örtüsü nasıldır?',
-        options: ['Çöl ve bozkır bitkileri', 'Bodur çalılar ve dikenler', 'Yoğun geniş yapraklı ormanlar', 'Sadece çam ormanları'],
+        text: 'Geleneksel Osmanlı konaklarının "cumba" denen özelliği nedir?',
+        options: ['Çatıda bulunan kubbe', 'Bodrum katındaki kiler', 'Üst katlarda öne doğru çıkıntı yapan bölüm', 'Avludaki çeşme'],
         correct: 2,
-        explanation: 'Bol yağış sayesinde Karadeniz\'de Türkiye\'nin en gür ormanları bulunur. Kayın, kestane, ıhlamur gibi geniş yapraklı ağaçlar yaygındır.'
+        explanation: 'Cumba, Osmanlı konaklarında üst katlarda caddeye doğru uzanan çıkıntılı bölümdür. Safranbolu\'daki cumbalı evler bölgenin simgesi olmuştur.'
       },
       {
-        text: 'Karadeniz Bölgesi\'nde hangi tarım ürünleri öne çıkar?',
-        options: ['Buğday ve şeker pancarı', 'Çay ve fındık', 'Pamuk ve zeytin', 'Narenciye ve muz'],
-        correct: 1,
-        explanation: 'Karadeniz Bölgesi Türkiye çay üretiminin neredeyse tamamını, fındık üretiminin büyük bölümünü karşılar. Ordu ve Giresun dünya fındık ihracatında önemli merkezlerdir.'
-      },
-      {
-        text: 'Türkiye\'nin en uzun nehri Kızılırmak nereye dökülür?',
-        options: ['Ege Denizi\'ne', 'Marmara Denizi\'ne', 'Karadeniz\'e', 'Akdeniz\'e'],
+        text: 'Hattuşaş (Hitit Başkenti) Karadeniz\'e yakın hangi ile bağlıdır?',
+        options: ['Trabzon', 'Rize', 'Boğazkale/Çorum', 'Sinop'],
         correct: 2,
-        explanation: 'Kızılırmak (1.355 km), Sivas\'tan doğar, İç Anadolu\'yu geçer ve Karadeniz Bölgesi\'nden geçerek Karadeniz\'e dökülür.'
+        explanation: 'Hattuşaş, MÖ 1600\'lü yıllarda Hitit İmparatorluğu\'nun başkentiydi. Çorum\'un Boğazkale ilçesinde yer alır ve 1986\'da UNESCO Dünya Mirası listesine girmiştir.'
+      },
+      {
+        text: 'Karadeniz Bölgesi\'ndeki geleneksel el sanatlarından hangisi en ünlüdür?',
+        options: ['Çini seramik', 'Kastamonu yazmacılığı ve tahta oyma', 'Halıcılık', 'Cam işlemeciliği'],
+        correct: 1,
+        explanation: 'Kastamonu, tahta oyma ve yazmacılık (kumaş baskı) sanatlarıyla ünlüdür. Karadeniz\'in ormanlık yapısı ahşap el sanatlarının gelişmesine zemin hazırlamıştır.'
       }
     ]
   },
   {
     id: 'akdeniz', number: 2,
     name: 'Akdeniz Bölgesi',
-    icon: '☀️', color: '#1BBFB0',
-    badge: 'İklim Dedektifi',
+    icon: '🏺', color: '#1BBFB0',
+    badge: 'Likya Kaşifi',
     infoCards: [
-      { label: 'İklim',         value: 'Akdeniz iklimi' },
-      { label: 'Bitki Örtüsü', value: 'Maki ve kızılçam' },
-      { label: 'Şehirler',     value: 'Antalya, Mersin, Adana' },
-      { label: 'Ekonomi',      value: 'Turizm ve tarım' },
+      { label: 'UNESCO Mirası',  value: 'Xanthos-Letoon (1988)' },
+      { label: 'Antik Tiyatro', value: 'Aspendos (MS 2. yy)' },
+      { label: 'Mozaik Müzesi', value: 'Hatay — Antakya' },
+      { label: 'Lykia Uygarlığı', value: 'Kaya mezarları' },
     ],
-    story: 'Sıcak güneş altında Profesör Coğraf bağırır: "İklim Dedektifi olmaya hazır mısın? Akdeniz\'in berrak suları, portakal bahçeleri ve antik şehirleri seni bekliyor. Yazın güneş kavurur, kışın yağmur serinletir. Bu iklimdeki sırları çöz!"',
-    mission: 'Akdeniz iklimini, Toros Dağları\'nı ve bölgenin tarım ürünlerini keşfederek İklim Dedektifi unvanını kazan!',
-    funFact: 'Antalya\'ya her yıl 10 milyondan fazla turist gelir! Bu, Türkiye\'nin toplam turistinin yaklaşık yarısıdır. Türkiye\'nin "tatil başkenti" olarak da bilinir.',
+    story: 'Profesör Tarih heyecanla haykırır: "Kaşif! Akdeniz kıyılarına geldin — ama bu yalnızca bir tatil beldesi değil! Burada Likya Uygarlığı\'nın kayalara oyulmuş mezarları var, 2000 yıllık Aspendos Tiyatrosu hâlâ konser veriyor, Hatay\'da dünyanın en büyük mozaik müzesi seni bekliyor!"',
+    mission: 'Akdeniz\'in antik mirasını — Xanthos-Letoon\'u, Aspendos Tiyatrosu\'nu ve Likya kaya mezarlarını — keşfederek Likya Kaşifi unvanını kazan!',
+    funFact: 'Aspendos Antik Tiyatrosu (Antalya), MS 2. yüzyılda inşa edildi ve 15.000 kişilik kapasitesiyle günümüzde de aktif olarak konser ve festival mekanı olarak kullanılıyor!',
     questions: [
       {
-        text: 'Akdeniz ikliminin en temel özelliği nedir?',
-        options: ['Her mevsim eşit yağış', 'Yazlar sıcak-kurak, kışlar ılık-yağışlı', 'Dört mevsim sıcak ve kurak', 'Kışlar çok soğuk ve karlı'],
+        text: 'Xanthos-Letoon UNESCO Dünya Mirası nerede bulunur?',
+        options: ['Adana yakınlarında, Çukurova\'da', 'Muğla-Antalya arasındaki Likya\'da', 'Hatay\'da Orontes kıyısında', 'Mersin\'de dağ eteklerinde'],
         correct: 1,
-        explanation: 'Akdeniz ikliminin temel özelliği: yazlar sıcak ve kurak, kışlar ılık ve yağışlıdır. Bu iklim özellikle Antalya, Mersin ve Hatay kıyılarında görülür.'
+        explanation: 'Xanthos-Letoon, Likya uygarlığının merkezi olup Muğla-Antalya sınırında yer alır. 1988\'de UNESCO listesine alınan bu alan Likya yazısının da çözüldüğü yerdir.'
       },
       {
-        text: 'Akdeniz Bölgesi\'nde hangi ürünler en çok yetişir?',
-        options: ['Çay ve fındık', 'Buğday ve arpa', 'Narenciye, muz ve pamuk', 'Şeker pancarı ve mısır'],
-        correct: 2,
-        explanation: 'Akdeniz\'in sıcak ve ılıman iklimi narenciye (portakal, limon, mandalina), muz ve pamuk tarımı için idealdir. Bu ürünler bölgenin en önemli geçim kaynaklarındandır.'
-      },
-      {
-        text: 'Akdeniz kıyısı boyunca uzanan büyük dağ silsilesi hangisidir?',
-        options: ['Kaçkar Dağları', 'Toros Dağları', 'Ağrı Dağı', 'Uludağ'],
+        text: 'Aspendos Antik Tiyatrosu\'nun özelliği nedir?',
+        options: ['Tamamen yeraltında inşa edilmiştir', 'Dünyanın en iyi korunmuş Roma tiyatrolarından biridir', 'Yalnızca Yunan dönemine aittir', 'Dünyada tek kez kullanılmıştır'],
         correct: 1,
-        explanation: 'Toros Dağları, Akdeniz kıyısı boyunca doğu-batı yönünde uzanır. Bu dağlar hem iç kesimlere geçişi zorlaştırır hem de bölgenin eşsiz manzarasını oluşturur.'
+        explanation: 'Antalya\'nın Serik ilçesindeki Aspendos Tiyatrosu (MS 155), 15.000 kişilik kapasitesiyle dünyanın en iyi korunmuş Roma tiyatrolarından biridir. Günümüzde operalar ve festivaller için kullanılmaktadır.'
       },
       {
-        text: 'Turistler için tatil şehri olarak hangi şehir Akdeniz Bölgesi\'ndedir?',
-        options: ['Bursa', 'Erzurum', 'Antalya', 'Diyarbakır'],
-        correct: 2,
-        explanation: 'Antalya, Türkiye\'nin en çok turist çeken şehridir. Tarihi kalıntıları, mavi bayraklı plajları ve tatil köyleriyle Akdeniz turizminin merkezidir.'
+        text: 'Hatay\'daki mozaik müzesi neden dünyaca önemlidir?',
+        options: ['Türkiye\'nin en büyük fotoğraf koleksiyonuna sahiptir', 'Dünyanın en büyük in situ (yerinde) Roma mozaik koleksiyonlarından birini barındırır', 'Osmanlı hat sanatını sergiler', 'Bizans dönemine ait tablolar içerir'],
+        correct: 1,
+        explanation: 'Hatay Arkeoloji Müzesi, Antakya (Antioch) kazılarından çıkarılan Roma dönemine ait devasa mozaiklere ev sahipliği yapar. 1.500\'den fazla mozaik eseriyle dünyanın sayılı mozaik koleksiyonlarından biridir.'
       },
       {
-        text: 'Akdeniz Bölgesi\'nin en kalabalık şehri hangisidir?',
-        options: ['Antalya', 'Mersin', 'Adana', 'Hatay'],
-        correct: 2,
-        explanation: 'Adana, Akdeniz Bölgesi\'nin en büyük şehridir ve Türkiye\'nin 5. büyük şehridir. Pamuk, tekstil ve gıda sanayisinin merkezidir.'
+        text: 'Likya uygarlığına ait kaya mezarları en çok hangi bölgede görülür?',
+        options: ['Ege kıyıları', 'Akdeniz — Muğla ve Antalya arası', 'Karadeniz sahilleri', 'Marmara kıyıları'],
+        correct: 1,
+        explanation: 'Likya (günümüz Muğla-Antalya arası), MÖ 1. binyılda yaşayan Lykialılara aittir. Kayalara oyulan ev biçimli mezarlar Kaş, Dalyan ve Fethiye çevresinde yoğun biçimde görülür.'
+      },
+      {
+        text: 'Perge Antik Kenti hangi bölgededir ve hangi döneme aittir?',
+        options: ['Ege — Yunan dönemi', 'Akdeniz (Antalya) — Helenistik ve Roma dönemi', 'Marmara — Bizans dönemi', 'İç Anadolu — Hitit dönemi'],
+        correct: 1,
+        explanation: 'Perge, Antalya\'nın Aksu ilçesindedir. MÖ 1000\'lere dayanan tarihi ile Helenistik ve Roma dönemlerinde parlayan Perge; anıtsal kapıları, sütunlu caddesi ve tiyatrosuyla Akdeniz\'in en önemli antik kentlerinden biridir.'
       }
     ]
   },
   {
     id: 'ic-anadolu', number: 3,
     name: 'İç Anadolu Bölgesi',
-    icon: '🏔️', color: '#F4D03F',
-    badge: 'Yer Şekilleri Ustası',
+    icon: '🗿', color: '#F4D03F',
+    badge: 'Anadolu Medeniyetleri Uzmanı',
     infoCards: [
-      { label: 'İklim',         value: 'Karasal iklim' },
-      { label: 'Bitki Örtüsü', value: 'Bozkır ve step' },
-      { label: 'Başkent',      value: 'Ankara' },
-      { label: 'Tarım',        value: 'Buğday ve arpa' },
+      { label: 'UNESCO (1985)',  value: 'Göreme / Kapadokya' },
+      { label: 'UNESCO (1986)',  value: 'Hattuşaş — Hitit Başkenti' },
+      { label: 'UNESCO (2012)', value: 'Çatalhöyük Neolitik Kenti' },
+      { label: 'UNESCO (1985)', value: 'Divriği Ulu Camii' },
     ],
-    story: 'Rüzgarlı bozkırda Profesör Coğraf seslenir: "Türkiye\'nin kalbi İç Anadolu\'ya hoş geldin! Geniş ovalar, dalgalanan buğday tarlaları ve mistik Tuz Gölü seni bekliyor. Ankara burada, Kapadokya\'nın peri bacaları burada. Yer şekillerini çöz!"',
-    mission: 'İç Anadolu\'nun yer şekillerini, karasal iklimini, Ankara\'yı ve Tuz Gölü\'nü keşfederek Yer Şekilleri Ustası unvanını kazan!',
-    funFact: 'Kapadokya (Nevşehir), İç Anadolu\'da yer alır. Milyonlarca yıl önce oluşan peri bacaları, her yıl sıcak hava balonuyla görülmek için dünyadan ziyaretçi çeker!',
+    story: 'Profesör Tarih coşkuyla anlatır: "Anadolu\'nun kalbi İç Anadolu\'ya hoş geldin! 9000 yıl önce burada ilk şehir kuruldu. Hitit İmparatorluğu bu topraklara hükmetti. Kapadokya\'nın peri bacaları binlerce yıl Hristiyanları sakladı. Dört ayrı UNESCO Mirası bu bölgede — hazır mısın?"',
+    mission: 'Çatalhöyük\'ten Hattuşaş\'a, Kapadokya\'dan Divriği\'ye İç Anadolu\'nun dört UNESCO mirasını keşfederek Anadolu Medeniyetleri Uzmanı unvanını kazan!',
+    funFact: 'Çatalhöyük (Konya), MÖ 7500\'de kurulan dünyanın bilinen en eski şehirsel yerleşimlerinden biridir. Buradaki insanlar 9500 yıl önce duvara resim yapmış, kilden heykel üretmiş ve komşularla birlikte yaşamıştır!',
     questions: [
       {
-        text: 'İç Anadolu Bölgesi\'nde hangi bitki örtüsü yaygındır?',
-        options: ['Gür ormanlar', 'Maki ve çalılıklar', 'Bozkır (step)', 'Tropikal ormanlar'],
-        correct: 2,
-        explanation: 'İç Anadolu\'nun karasal iklimi ve düşük yağış miktarı bozkır bitki örtüsünün oluşmasına neden olur. Step olarak da bilinen bu bitki örtüsü sert koşullara dayanıklı otlardan oluşur.'
-      },
-      {
-        text: 'Karasal iklimin özellikleri nelerdir?',
-        options: ['Her mevsim ılık ve yağışlı', 'Yazlar sıcak-kurak, kışlar soğuk ve karlı', 'Dört mevsim nemli', 'Yazlar serin, kışlar ılık'],
+        text: 'Çatalhöyük neden dünya tarihi açısından bu kadar önemlidir?',
+        options: ['Türkiye\'nin ilk camisi burada inşa edilmiştir', 'MÖ 7500\'e tarihlenen dünyanın en eski kentsel yerleşimlerinden biridir', 'İlk Osmanlı sarayı bu noktada kurulmuştur', 'Roma\'nın Anadolu\'daki ilk kolonisidir'],
         correct: 1,
-        explanation: 'Karasal iklimde yazlar sıcak ve kurak, kışlar soğuk ve karlı geçer. Günlük ve mevsimlik sıcaklık farkları çok büyüktür. İç Anadolu\'da bu iklim tipik şekilde görülür.'
+        explanation: 'Çatalhöyük (Konya), yaklaşık MÖ 7500\'de kurulmuş, dünyanın bilinen en eski kentsel yerleşimlerinden biridir. 2012\'de UNESCO listesine alınmış; duvar resimleri, heykelcikler ve toplu yaşam alanları ile erken insan toplumunu anlamamızı sağlar.'
       },
       {
-        text: 'Türkiye\'nin başkenti Ankara hangi bölgededir?',
-        options: ['Marmara', 'Ege', 'İç Anadolu', 'Karadeniz'],
-        correct: 2,
-        explanation: 'Ankara, İç Anadolu\'da bulunur ve 1923\'te Türkiye Cumhuriyeti\'nin başkenti ilan edilmiştir. Türkiye\'nin ikinci büyük şehridir.'
-      },
-      {
-        text: 'Tuz Gölü hangi bölgededir ve neden önemlidir?',
-        options: ['Ege — derin tatlı su gölü', 'İç Anadolu — Türkiye\'nin en tuzlu gölü', 'Marmara — büyük balıkçılık gölü', 'Doğu Anadolu — soğuk su gölü'],
+        text: 'Hattuşaş nedir ve hangi ilde bulunur?',
+        options: ['Bir Bizans kilisesi — Nevşehir\'de', 'Hitit İmparatorluğu\'nun başkenti — Çorum/Boğazkale\'de', 'Selçuklu kervansarayı — Konya\'da', 'Osmanlı kalesi — Ankara\'da'],
         correct: 1,
-        explanation: 'Tuz Gölü, İç Anadolu\'da Konya-Ankara-Aksaray sınırında bulunur. %32 tuzluluk oranıyla Türkiye\'nin en tuzlu gölüdür ve ülke tuz ihtiyacının büyük bölümünü karşılar.'
+        explanation: 'Hattuşaş, MÖ 17.-12. yüzyıllarda Hitit İmparatorluğu\'nun başkentiydi. Çorum\'un Boğazkale ilçesinde bulunur. Aslan Kapı, Sfenks Kapı ve devasa tapınaklarıyla 1986\'da UNESCO listesine alınmıştır.'
       },
       {
-        text: 'İç Anadolu\'nun en önemli tarım ürünü nedir?',
-        options: ['Çay', 'Zeytin', 'Buğday', 'Narenciye'],
-        correct: 2,
-        explanation: 'İç Anadolu, geniş düzlükleri ile Türkiye\'nin "tahıl ambarı"dır. Buğday ve arpa üretiminde Türkiye\'de birinci sıradadır. Konya Ovası en verimli tarım alanlarından biridir.'
+        text: 'Göreme Açık Hava Müzesi\'nin önemi nedir?',
+        options: ['Osmanlı sultanlarının yaz saraylarını barındırır', 'Kayaya oyulmuş Bizans dönemi kiliseleri ve fresklerini korur', 'İlk Türk-İslam mimarisinin örneklerini içerir', 'Roma su kemerleri burada en iyi korunmuştur'],
+        correct: 1,
+        explanation: 'Göreme Açık Hava Müzesi (Nevşehir), Kapadokya\'da volkanik kayalara oyulmuş MS 10.-13. yüzyıl Bizans kiliselerini barındırır. Freskler (duvar resimleri) mükemmel korunmuştur; 1985\'te UNESCO listesine girmiştir.'
+      },
+      {
+        text: 'Divriği Ulu Camii ve Darüşşifası\'nı özgün kılan nedir?',
+        options: ['Çini mozaikleriyle dünyada en büyük cami', 'Taş işçiliğinin ustalık harikası olarak UNESCO listesindeki ilk İslam eseri', 'Anadolu\'nun ilk ahşap camisidir', 'Sultan Süleyman tarafından yaptırılmıştır'],
+        correct: 1,
+        explanation: 'Sivas\'ın Divriği ilçesindeki Ulu Cami ve Darüşşifa (1228-29), taş oymacılığının baş yapıtı olarak Türkiye\'nin ilk UNESCO Dünya Mirası listesine alınan eseridir (1985). Kapılarındaki üç boyutlu taş işçiliği eşsizdir.'
+      },
+      {
+        text: 'Peri bacaları nasıl oluşmuştur?',
+        options: ['İnsanlar tarafından kazılarak oluşturulmuştur', 'Volkanik tüf tabakasının milyonlarca yıl boyunca erozyon ile aşınmasıyla', 'Depremler sonucu yer şekillerinin değişmesiyle', 'Buzul döneminde buz yığınlarının bıraktığı izlerle'],
+        correct: 1,
+        explanation: 'Kapadokya\'daki peri bacaları; milyonlarca yıl önce volkanik faaliyetlerle oluşan tüf (yumuşak taş) tabakasının yağmur ve rüzgar erozyonuyla şekillenmesi sonucu meydana gelmiştir. Erken Hristiyanlar bu kayaları oyarak kilise ve yeraltı şehirleri oluşturmuştur.'
       }
     ]
   },
   {
     id: 'ege', number: 4,
     name: 'Ege Bölgesi',
-    icon: '🌾', color: '#9B59B6',
-    badge: 'Tarım Şampiyonu',
+    icon: '🏟️', color: '#9B59B6',
+    badge: 'Antik Dünya Kaşifi',
     infoCards: [
-      { label: 'İklim',         value: 'Akdeniz iklimi' },
-      { label: 'Ürünler',      value: 'Zeytin, üzüm, incir' },
-      { label: 'Turizm',       value: 'Çok gelişmiştir' },
-      { label: 'Kıyı',        value: 'Girintili çıkıntılı' },
+      { label: 'UNESCO (2015)',  value: 'Efes Antik Kenti' },
+      { label: 'UNESCO (2014)', value: 'Bergama/Pergamon' },
+      { label: 'UNESCO (2017)', value: 'Afrodisias' },
+      { label: 'UNESCO (1988)', value: 'Hierapolis-Pamukkale' },
     ],
-    story: 'Zeytinliklerin arasından geçerken Profesör Coğraf anlatır: "Tarım Şampiyonu adayı, Ege\'ye hoş geldin! Türkiye\'nin zeytinyağı, üzüm ve incirinin büyük bölümü buradan gelir. Antik Efes burada, İzmir burada. Kıyılar girintili çıkıntılı, deniz mavi…"',
-    mission: 'Ege\'nin tarım ürünlerini, kıyı şekillerini ve iklimini öğrenerek Tarım Şampiyonu unvanını kazan!',
-    funFact: 'İzmir, 3000 yıllık tarihi ile "İncinin Başkenti" olarak da bilinir. Dünya incir ihracatının büyük çoğunluğu Aydın ve İzmir\'den yapılır!',
+    story: 'Profesör Tarih heyecanla bağırır: "Dört UNESCO Mirası bir arada — Ege\'ye hoş geldin, Antik Dünya Kaşifi! Dünya\'nın Yedi Harikası\'ndan biri olan Artemis Tapınağı\'nın bulunduğu Efes burada. Bergama Kütüphanesi İskenderiye\'nin rakibiydi. Afrodisias\'ta heykel okulu vardı. Pamukkale\'nin travertenleri binlerce yıl insanlara şifa verdi!"',
+    mission: 'Efes, Bergama, Afrodisias ve Pamukkale\'nin antik mirasını keşfederek Antik Dünya Kaşifi unvanını kazan!',
+    funFact: 'Efes\'teki Artemis Tapınağı, Dünya\'nın Yedi Harikası\'ndan biriydi. Bugün yalnızca tek bir sütunu ayaktadır — ama Efes Antik Kenti, UNESCO koruması altında Türkiye\'nin en çok ziyaret edilen antik alanıdır!',
     questions: [
       {
-        text: 'Ege Bölgesi\'nin en önemli tarım ürünleri hangileridir?',
-        options: ['Çay ve fındık', 'Buğday ve şeker pancarı', 'Zeytin, üzüm ve incir', 'Narenciye ve muz'],
-        correct: 2,
-        explanation: 'Ege Bölgesi, Türkiye zeytin ve zeytinyağı üretiminin büyük bölümünü karşılar. Üzüm (kuru üzüm), incir ve pamuk da bölgenin önemli tarım ürünleridir.'
-      },
-      {
-        text: 'Ege kıyılarının şekli nasıldır?',
-        options: ['Düz ve sade', 'Girintili çıkıntılı (ria kıyısı)', 'Yüksek falezler', 'Delta ve lagün kıyıları'],
+        text: 'Efes Antik Kenti hangi ilde bulunur ve neden UNESCO listesindedir?',
+        options: ['Muğla — doğal güzellikleri nedeniyle', 'İzmir (Selçuk) — Helenistik ve Roma dönemine ait olağanüstü antik kent kalıntıları nedeniyle', 'Aydın — Osmanlı mimarisi nedeniyle', 'Manisa — Bizans katedralleri nedeniyle'],
         correct: 1,
-        explanation: 'Ege kıyıları "ria" tipi kıyılardır — derince giren körfezler, koylar ve yarımadalar şeklinde girintili çıkıntılıdır. Bu yapı doğal liman oluşmasını kolaylaştırır.'
+        explanation: 'Efes, İzmir\'in Selçuk ilçesindedir. MÖ 10. yüzyıldan itibaren iskân gören kent; Artemis Tapınağı, Celsus Kütüphanesi ve büyük tiyatrosuyla 2015\'te UNESCO listesine alınmıştır.'
       },
       {
-        text: 'Zeytin üretim alanını aramak için hangi bölgeye gidilir?',
-        options: ['Doğu Anadolu', 'Karadeniz', 'Ege', 'İç Anadolu'],
-        correct: 2,
-        explanation: 'Ege Bölgesi Türkiye zeytin üretiminin merkezi olup Aydın, İzmir ve Balıkesir illeri en çok zeytin yetiştiren illerdir.'
-      },
-      {
-        text: 'Dünyaca ünlü Efes Antik Kenti hangi ilde bulunur?',
-        options: ['Muğla', 'İzmir (Selçuk ilçesi)', 'Aydın', 'Manisa'],
+        text: 'Bergama (Pergamon) Antik Kenti\'nin tarihî önemi nedir?',
+        options: ['Osmanlı İmparatorluğu\'nun ilk başkentiydi', 'Helenistik dönemde güçlü bir krallık merkezi ve ünlü kütüphanesiyle İskenderiye\'nin rakibiydi', 'Roma\'nın Anadolu\'daki ilk sömürgesi olarak kuruldu', 'Hitit döneminde büyük bir demir işleme merkeziydi'],
         correct: 1,
-        explanation: 'Efes Antik Kenti, İzmir iline bağlı Selçuk ilçesindedir. UNESCO Dünya Mirası listesinde olan Efes, Türkiye\'nin en çok ziyaret edilen antik şehridir.'
+        explanation: 'Bergama (İzmir\'e bağlı), MÖ 3.-1. yüzyıllarda Pergamon Krallığı\'nın başkentiydi. 200.000 ciltlik kütüphanesiyle İskenderiye\'nin rakibiydi. "Parşömen" (pergament) kâğıdının adını buradan alır. 2014\'te UNESCO listesine girdi.'
       },
       {
-        text: 'Ege ikliminin yazları nasıldır?',
-        options: ['Serin ve yağışlı', 'Soğuk ve karlı', 'Sıcak ve kurak', 'Ilıman ve bulutlu'],
-        correct: 2,
-        explanation: 'Ege ikliminde yazlar sıcak ve kurak, kışlar ılık ve yağışlıdır. Bu iklim zeytin ve üzüm tarımı için idealdir.'
+        text: 'Afrodisias Antik Kenti hangi sanat dalıyla ünlüdür?',
+        options: ['Seramik ve çömlekçilik', 'Heykel ve mermer işçiliği okulu', 'Cam mozaik sanatı', 'Bronz dökümcülüğü'],
+        correct: 1,
+        explanation: 'Afrodisias (Aydın), Roma döneminde ünlü bir heykel okulu barındırıyordu. Mermer heykeltraşlığı bu kentte doruk noktasına ulaştı. 2017\'de UNESCO listesine alınan kentte bugün müzede yüzlerce özgün heykel sergilenmektedir.'
+      },
+      {
+        text: 'Hierapolis-Pamukkale\'nin "travertenleri" nedir?',
+        options: ['Volkanik lav taşlarından oluşan dağlar', 'Sıcak su kaynaklarının kireç biriktirmesiyle oluşan beyaz teraskayalar', 'Mağara içindeki stalaktit ve stalagmitler', 'Nehir sedimanlarının oluşturduğu delta'],
+        correct: 1,
+        explanation: 'Pamukkale\'nin (Denizli) beyaz teraskayaları "travertenler"dir. Kalsiyum bikarbonat içeren sıcak sular yüzeye çıktıkça buharlaşır ve kireç tabakası biriktirir. Bu doğal oluşum + Hierapolis Antik Kenti ile 1988\'de UNESCO listesine alınmıştır.'
+      },
+      {
+        text: 'Troya Antik Kenti hangi bölgededir ve neden önemlidir?',
+        options: ['Ege — İzmir yakınlarında, Yunan mitolojisindeki Truva savaşının yaşandığı yer', 'Marmara — Çanakkale\'de, Truva savaşının efsanevi kentidir', 'Akdeniz — Antalya\'da, Roma döneminden kalma limandır', 'Karadeniz — Sinop\'ta, ticaret merkezi kentidir'],
+        correct: 1,
+        explanation: 'Troya (Truva), Çanakkale\'de Marmara Bölgesi\'ndedir; ancak Ege medeniyetleriyle derin bağı vardır. MÖ 3000\'den MS 400\'e kadar kesintisiz iskân edilmiş, Homeros\'un İlyada destanına konu olan efsanevi kenttir. 1998\'de UNESCO listesine girmiştir.'
       }
     ]
   },
   {
     id: 'marmara', number: 5,
     name: 'Marmara Bölgesi',
-    icon: '🏙️', color: '#F5A42A',
-    badge: 'Şehir Kaşifi',
+    icon: '🕌', color: '#F5A42A',
+    badge: 'Osmanlı Başkenti Uzmanı',
     infoCards: [
-      { label: 'En Büyük Şehir', value: 'İstanbul' },
-      { label: 'Ekonomi',         value: 'Sanayi ve ticaret' },
-      { label: 'Ulaşım',          value: 'En gelişmiş ağ' },
-      { label: 'Özellik',         value: 'İki kıta arasında köprü' },
+      { label: 'UNESCO (1985)',  value: 'İstanbul Tarihi Alanları' },
+      { label: 'UNESCO (2011)', value: 'Selimiye Camii — Edirne' },
+      { label: 'UNESCO (2014)', value: 'Bursa ve Cumalıkızık' },
+      { label: 'UNESCO (1998)', value: 'Troya Antik Kenti' },
     ],
-    story: 'Boğaz vapurunda Profesör Coğraf coşkuyla anlatır: "Şehir Kaşifi, Marmara\'ya hoş geldin! Türkiye\'nin en kalabalık, en sanayileşmiş bölgesi. İstanbul iki kıtaya yayılmış, Marmara Denizi iki boğazla bağlanmış. Sanayi, ticaret, tarih — hepsi burada!"',
-    mission: 'İstanbul\'un konumunu, boğazları, Marmara\'nın ekonomik gücünü keşfederek Şehir Kaşifi unvanını kazan!',
-    funFact: 'İstanbul, dünyada iki kıtaya (Avrupa ve Asya) yayılmış sayılı şehirlerden biridir. Boğaziçi Köprüsü\'nün üzerinde bir adımda kıtalar arası geçiş yapabilirsin!',
+    story: 'Boğaz vapurunda Profesör Tarih hayranlıkla anlatır: "Osmanlı Başkenti Uzmanı adayı, Marmara\'ya hoş geldin! Dört farklı UNESCO Dünya Mirası bu bölgede! Ayasofya 1500 yıllık, Topkapı Sarayı 500 yıllık, Selimiye Camii\'nin kubbeleri matematiksel mükemmeliyettir. Bursa ise Osmanlı\'nın ilk başkenti..."',
+    mission: 'İstanbul\'un tarihi yarımadasını, Edirne\'nin Selimiye Camii\'ni ve Bursa\'nın Osmanlı mirasını keşfederek Osmanlı Başkenti Uzmanı unvanını kazan!',
+    funFact: 'Ayasofya (İstanbul), MS 537\'de Bizans İmparatoru Justinianus tarafından inşa edildi. 916 yıl Hristiyan katedrali, 481 yıl Osmanlı camii olarak hizmet veren bu yapı bugün müze ve cami olarak ziyaret edilmektedir. Kubbesi 1000 yıl boyunca dünyanın en büyük kubbesi olma unvanını korudu!',
     questions: [
       {
-        text: 'İstanbul\'u haritada doğru konumlayan cevap hangisidir?',
-        options: ['İç Anadolu\'da, Ankara\'nın yakınında', 'Marmara Bölgesi\'nde, iki kıta arasında', 'Ege kıyısında, İzmir\'in kuzeyinde', 'Karadeniz kıyısında, Trabzon\'un yanında'],
+        text: 'İstanbul\'un hangi tarihi alanı 1985\'te UNESCO listesine alınmıştır?',
+        options: ['Boğaziçi köprüleri ve çevresi', 'Tarihi Yarımada — Ayasofya, Topkapı Sarayı, Sultanahmet Camii ve surlar', 'Kadıköy sahil şeridi', 'Beyoğlu ve İstiklal Caddesi'],
         correct: 1,
-        explanation: 'İstanbul, Marmara Bölgesi\'nde İstanbul Boğazı\'nın iki yakasında yer alır. Avrupa ve Asya kıtalarına yayılmış, Türkiye\'nin en büyük şehridir.'
+        explanation: 'İstanbul Tarihi Alanları; Ayasofya, Topkapı Sarayı, Sultanahmet Camii (Mavi Cami), Hippodrom, Kapalıçarşı ve Bizans surlarını kapsayan bölgeyi içerir. 1985\'te dört ayrı alan olarak UNESCO listesine alınmıştır.'
       },
       {
-        text: 'Marmara Denizi hangi boğazlarla bağlanır?',
-        options: ['Süveyş ve Hürmüz Boğazı', 'İstanbul ve Çanakkale Boğazı', 'Kerç ve Öresund Boğazı', 'Gibraltar ve Messina Boğazı'],
+        text: 'Mimar Sinan\'ın baş yapıtı olarak kabul edilen cami hangisidir?',
+        options: ['İstanbul Sultanahmet Camii', 'Edirne Selimiye Camii', 'Bursa Yeşil Cami', 'İznik Ayasofyası'],
         correct: 1,
-        explanation: 'Marmara Denizi, İstanbul Boğazı ile Karadeniz\'e, Çanakkale Boğazı ile Ege Denizi\'ne bağlanır. Bu boğazlar tarihte büyük stratejik öneme sahip olmuştur.'
+        explanation: 'Selimiye Camii (Edirne, 1575), Mimar Sinan\'ın kendi "ustalık eseri" olarak tanımladığı yapıdır. Merkezi tek kubbenin altında geniş iç mekan, Bizans\'ın Ayasofya\'sından daha büyük bir iç alan sunar. 2011\'de UNESCO listesine girmiştir.'
       },
       {
-        text: 'Türkiye\'nin hangi bölgesi sanayi ve nüfus açısından en gelişmiştir?',
-        options: ['Doğu Anadolu', 'Güneydoğu Anadolu', 'Marmara', 'İç Anadolu'],
-        correct: 2,
-        explanation: 'Marmara Bölgesi, Türkiye nüfusunun %30\'undan fazlasını barındırır ve ülkenin en büyük sanayi bölgesidir. Otomotiv, tekstil, gıda sanayi yoğunlaşmıştır.'
+        text: 'Bursa ve Cumalıkızık UNESCO Mirası\'nın önemi nedir?',
+        options: ['Roma döneminden kalma su kemerleri', 'Osmanlı İmparatorluğu\'nun doğuşunu belgeleyen erken Osmanlı anıtları ve geleneksel köy dokusu', 'Osmanlı tersaneleri ve denizcilik geleneği', 'Selçuklu dönemine ait kervansaraylar'],
+        correct: 1,
+        explanation: 'Bursa, Osmanlı\'nın ilk başkentiydi (1326-1365). Yeşil Cami, Yeşil Türbe ve Bursa Büyük Camii erken Osmanlı mimarisinin şaheserleridir. Cumalıkızık köyü ise 700 yıllık dokusunu korumaktadır. 2014\'te UNESCO listesine alındı.'
       },
       {
-        text: 'Marmara Bölgesi\'nin "iki kıtayı birleştirme" özelliği nasıl sağlanır?',
-        options: ['Tüneller ve köprüler boğazı geçirir', 'Deniz kablo hattı vardır', 'İki ayrı ada birleştirir', 'Dağ tüneli kullanılır'],
-        correct: 0,
-        explanation: 'İstanbul\'da Boğaziçi Köprüsü, Fatih Sultan Mehmet Köprüsü ve Yavuz Sultan Selim Köprüsü Avrupa yakasını Asya yakasına bağlar. Ayrıca Marmaray tüp tüneli de denizin altından geçer.'
+        text: 'Topkapı Sarayı kaç yıl boyunca Osmanlı sultanlarına ev sahipliği yapmıştır?',
+        options: ['Yaklaşık 100 yıl (15-16. yüzyıl)', 'Yaklaşık 400 yıl (15-19. yüzyıl)', 'Yaklaşık 50 yıl (18. yüzyıl)', 'Yaklaşık 200 yıl (17-18. yüzyıl)'],
+        correct: 1,
+        explanation: 'Topkapı Sarayı, 1465\'ten 1856\'ya kadar yaklaşık 400 yıl boyunca 36 Osmanlı sultanına ev sahipliği yaptı. 1924\'te müzeye dönüştürülen saray; Hırka-i Saadet, silah koleksiyonu ve Osmanlı porselenleriyle önemli bir kültürel mirastır.'
       },
       {
-        text: 'Osmanlı İmparatorluğu\'nun başkenti olan İstanbul hangi bölgededir?',
-        options: ['Ege', 'Akdeniz', 'Marmara', 'Karadeniz'],
-        correct: 2,
-        explanation: 'İstanbul (eski adıyla Konstantinopolis/Kostantiniyye), 1453\'ten 1923\'e kadar Osmanlı İmparatorluğu\'nun başkentiydi. Bugün Türkiye\'nin en büyük şehri olarak Marmara Bölgesi\'ndedir.'
+        text: 'Kapalıçarşı\'nın (Büyük Çarşı) tarihsel önemi nedir?',
+        options: ['Türkiye\'nin ilk modern alışveriş merkezidir', '1461\'de inşa edilen, dünyanın en eski ve en büyük kapalı çarşılarından biridir', 'Cumhuriyet döneminde inşa edilmiş turistik alandır', 'Selçuklu döneminden kalma bir liman çarşısıdır'],
+        correct: 1,
+        explanation: 'İstanbul\'daki Kapalıçarşı (Büyük Çarşı), 1461\'de Fatih Sultan Mehmet döneminde inşa edildi. 61 kapalı cadde, 4000 dükkan ve yüzlerce atölyesiyle dünyanın bilinen en eski ve en büyük kapalı çarşılarından biridir; canlı kültürel mirası yaşatmaktadır.'
       }
     ]
   },
@@ -245,93 +245,93 @@ const REGIONS = [
     id: 'dogu-anadolu', number: 6,
     name: 'Doğu Anadolu Bölgesi',
     icon: '⛰️', color: '#5B9BD5',
-    badge: 'Dağ Kâşifi',
+    badge: 'Kadim Uygarlıklar Dedektifi',
     infoCards: [
-      { label: 'En Yüksek Dağ', value: 'Ağrı Dağı (5137 m)' },
-      { label: 'İklim',         value: 'Sert karasal iklim' },
-      { label: 'Ekonomi',       value: 'Büyükbaş hayvancılık' },
-      { label: 'Nehirler',      value: 'Fırat ve Dicle\'nin kaynağı' },
+      { label: 'UNESCO (1987)',  value: 'Nemrut Dağı — Kommagene' },
+      { label: 'UNESCO (2016)', value: 'Ani Harabeleri — Kars' },
+      { label: 'UNESCO (2021)', value: 'Arslantepe — Malatya' },
+      { label: 'Tarihi Kilise', value: 'Akdamar — Van Gölü' },
     ],
-    story: 'Karlı zirvelere bakarken Profesör Coğraf coşkuyla anlatır: "Dağ Kâşifi adayı! Türkiye\'nin en yüksek zirvesi Ağrı Dağı burada, Van Gölü\'nün mavisi burada. Fırat ve Dicle\'nin kaynağı bu topraklarda. Kışlar sert, yaylalar geniş. Hazır mısın?"',
-    mission: 'Ağrı Dağı\'nı, Van Gölü\'nü ve Fırat-Dicle\'nin kaynağını keşfederek Dağ Kâşifi unvanını kazan!',
-    funFact: 'Ağrı Dağı (5.137 m), yalnızca Türkiye\'nin değil tüm Orta Doğu\'nun en yüksek zirvesidir. Zirveyi yıl boyunca karlar örter ve Nuh\'un Gemisi efsanesiyle de ünlüdür!',
+    story: 'Karlı dağların arasında Profesör Tarih fısıldar: "Kadim Uygarlıklar Dedektifi adayı! Tanrı başları bir dağın zirvesinde seni izliyor — Nemrut\'a hoş geldin! Kars\'ta Ani Harabeleri gizli bir medeniyetin sessiz tanığı. Malatya\'da 5500 yıllık saray. Van Gölü\'nde bir adada kilise... Bu bölge tarihin katmanlarla gömülü hazinesi!"',
+    mission: 'Nemrut Dağı\'ndaki Kommagene Krallığı\'nı, Ani Harabeleri\'ni ve Arslantepe\'yi keşfederek Kadim Uygarlıklar Dedektifi unvanını kazan!',
+    funFact: 'Nemrut Dağı\'nda (Adıyaman) MÖ 1. yüzyılda yaşayan Kommagene Kralı I. Antiokhus, devasa taş başları olan bir mezar tümülüsü yaptırdı. Her biri 8-9 metre yüksekliğindeki bu heykeller gün doğumu ve batımında inanılmaz gölgeler oluşturur!',
     questions: [
       {
-        text: 'Türkiye\'nin en yüksek dağı hangisidir ve hangi bölgededir?',
-        options: ['Kaçkar Dağı (3937 m) — Karadeniz', 'Uludağ (2543 m) — Marmara', 'Ağrı Dağı (5137 m) — Doğu Anadolu', 'Erciyes Dağı (3916 m) — İç Anadolu'],
-        correct: 2,
-        explanation: 'Ağrı Dağı, 5.137 metre yüksekliğiyle Türkiye\'nin ve Orta Doğu\'nun en yüksek zirvesidir. Doğu Anadolu\'da Ağrı ilinde bulunur.'
-      },
-      {
-        text: 'Büyükbaş hayvancılığın Doğu Anadolu\'da gelişmesinin sebebi nedir?',
-        options: ['Fabrikalar çok gelişmiştir', 'Geniş yaylalar ve otlaklar çok fazladır', 'Deniz kıyısı balıkçılığa uygundur', 'Tahıl tarımı imkânsızdır'],
+        text: 'Nemrut Dağı\'ndaki devasa taş başlar kime aittir?',
+        options: ['Hitit Büyük Kral I. Suppiluliuma\'ya', 'Kommagene Krallığı Hükümdarı I. Antiokhus\'a', 'Ermeni Krallığı\'nın ilk hükümdarına', 'Roma İmparatoru Augustus\'a'],
         correct: 1,
-        explanation: 'Doğu Anadolu\'nun geniş yaylaları ve otlakları büyükbaş hayvancılık için idealdir. Sert iklim koşulları tahıl tarımını zorlaştırdığından hayvancılık ön plana çıkar.'
+        explanation: 'Nemrut Dağı\'ndaki (Adıyaman, 2150 m) devasa tanrı ve kral başları, MÖ 1. yüzyılda Kommagene Krallığı hükümdarı I. Antiokhus tarafından yaptırılmıştır. Kral tanrılarla eşit tutulmuş ve 9 metrelik heykellerle cennet mezarını kurmuştur. 1987\'de UNESCO listesine alınmıştır.'
       },
       {
-        text: 'Fırat ve Dicle nehirlerinin kaynağı hangi bölgededir?',
-        options: ['Güneydoğu Anadolu', 'İç Anadolu', 'Karadeniz', 'Doğu Anadolu'],
-        correct: 3,
-        explanation: 'Tarihî Mezopotamya\'yı besleyen Fırat ve Dicle nehirleri Doğu Anadolu dağlarından doğar. Bu özelliğiyle bölge "suların anası" olarak da bilinir.'
-      },
-      {
-        text: 'Türkiye\'nin en büyük gölü hangisidir ve hangi bölgededir?',
-        options: ['Tuz Gölü — İç Anadolu', 'Van Gölü — Doğu Anadolu', 'Beyşehir Gölü — Akdeniz', 'Eğirdir Gölü — Akdeniz'],
-        correct: 1,
-        explanation: 'Van Gölü, Türkiye\'nin en büyük ve dünyanın en büyük soda gölüdür. Doğu Anadolu\'da Van ilinde bulunur.'
-      },
-      {
-        text: 'Doğu Anadolu\'nun iklim özelliği nedir?',
-        options: ['Yazlar sıcak, kışlar ılık', 'Her mevsim yağışlı ve ılık', 'Kışlar çok sert-soğuk, yazlar kısa ve serin', 'Deniz etkisiyle yıl boyu ılıman'],
+        text: 'Ani Harabeleri hangi ilde bulunur ve hangi uygarlığa aittir?',
+        options: ['Van — Urartu uygarlığına', 'Erzurum — Selçuklu dönemine', 'Kars — Ortaçağ Ermeni Bagratid Krallığı\'na', 'Ağrı — Bizans dönemine'],
         correct: 2,
-        explanation: 'Türkiye\'nin en soğuk bölgesi Doğu Anadolu\'dur. Erzurum ve Kars -40°C\'ye kadar düşen sıcaklıklar yaşayabilir. Kışlar uzun ve sert, yazlar kısa ve serindir.'
+        explanation: 'Ani, Kars iline bağlıdır. Ortaçağ\'da Ermeni Bagratid Krallığı\'nın başkentiydi; 10.-11. yüzyıllarda 100.000 kişilik nüfusuyla döneminin büyük şehirlerinden biriydi. Camileri, kiliseleri ve saraylarıyla 2016\'da UNESCO listesine alındı.'
+      },
+      {
+        text: 'Arslantepe (Malatya) neden dünya arkeolojisi için bu kadar önemlidir?',
+        options: ['Türkiye\'nin en büyük Osmanlı kalesidir', 'MÖ 3300\'e tarihlenen dünyanın bilinen en eski saray ve depo yapılarından birini barındırır', 'Bizans döneminin en büyük su sarnıcıdır', 'Romalılara ait en uzun su kemerinin başlangıç noktasıdır'],
+        correct: 1,
+        explanation: 'Arslantepe (Malatya), MÖ 3300\'e tarihlenen dünyanın en eski saray yapılarından birine ev sahipliği yapar. Erken devlet organizasyonunun, artı değer depolamanın ve metal silahların bu bölgeden yayıldığı düşünülmektedir. 2021\'de UNESCO listesine alınmıştır.'
+      },
+      {
+        text: 'Akdamar Kilisesi\'nin özgün özelliği nedir?',
+        options: ['Osmanlı döneminde yapılan tek taş kilisedir', 'Van Gölü\'ndeki bir adada inşa edilmiş, dış cephesinde kabartma İncil sahneleri olan Ermeni kilisesidir', 'Türkiye\'nin en büyük Bizans mozaiklerini barındırır', 'Roma döneminden kalma çarşı yapısına dönüştürülmüştür'],
+        correct: 1,
+        explanation: 'Akdamar Kilisesi (MS 921), Van Gölü\'ndeki Akdamar Adası\'nda Ermeni mimarisinin şaheseri olarak yükselir. Dış cephedeki Eski ve Yeni Ahit sahnelerini konu alan kabartmalar, dönemin taş işçiliğinin en mükemmel örneklerindendir.'
+      },
+      {
+        text: 'Urartu Uygarlığı Doğu Anadolu\'da nerede merkez kurmuştur?',
+        options: ['Erzurum çevresinde', 'Kars\'ta', 'Van Gölü çevresinde, MÖ 9-6. yüzyıllar arasında', 'Elazığ ve Malatya arasında'],
+        correct: 2,
+        explanation: 'Urartu (Ararat) Uygarlığı, MÖ 9.-6. yüzyıllarda Van Gölü havzasını merkez alarak bugünkü Doğu Anadolu, Kuzeybatı İran ve Ermenistan\'a yayıldı. Van Kalesi ve Urartu yazıtları günümüze ulaşmıştır.'
       }
     ]
   },
   {
     id: 'guneydogu', number: 7,
     name: 'Güneydoğu Anadolu Bölgesi',
-    icon: '💧', color: '#E07B6A',
-    badge: 'Su ve Tarım Uzmanı',
+    icon: '🏺', color: '#E07B6A',
+    badge: 'İnsanlığın Kökenleri Uzmanı',
     infoCards: [
-      { label: 'Önemli Ürün',  value: 'Pamuk ve fıstık' },
-      { label: 'Proje',        value: 'GAP (Sulama+Enerji)' },
-      { label: 'İklim',        value: 'Çok sıcak ve kurak' },
-      { label: 'Nehirler',     value: 'Fırat ve Dicle' },
+      { label: 'UNESCO (2018)',  value: 'Göbekli Tepe — Şanlıurfa' },
+      { label: 'UNESCO (2015)', value: 'Diyarbakır Surları' },
+      { label: 'Mozaik Müzesi', value: 'Zeugma — Gaziantep' },
+      { label: 'Tarihi Kent',   value: 'Mardin taş evleri' },
     ],
-    story: 'Sıcakta Profesör Coğraf gözlerini kısar: "Su ve Tarım Uzmanı adayı! Mezopotamya\'nın kalbindesin. GAP projesinin muazzam barajları Fırat ve Dicle\'yi kontrol ediyor. Pamuk tarlaları uzanıyor, güneş yakıyor. Tarihin bu köklü topraklarını keşfet!"',
-    mission: 'GAP projesini, pamuk tarımını ve bölgenin iklim özelliklerini öğrenerek Su ve Tarım Uzmanı unvanını kazan!',
-    funFact: 'Şanlıurfa\'daki Göbeklitepe, MÖ 10.000 yılına ait dünyanın en eski tapınak kompleksidir. Bu keşif, "uygarlık tarımla başlar" tezini alt üst etti!',
+    story: 'Profesör Tarih neredeyse ağlayarak anlatır: "İnsanlığın Kökenleri Uzmanı adayı — bu topraklar tüm insanlığın anayurdu! Göbekli Tepe tarımdan 6000 yıl önce inşa edildi ve tarihi yeniden yazdı. Diyarbakır\'ın siyah bazalt surları 5500 yıllık. Zeugma\'nın Çingene Kız mozaiği 2000 yıl toprağın altında uyudu. Hazır mısın?"',
+    mission: 'Göbekli Tepe\'nin insanlık tarihine katkısını, Diyarbakır surlarını ve Zeugma Mozaik Müzesi\'ni keşfederek İnsanlığın Kökenleri Uzmanı unvanını kazan!',
+    funFact: 'Göbekli Tepe (Şanlıurfa), MÖ 10.000\'e tarihlenen dünyanın bilinen en eski tapınak kompleksidir. İnşa edenler henüz çiftçi değil, avcı-toplayıcıydı! Bu keşif "önce tarım, sonra din" tezini alt üst etti — belki "önce tapınak, sonra şehir" oldu. 2018\'de UNESCO listesine alındı.',
     questions: [
       {
-        text: 'GAP (Güneydoğu Anadolu Projesi) hangi bölgededir ve amacı nedir?',
-        options: ['İç Anadolu — buğday tarımı', 'Karadeniz — çay bahçeleri', 'Güneydoğu — sulama ve enerji üretimi', 'Ege — zeytin tarımı'],
-        correct: 2,
-        explanation: 'GAP, Güneydoğu Anadolu\'da Fırat ve Dicle üzerinde uygulanan büyük projedir. Amaçları: sulama yoluyla tarımı geliştirmek ve hidroelektrik enerji üretmek.'
-      },
-      {
-        text: 'Güneydoğu Anadolu\'da en çok hangi ürün yetiştirilir?',
-        options: ['Çay', 'Fındık', 'Buğday ve pamuk', 'Narenciye'],
-        correct: 2,
-        explanation: 'GAP projesiyle birlikte sulanan Güneydoğu Anadolu\'da pamuk ve buğday üretimi büyük ölçüde artmıştır. Gaziantep fıstığı da bölgenin önemli ürünlerindendir.'
-      },
-      {
-        text: 'Güneydoğu Anadolu\'nun iklim özelliği nedir?',
-        options: ['Her mevsim yağışlı', 'Yazlar çok sıcak-kurak, kışlar soğuk', 'Dört mevsim ılıman', 'Yazlar serin, kışlar çok soğuk'],
+        text: 'Göbekli Tepe neden "insanlık tarihini yeniden yazan" bir keşifdir?',
+        options: ['Dünyanın en büyük piramidinin burada olduğu anlaşılmıştır', 'MÖ 10.000\'e tarihlenen, henüz çiftçilik bilmeyen toplulukların inşa ettiği en eski tapınak kompleksidir', 'Sümer yazısının Anadolu\'da icat edildiğini kanıtlamıştır', 'İlk metal araçların bu bölgede üretildiği ortaya konulmuştur'],
         correct: 1,
-        explanation: 'Güneydoğu Anadolu, Türkiye\'nin en sıcak ve en kurak bölgesidir. Yazlar çok sıcak (40°C+) geçer. Şanlıurfa "Türkiye\'nin en sıcak şehri" unvanını taşır.'
+        explanation: 'Göbekli Tepe (Şanlıurfa), MÖ yaklaşık 10.000\'de avcı-toplayıcılar tarafından inşa edildi. Tarımın başlangıcından 6000 yıl önce organize dini toplantı mekânı yaratılmıştı. Bu, insanlığın dini ve sosyal örgütlenmesinin sanılandan çok daha eskiye gittiğini gösterdi. 2018\'de UNESCO listesine alındı.'
       },
       {
-        text: 'Barajların bu bölgede çok olmasının temel sebebi nedir?',
-        options: ['Deniz kıyısına yakındır', 'Fırat ve Dicle nehirleri bölgeden geçer', 'Karla beslenme çok fazladır', 'Yer altı suları zengindir'],
+        text: 'Diyarbakır\'ın surları hangi taştan yapılmıştır ve neden önemlidir?',
+        options: ['Beyaz mermerden — Roma\'nın inşa ettiği en uzun surlar olduğu için', 'Siyah bazaltan — MS 4. yüzyıldan itibaren farklı uygarlıkların kullandığı en uzun surlardan biri olduğu için', 'Tuğla ve kilden — Mezopotamya geleneğini yansıttığı için', 'Granit taştan — depreme dayanıklı ilk surlar olduğu için'],
         correct: 1,
-        explanation: 'Fırat ve Dicle nehirleri Güneydoğu Anadolu\'dan geçer. Bu iki büyük nehir üzerine Atatürk, Birecik, Keban gibi dev barajlar inşa edilmiştir.'
+        explanation: 'Diyarbakır surları, bölgeye özgü siyah bazalt taşından inşa edilmiştir. Yaklaşık 5,5 km uzunluğu ve 72 kule ile Anadolu\'nun en iyi korunmuş antik kentsel surlarından biridir. Hevsel Bahçeleri ile birlikte 2015\'te UNESCO listesine alındı.'
       },
       {
-        text: 'Güneydoğu Anadolu hangi kadim medeniyetlerin izlerini taşır?',
-        options: ['Roma ve Bizans', 'Osmanlı ve Selçuklu', 'Sümer, Babil ve Asur (Mezopotamya)', 'Yunan ve Pers'],
-        correct: 2,
-        explanation: 'Güneydoğu Anadolu, Mezopotamya\'nın bir parçasıdır. İnsanlık tarihinin ilk medeniyetleri olan Sümer, Babil ve Asur bu topraklarda doğmuştur.'
+        text: 'Zeugma\'daki "Çingene Kız" mozaiği neden bu kadar ünlüdür?',
+        options: ['Türkiye\'nin en büyük tek parça mozaiğidir', 'MS 2. yüzyıla ait, olağanüstü derinlik ve duygu ifadesiyle tarihin en etkileyici portre mozaiklerinden biridir', 'Altın cam kullanılan tek Antik çağ mozaiğidir', 'Mısır piramitlerini betimleyen tek Anadolu eseridir'],
+        correct: 1,
+        explanation: 'Zeugma Mozaik Müzesi (Gaziantep), MS 2. yüzyıldan kalma Roma döneminin en olağanüstü mozaik koleksiyonlarından birini barındırır. "Çingene Kız" mozaiği; gerçekçi ifadesi, derinlik hissi ve muhteşem ustalığıyla dünyada en çok tanınan antik portre mozaiklerinden biridir.'
+      },
+      {
+        text: 'Mardin\'in taş evleri hangi yapı malzemesinden inşa edilmiştir?',
+        options: ['Fırat Nehri\'nden getirilen granit taşından', 'Bölgeye özgü sarı-bal renkli kireçtaşından; bu taş hem yumuşak hem de dayanıklıdır', 'Tuğla ve alçıdan — Mezopotamya geleneğiyle', 'Siyah bazalt taşından — Diyarbakır geleneğinin devamı'],
+        correct: 1,
+        explanation: 'Mardin, doğal olarak elde edilen sarı-bal renkli kireçtaşından inşa edilmiştir. Bu yumuşak taş işlenmesi kolay olduğundan ince oyma motiflerle süslenebilir. Kentin eğimli araziye kurulu tarihi dokusu, geleneksel mimarisinin özgünlüğü nedeniyle UNESCO Geçici Listesi\'ndedir.'
+      },
+      {
+        text: 'Şanlıurfa\'nın "Peygamberler Şehri" olarak anılmasının sebebi nedir?',
+        options: ['Osmanlı döneminde 100\'den fazla cami inşa edilmiştir', 'Hz. İbrahim\'in doğduğuna inanılan şehir olması ve Eyüp Peygamber\'in de burada ikamet ettiğine dair inanç', 'İslam\'ın ilk yayıldığı Anadolu şehri olması', 'Mekke\'ye en yakın büyük Türk şehri olması'],
+        correct: 1,
+        explanation: 'Şanlıurfa, İbrahimî geleneğe göre Hz. İbrahim\'in doğum yeri olarak kabul edilir. Balıklıgöl ve Dergah çevresi, Hz. İbrahim ile ilgili kutsal mekânları barındırır. Bu inanç şehre "Peygamberler Şehri" ya da "Urfa" unvanını kazandırmıştır.'
       }
     ]
   }
