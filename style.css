@@ -336,50 +336,52 @@ html, body {
 
 .map-container {
   width: 100%;
-  max-width: 900px;
+  max-width: 920px;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 12px 48px rgba(0,0,0,0.5);
 }
 #turkey-map {
   width: 100%;
   height: auto;
-  filter: drop-shadow(0 10px 40px rgba(0,0,0,0.6));
+  display: block;
 }
 
 .region-polygon {
-  stroke: rgba(255,255,255,0.25);
-  stroke-width: 1.5;
+  stroke: white;
+  stroke-width: 1.8;
+  stroke-linejoin: round;
   cursor: pointer;
   transition: filter 0.2s, opacity 0.2s;
-  fill-opacity: 0.85;
 }
 .region-polygon:hover {
-  filter: brightness(1.3) drop-shadow(0 0 12px currentColor);
-  stroke-width: 2.5;
-  stroke: rgba(255,255,255,0.7);
+  filter: brightness(1.15) drop-shadow(0 0 10px rgba(0,0,0,0.35));
+  stroke-width: 3;
 }
 .region-polygon.completed {
-  opacity: 0.65;
+  opacity: 0.6;
 }
 
-/* Bölge renkleri */
-.region-polygon[data-region="marmara"]      { fill: #6366f1; }
-.region-polygon[data-region="karadeniz"]    { fill: #22c55e; }
-.region-polygon[data-region="ege"]          { fill: #06b6d4; }
-.region-polygon[data-region="akdeniz"]      { fill: #f97316; }
-.region-polygon[data-region="ic-anadolu"]   { fill: #eab308; }
-.region-polygon[data-region="dogu-anadolu"] { fill: #ef4444; }
-.region-polygon[data-region="guneydogu"]    { fill: #a855f7; }
+/* Bölge renkleri — görseldeki haritayla birebir */
+.region-polygon[data-region="karadeniz"]    { fill: #72B841; }
+.region-polygon[data-region="marmara"]      { fill: #F5A42A; }
+.region-polygon[data-region="ege"]          { fill: #9B59B6; }
+.region-polygon[data-region="ic-anadolu"]   { fill: #F4D03F; }
+.region-polygon[data-region="dogu-anadolu"] { fill: #5B9BD5; }
+.region-polygon[data-region="guneydogu"]    { fill: #E07B6A; }
+.region-polygon[data-region="akdeniz"]      { fill: #1BBFB0; }
 
 .region-label {
   font-family: 'Poppins', sans-serif;
-  font-size: 13px;
-  font-weight: 700;
-  fill: rgba(255,255,255,0.9);
+  font-size: 11.5px;
+  font-weight: 800;
+  fill: #1a1a2e;
   text-anchor: middle;
   pointer-events: none;
-  text-shadow: 0 1px 4px rgba(0,0,0,0.8);
   paint-order: stroke fill;
-  stroke: rgba(0,0,0,0.5);
+  stroke: rgba(255,255,255,0.75);
   stroke-width: 3px;
+  stroke-linejoin: round;
 }
 
 .region-info-card {
