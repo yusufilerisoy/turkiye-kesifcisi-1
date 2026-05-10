@@ -25,7 +25,13 @@ const REGIONS = [
     id: 'karadeniz', number: 1,
     name: 'Karadeniz Bölgesi',
     icon: '🏛️', color: '#72B841',
-    badge: 'Osmanlı Mirası Koruyucusu',
+        badge: 'Osmanlı Mirası Koruyucusu',
+    cities: [
+      { name: 'Safranbolu', il: 'Karabük',  heritage: 'Osmanlı konakları — UNESCO 1994' },
+      { name: 'Sümela Manastırı', il: 'Trabzon', heritage: 'Bizans dönemi kaya manastırı — MS 386' },
+      { name: 'Hattuşaş', il: 'Çorum',      heritage: 'Hitit İmparatorluğu başkenti — UNESCO 1986' },
+      { name: 'Sinop Kalesi', il: 'Sinop',  heritage: 'Helenistik dönem kıyı kalesi' },
+    ],
     infoCards: [
       { label: 'UNESCO (1994)', value: 'Safranbolu' },
       { label: 'Bizans Eseri',  value: 'Sümela Manastırı' },
@@ -82,7 +88,13 @@ const REGIONS = [
     id: 'akdeniz', number: 2,
     name: 'Akdeniz Bölgesi',
     icon: '🏺', color: '#1BBFB0',
-    badge: 'Likya Kaşifi',
+        badge: 'Likya Kaşifi',
+    cities: [
+      { name: 'Xanthos-Letoon', il: 'Muğla/Antalya', heritage: 'Likya başkenti ve kutsal alan — UNESCO 1988' },
+      { name: 'Aspendos', il: 'Antalya',    heritage: 'MS 155 tarihli Roma tiyatrosu — 15 000 kişilik' },
+      { name: 'Antakya (Antioch)', il: 'Hatay', heritage: 'Dünyanın en büyük Roma mozaik koleksiyonu' },
+      { name: 'Perge', il: 'Antalya',       heritage: 'Helenistik-Roma antik kenti' },
+    ],
     infoCards: [
       { label: 'UNESCO (1988)', value: 'Xanthos-Letoon' },
       { label: 'Antik Tiyatro', value: 'Aspendos (MS 155)' },
@@ -139,7 +151,13 @@ const REGIONS = [
     id: 'ic-anadolu', number: 3,
     name: 'İç Anadolu Bölgesi',
     icon: '🗿', color: '#F4D03F',
-    badge: 'Anadolu Medeniyetleri Uzmanı',
+        badge: 'Anadolu Medeniyetleri Uzmanı',
+    cities: [
+      { name: 'Göreme', il: 'Nevşehir',     heritage: 'Peri bacaları ve kilise freskleri — UNESCO 1985' },
+      { name: 'Derinkuyu Yeraltı Şehri', il: 'Nevşehir', heritage: 'Erken Hristiyan dönemine ait 8 katlı yeraltı şehri' },
+      { name: 'Mevlana Müzesi', il: 'Konya', heritage: 'Selçuklu türbesi ve dergâh — 13. yy' },
+      { name: 'Çatalhöyük', il: 'Konya',    heritage: 'MÖ 7500 tarihli en eski şehir — UNESCO 2012' },
+    ],
     infoCards: [
       { label: 'UNESCO (1985)', value: 'Göreme/Kapadokya' },
       { label: 'UNESCO (1986)', value: 'Hattuşaş — Hitit Başkenti' },
@@ -196,7 +214,13 @@ const REGIONS = [
     id: 'ege', number: 4,
     name: 'Ege Bölgesi',
     icon: '🏟️', color: '#9B59B6',
-    badge: 'Antik Dünya Kaşifi',
+        badge: 'Antik Dünya Kaşifi',
+    cities: [
+      { name: 'Efes', il: 'İzmir/Selçuk',   heritage: 'Büyük İskender dönemi antik kenti — UNESCO 2015' },
+      { name: 'Hierapolis-Pamukkale', il: 'Denizli', heritage: 'Roma hamamları ve travertenler — UNESCO 1988' },
+      { name: 'Bergama (Pergamon)', il: 'İzmir', heritage: 'Helenistik akropol ve kütüphane — UNESCO 2014' },
+      { name: 'Afrodisias', il: 'Aydın',    heritage: 'Mermer heykelciliğiyle ünlü antik kent — UNESCO 2017' },
+    ],
     infoCards: [
       { label: 'UNESCO (2015)', value: 'Efes Antik Kenti' },
       { label: 'UNESCO (2014)', value: 'Bergama/Pergamon' },
@@ -253,7 +277,13 @@ const REGIONS = [
     id: 'marmara', number: 5,
     name: 'Marmara Bölgesi',
     icon: '🕌', color: '#F5A42A',
-    badge: 'Osmanlı Başkenti Uzmanı',
+        badge: 'Osmanlı Başkenti Uzmanı',
+    cities: [
+      { name: 'Ayasofya & Topkapı', il: 'İstanbul', heritage: 'Bizans & Osmanlı imparatorluk yapıları — UNESCO 1985' },
+      { name: 'Selimiye Camii', il: 'Edirne', heritage: 'Mimar Sinan'ın şaheseri — UNESCO 2011' },
+      { name: 'Bursa Tarihi Merkezi', il: 'Bursa', heritage: 'İlk Osmanlı başkenti, Yeşil Cami ve türbeler — UNESCO 2014' },
+      { name: 'Kapalıçarşı', il: 'İstanbul', heritage: 'Dünyanın en büyük kapalı çarşısı — 1461'den beri açık' },
+    ],
     infoCards: [
       { label: 'UNESCO (1985)', value: 'İstanbul Tarihi Alanları' },
       { label: 'UNESCO (2011)', value: 'Selimiye Camii — Edirne' },
@@ -310,7 +340,13 @@ const REGIONS = [
     id: 'dogu-anadolu', number: 6,
     name: 'Doğu Anadolu Bölgesi',
     icon: '⛰️', color: '#5B9BD5',
-    badge: 'Kadim Uygarlıklar Dedektifi',
+        badge: 'Kadim Uygarlıklar Dedektifi',
+    cities: [
+      { name: 'Akdamar Kilisesi', il: 'Van',  heritage: 'Ermeni taş kabartmaları — MS 915, Kutsal Haç Kilisesi' },
+      { name: 'İshak Paşa Sarayı', il: 'Ağrı', heritage: 'Osmanlı-Safevi saray mimarisi — 18. yy' },
+      { name: 'Çifte Minareli Medrese', il: 'Erzurum', heritage: 'Anadolu Selçuklu taş işçiliği — 1253' },
+      { name: 'Ani Harabeleri', il: 'Kars',   heritage: 'Ortaçağ Ermeni krallığı başkenti — UNESCO 2016' },
+    ],
     infoCards: [
       { label: 'UNESCO (1987)', value: 'Nemrut Dağı — Kommagene' },
       { label: 'UNESCO (2016)', value: 'Ani Harabeleri — Kars' },
@@ -367,7 +403,13 @@ const REGIONS = [
     id: 'guneydogu', number: 7,
     name: 'Güneydoğu Anadolu Bölgesi',
     icon: '🏺', color: '#E07B6A',
-    badge: 'İnsanlığın Kökenleri Uzmanı',
+        badge: 'İnsanlığın Kökenleri Uzmanı',
+    cities: [
+      { name: 'Göbeklitepe', il: 'Şanlıurfa', heritage: 'MÖ 10.000 — dünyanın en eski tapınağı — UNESCO 2018' },
+      { name: 'Zeugma Mozaikleri', il: 'Gaziantep', heritage: 'Roma dönemi en büyük mozaik koleksiyonu — MS 1-3. yy' },
+      { name: 'Mardin Tarihi Doku', il: 'Mardin', heritage: 'Süryani taş mimarisi ve kültürü — UNESCO'nun geçici listesi' },
+      { name: 'Dara Antik Kenti', il: 'Mardin', heritage: 'Bizans sınır kenti ve su sarnıçları — MS 505' },
+    ],
     infoCards: [
       { label: 'UNESCO (2018)', value: 'Göbekli Tepe — Şanlıurfa' },
       { label: 'UNESCO (2015)', value: 'Diyarbakır Surları ve Hevsel' },
@@ -565,6 +607,12 @@ function initMap(){
             rcName.textContent=`${region.number}. ${region.name}`;
             rcStatus.textContent=done?` — ${region.badge} ✓ (${done.score} puan)`:' — Keşfedilmedi';
             rcStatus.style.color=done?'var(--accent)':'var(--text-dim)';
+            const citiesEl=$('rc-cities');
+            if(citiesEl && region.cities){
+              citiesEl.innerHTML=region.cities.map(c=>
+                `<li><span class="rc-city-name">📍 ${c.name}</span><span class="rc-city-il">${c.il}</span><span class="rc-city-heritage">${c.heritage}</span></li>`
+              ).join('');
+            }
             hoverCard.style.display='flex';
             if(!State.completedRegions[rid])
               layer.setStyle({fillOpacity:0.75,weight:3});
