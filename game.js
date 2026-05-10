@@ -38,40 +38,40 @@ const REGIONS = [
     questions: [
       {
         text: 'Safranbolu UNESCO Dünya Mirası listesine neden alınmıştır?',
-        options: ['Doğal plajları ve ormanları nedeniyle', 'Geç Osmanlı döneminden kalma özgün kentsel mimarisi ve 2000\'den fazla tescilli konağı nedeniyle', 'Büyük çelik fabrikaları nedeniyle', 'Yüksek dağları ve kayak merkezleri nedeniyle'],
-        correct: 1,
+        options: ['Geç Osmanlı döneminden kalma özgün kentsel mimarisi ve 2000\'den fazla tescilli konağı nedeniyle', 'Doğal plajları ve ormanları nedeniyle', 'Büyük çelik fabrikaları nedeniyle', 'Yüksek dağları ve kayak merkezleri nedeniyle'],
+        correct: 0,
         wikiTitle: 'Safranbolu',
         imageCaption: 'Safranbolu — Osmanlı konakları (UNESCO, 1994)',
         explanation: 'Safranbolu (Karabük), 1994\'te UNESCO listesine girdi. Geç Osmanlı döneminden kalma 2000\'den fazla tescilli taş ve ahşap konağıyla özgün kentsel dokusunu koruyan ender şehirlerden biridir.'
       },
       {
         text: 'Sümela Manastırı nerede inşa edilmiştir ve hangi dönemden kalmadır?',
-        options: ['İstanbul surları içinde — Roma dönemi', 'Trabzon\'da dik kaya yüzeyine — Bizans dönemi (MS 386)', 'Bursa dağlarında — Osmanlı dönemi', 'Ankara yakınlarında — Selçuklu dönemi'],
-        correct: 1,
+        options: ['İstanbul surları içinde — Roma dönemi', 'Bursa dağlarında — Osmanlı dönemi', 'Trabzon\'da dik kaya yüzeyine — Bizans dönemi (MS 386)', 'Ankara yakınlarında — Selçuklu dönemi'],
+        correct: 2,
         wikiTitle: 'Sumela Monastery',
         imageCaption: 'Sümela Manastırı — Trabzon (MS 386, Bizans)',
         explanation: 'Sümela Manastırı, Trabzon\'un Maçka ilçesinde dik bir kaya yüzeyine inşa edilmiştir. MS 386\'da Bizans döneminde kurulan manastır, Karadeniz\'in en çarpıcı kültürel miras yapısıdır.'
       },
       {
         text: 'Osmanlı konaklarındaki "cumba" nedir?',
-        options: ['Avluda bulunan mermer çeşme', 'Üst katlarda caddeye doğru taşan çıkıntılı oda bölümü', 'Çatı katındaki güvercin yuvası', 'Bodrumdaki serin kiler odası'],
-        correct: 1,
+        options: ['Avluda bulunan mermer çeşme', 'Çatı katındaki güvercin yuvası', 'Bodrumdaki serin kiler odası', 'Üst katlarda caddeye doğru taşan çıkıntılı oda bölümü'],
+        correct: 3,
         wikiTitle: 'Safranbolu',
         imageCaption: 'Safranbolu cumbalı evler — geleneksel Osmanlı mimarisi',
         explanation: 'Cumba, Osmanlı konaklarında üst katlarda caddeye doğru uzanan çıkıntılı bölümdür. Safranbolu\'daki cumbalı evler bölgenin simgesi olup UNESCO mirasının temel özelliğidir.'
       },
       {
         text: 'Hitit İmparatorluğu\'nun başkenti Hattuşaş hangi ilde bulunmaktadır?',
-        options: ['Trabzon', 'Samsun', 'Çorum (Boğazkale ilçesi)', 'Sinop'],
-        correct: 2,
+        options: ['Trabzon', 'Çorum (Boğazkale ilçesi)', 'Samsun', 'Sinop'],
+        correct: 1,
         wikiTitle: 'Hattusa',
         imageCaption: 'Hattuşaş Aslan Kapısı — Hitit Başkenti (UNESCO, 1986)',
         explanation: 'Hattuşaş, MÖ 17.-12. yüzyıllarda Hitit İmparatorluğu\'nun başkentiydi. Çorum\'un Boğazkale ilçesinde bulunur. Aslan Kapı, Sfenks Kapı ve devasa tapınaklarıyla 1986\'da UNESCO listesine alınmıştır.'
       },
       {
         text: 'Kastamonu yazmacılığı hangi geleneksel el sanatıdır?',
-        options: ['Bakır üzerine kalem oyma sanatı', 'Ahşap kalıpla kumaşa baskı yapılarak desen oluşturma sanatı', 'Camın boyanarak şekil verilmesi sanatı', 'Çini karo üzerine resim yapma sanatı'],
-        correct: 1,
+        options: ['Bakır üzerine kalem oyma sanatı', 'Camın boyanarak şekil verilmesi sanatı', 'Ahşap kalıpla kumaşa baskı yapılarak desen oluşturma sanatı', 'Çini karo üzerine resim yapma sanatı'],
+        correct: 2,
         wikiTitle: 'Kastamonu',
         imageCaption: 'Kastamonu — geleneksel yazmacılık ve tahta oyma',
         explanation: 'Kastamonu yazmacılığı, ahşap kalıplarla kumaşa elle baskı yapılarak oluşturulan geleneksel bir tekstil sanatıdır. Karadeniz\'in zengin ormanları ahşap el sanatlarının gelişmesine zemin hazırlamıştır.'
@@ -95,16 +95,16 @@ const REGIONS = [
     questions: [
       {
         text: 'Xanthos-Letoon UNESCO Dünya Mirası hangi uygarlığa aittir?',
-        options: ['Roma İmparatorluğu\'na', 'Likya (Lykia) uygarlığına', 'Hitit İmparatorluğu\'na', 'Bizans İmparatorluğu\'na'],
-        correct: 1,
+        options: ['Likya (Lykia) uygarlığına', 'Roma İmparatorluğu\'na', 'Hitit İmparatorluğu\'na', 'Bizans İmparatorluğu\'na'],
+        correct: 0,
         wikiTitle: 'Xanthos',
         imageCaption: 'Xanthos Antik Kenti — Likya Uygarlığı (UNESCO, 1988)',
         explanation: 'Xanthos-Letoon, Likya uygarlığının başkenti ve kutsal merkezi olup Muğla-Antalya sınırındadır. 1988\'de UNESCO listesine alınan bu alan, Likya yazısının da çözüldüğü yerdir.'
       },
       {
         text: 'Aspendos Antik Tiyatrosu hangi özelliğiyle ünlüdür?',
-        options: ['Tamamen yeraltına inşa edilmiştir', '15.000 kişilik kapasitesiyle dünyanın en iyi korunmuş Roma tiyatrolarından biridir', 'Yalnızca Yunan dönemine aittir', 'Dünyanın en küçük antik tiyatrosudur'],
-        correct: 1,
+        options: ['Tamamen yeraltına inşa edilmiştir', 'Yalnızca Yunan dönemine aittir', 'Dünyanın en küçük antik tiyatrosudur', '15.000 kişilik kapasitesiyle dünyanın en iyi korunmuş Roma tiyatrolarından biridir'],
+        correct: 3,
         wikiTitle: 'Aspendos',
         imageCaption: 'Aspendos Tiyatrosu — Antalya (MS 155, Roma dönemi)',
         explanation: 'Antalya\'nın Serik ilçesindeki Aspendos Tiyatrosu (MS 155), dünyanın en iyi korunmuş Roma tiyatrolarından biridir. Günümüzde operalar ve festivaller için kullanılmaktadır.'
@@ -119,16 +119,16 @@ const REGIONS = [
       },
       {
         text: 'Likya kaya mezarları nasıl bir yapıya sahiptir?',
-        options: ['Yer altına oyulan tünel mezarlar', 'Kaya yüzeyine oyulmuş tapınak ya da ev cephesi biçiminde anıtsal mezarlar', 'Düz alanlara dikilen taş dikilitaşlar', 'Piramit biçiminde taş yığma mezarlar'],
-        correct: 1,
+        options: ['Yer altına oyulan tünel mezarlar', 'Düz alanlara dikilen taş dikilitaşlar', 'Kaya yüzeyine oyulmuş tapınak ya da ev cephesi biçiminde anıtsal mezarlar', 'Piramit biçiminde taş yığma mezarlar'],
+        correct: 2,
         wikiTitle: 'Lycian rock-cut tombs',
         imageCaption: 'Likya kaya mezarları — Kaş ve Fethiye çevresi',
         explanation: 'Likya (Muğla-Antalya arası) kaya mezarları, kayalık yüzeylere oyulmuş tapınak ya da ev cephesi görünümlü anıtsal yapılardır. Kaş, Dalyan ve Fethiye çevresinde yoğun biçimde görülürler.'
       },
       {
         text: 'Perge Antik Kenti hangi yapı topluluğuyla tanınmaktadır?',
-        options: ['Devasa yeraltı şehri ve kaya kiliseleriyle', 'Anıtsal kapılar, sütunlu cadde ve büyük tiyatrosuyla', 'Altın mozaikli Bizans sarayıyla', 'Dev su kemerleri ve hamam kompleksiyle'],
-        correct: 1,
+        options: ['Anıtsal kapılar, sütunlu cadde ve büyük tiyatrosuyla', 'Devasa yeraltı şehri ve kaya kiliseleriyle', 'Altın mozaikli Bizans sarayıyla', 'Dev su kemerleri ve hamam kompleksiyle'],
+        correct: 0,
         wikiTitle: 'Perge',
         imageCaption: 'Perge Antik Kenti — Antalya (Helenistik ve Roma dönemi)',
         explanation: 'Perge (Antalya/Aksu), MÖ 1000\'lere dayanan tarihiyle Helenistik ve Roma dönemlerinde önemli bir kentti. Anıtsal giriş kapısı, sütunlu merkez caddesi ve tiyatrosuyla Akdeniz\'in başlıca antik kent kalıntılarından biridir.'
@@ -152,16 +152,16 @@ const REGIONS = [
     questions: [
       {
         text: 'Çatalhöyük hangi açıdan insanlık tarihi için benzersizdir?',
-        options: ['Türkiye\'nin ilk camisi burada inşa edilmiştir', 'MÖ 7500\'e tarihlenen, dünyanın en erken kentsel yerleşimlerinden biri ve ilk duvar resimleri burada bulunmuştur', 'Roma\'nın Anadolu\'daki ilk sömürgesidir', 'İlk Osmanlı sarayı bu noktada kurulmuştur'],
-        correct: 1,
+        options: ['Türkiye\'nin ilk camisi burada inşa edilmiştir', 'Roma\'nın Anadolu\'daki ilk sömürgesidir', 'İlk Osmanlı sarayı bu noktada kurulmuştur', 'MÖ 7500\'e tarihlenen, dünyanın en erken kentsel yerleşimlerinden biri ve ilk duvar resimleri burada bulunmuştur'],
+        correct: 3,
         wikiTitle: 'Çatalhöyük',
         imageCaption: 'Çatalhöyük kazı alanı — Konya (UNESCO, 2012)',
         explanation: 'Çatalhöyük (Konya), MÖ 7500\'de kurulmuş dünyanın bilinen en eski kentsel yerleşimlerinden biridir. 2012\'de UNESCO listesine alınmış; duvar resimleri, ana tanrıça heykelcikleri ve toplu yaşam alanları ile erken insan toplumunu anlamamızı sağlar.'
       },
       {
         text: 'Hattuşaş\'taki "Aslan Kapı" neyin girişidir?',
-        options: ['Roma arenasının ana girişi', 'MÖ 14. yüzyılda inşa edilmiş Hitit başkentinin şehir surlarındaki törensel kapı', 'Selçuklu dönemine ait kervansaray girişi', 'Osmanlı sarayının harem dairesi girişi'],
-        correct: 1,
+        options: ['Roma arenasının ana girişi', 'Selçuklu dönemine ait kervansaray girişi', 'MÖ 14. yüzyılda inşa edilmiş Hitit başkentinin şehir surlarındaki törensel kapı', 'Osmanlı sarayının harem dairesi girişi'],
+        correct: 2,
         wikiTitle: 'Hattusa',
         imageCaption: 'Hattuşaş Aslan Kapısı — Hitit başkenti (UNESCO, 1986)',
         explanation: 'Aslan Kapı, MÖ 14. yüzyılda inşa edilmiş Hattuşaş şehir surlarındaki törensel bir kapıdır. Kapının iki yanında aslan heykeli bulunur. Hitit İmparatorluğu\'nun başkenti olan Hattuşaş, 1986\'da UNESCO listesine alınmıştır.'
@@ -176,16 +176,16 @@ const REGIONS = [
       },
       {
         text: 'Divriği Ulu Camii hangi özelliğiyle Türkiye\'nin ilk UNESCO mirası olmuştur?',
-        options: ['Osmanlı mimarisinin en büyük kubbe sistemi', 'MS 1228\'de yapılan eşsiz üç boyutlu taş oymacılığı ve Selçuklu tıp evi Darüşşifa', 'Bizans freskleriyle süslü Hristiyan şapeli', 'İlk ahşap minare ve Selçuklu çini sanatı'],
-        correct: 1,
+        options: ['MS 1228\'de yapılan eşsiz üç boyutlu taş oymacılığı ve Selçuklu tıp evi Darüşşifa', 'Osmanlı mimarisinin en büyük kubbe sistemi', 'Bizans freskleriyle süslü Hristiyan şapeli', 'İlk ahşap minare ve Selçuklu çini sanatı'],
+        correct: 0,
         wikiTitle: 'Great Mosque and Hospital of Divriği',
         imageCaption: 'Divriği Ulu Camii ve Darüşşifa — Sivas (UNESCO, 1985)',
         explanation: 'Sivas\'ın Divriği ilçesindeki Ulu Cami ve Darüşşifa (1228-29), taş oymacılığının baş yapıtı olarak Türkiye\'nin ilk UNESCO Dünya Mirası listesine alınan eseridir (1985). Kapılarındaki üç boyutlu taş işçiliği dünyada eşsizdir.'
       },
       {
         text: 'Kapadokya\'daki yeraltı şehirlerinin (Derinkuyu, Kaymaklı) yapım amacı neydi?',
-        options: ['Hammadde ve tahıl depolamak için', 'Saldırılar sırasında binlerce kişiyi saklayan, çok katlı savunma amaçlı yerleşimler', 'Hitit döneminde altın madenciliği için', 'Roma döneminde su sarnıcı olarak kullanmak için'],
-        correct: 1,
+        options: ['Hammadde ve tahıl depolamak için', 'Hitit döneminde altın madenciliği için', 'Roma döneminde su sarnıcı olarak kullanmak için', 'Saldırılar sırasında binlerce kişiyi saklayan, çok katlı savunma amaçlı yerleşimler'],
+        correct: 3,
         wikiTitle: 'Derinkuyu underground city',
         imageCaption: 'Derinkuyu Yeraltı Şehri — Kapadokya (8 kat derinliğinde)',
         explanation: 'Kapadokya\'daki Derinkuyu ve Kaymaklı yeraltı şehirleri, Bizans döneminde Arap akınları sırasında binlerce kişiyi barındıran çok katlı savunma sığınaklarıdır. Derinkuyu 8 kat aşağıya kadar iner ve 20.000 kişiyi barındırabilirdi.'
@@ -225,16 +225,16 @@ const REGIONS = [
       },
       {
         text: 'Afrodisias Antik Kenti hangi sanat dalında antik dünyada öne çıkmıştır?',
-        options: ['Altın kaplama ve kuyumculuk', 'Mermer heykeltraşlığı ve heykel okulu', 'Cam işleme ve mozaik sanatı', 'Bronz döküm ve silah yapımı'],
-        correct: 1,
+        options: ['Altın kaplama ve kuyumculuk', 'Cam işleme ve mozaik sanatı', 'Bronz döküm ve silah yapımı', 'Mermer heykeltraşlığı ve heykel okulu'],
+        correct: 3,
         wikiTitle: 'Aphrodisias',
         imageCaption: 'Afrodisias Antik Kenti — Aydın (UNESCO, 2017)',
         explanation: 'Afrodisias (Aydın), Roma döneminde ünlü bir heykel okulu barındırıyordu. Yerel mermer ocakları ve ustalar sayesinde mermer heykeltraşlık bu kentte zirveye ulaştı. Müzesinde yüzlerce özgün heykel sergilenmektedir.'
       },
       {
         text: 'Pamukkale\'deki beyaz teraskayalar (travertenler) nasıl oluşur?',
-        options: ['Dağlardan akan karların donup kalmasıyla', 'Kalsiyumca zengin ılıca sularının yüzeye çıkarak kireç biriktirmesiyle', 'Volkanik patlamalar sonucu oluşan lav tabakalarıyla', 'Rüzgarın kireçtaşını aşındırmasıyla'],
-        correct: 1,
+        options: ['Dağlardan akan karların donup kalmasıyla', 'Volkanik patlamalar sonucu oluşan lav tabakalarıyla', 'Kalsiyumca zengin ılıca sularının yüzeye çıkarak kireç biriktirmesiyle', 'Rüzgarın kireçtaşını aşındırmasıyla'],
+        correct: 2,
         wikiTitle: 'Pamukkale',
         imageCaption: 'Pamukkale travertenleri — Denizli (UNESCO, 1988)',
         explanation: 'Pamukkale\'nin (Denizli) beyaz teraskayaları "travertenler"dir. Kalsiyum bikarbonat içeren ılıca suları yüzeye çıktıkça buharlaşır ve kireç taşı biriktirir. Bu alan üzerindeki Hierapolis Antik Kenti ile birlikte 1988\'de UNESCO listesine alınmıştır.'
@@ -266,24 +266,24 @@ const REGIONS = [
     questions: [
       {
         text: 'Ayasofya\'nın mimari açıdan en devrimci özelliği nedir?',
-        options: ['Dünyanın en uzun minareleri', 'MS 537\'de olağanüstü büyüklükte inşa edilen merkezi kubbe ve yarım kubbe sistemi', 'Tamamen mermer kaplı dış cephesi', 'İki katlı revaklı avlusu'],
-        correct: 1,
+        options: ['MS 537\'de olağanüstü büyüklükte inşa edilen merkezi kubbe ve yarım kubbe sistemi', 'Dünyanın en uzun minareleri', 'Tamamen mermer kaplı dış cephesi', 'İki katlı revaklı avlusu'],
+        correct: 0,
         wikiTitle: 'Hagia Sophia',
         imageCaption: 'Ayasofya — İstanbul (MS 537, UNESCO 1985)',
         explanation: 'Ayasofya (MS 537), dönemin tüm mühendislik bilgisini zorlayan dev merkezi kubbe sistemiyle inşa edildi. Kubbesi 1000 yıl boyunca dünyanın en büyük kubbesi olma unvanını korudu. 916 yıl Bizans katedrali, 481 yıl Osmanlı camii olarak hizmet verdi.'
       },
       {
         text: 'Mimar Sinan Selimiye Camii\'ni neden "ustalık eseri" olarak tanımlamıştır?',
-        options: ['En uzun minarelere sahip olduğu için', 'Tek merkezi kubbe altında Ayasofya\'dan daha büyük iç mekan yaratıldığı için', 'En fazla çini kullanan cami olduğu için', 'İlk dört minareli cami olduğu için'],
-        correct: 1,
+        options: ['En uzun minarelere sahip olduğu için', 'En fazla çini kullanan cami olduğu için', 'Tek merkezi kubbe altında Ayasofya\'dan daha büyük iç mekan yaratıldığı için', 'İlk dört minareli cami olduğu için'],
+        correct: 2,
         wikiTitle: 'Selimiye Mosque',
         imageCaption: 'Selimiye Camii — Edirne, Mimar Sinan (UNESCO, 2011)',
         explanation: 'Mimar Sinan, Selimiye\'yi (Edirne, 1575) kendi ustalık eseri olarak tanımladı. Tek merkezi kubbenin altında yarattığı iç mekan alanı Ayasofya\'nınkinden büyüktür. Dört ince minaresiyle Osmanlı mimarisinin zirvesidir.'
       },
       {
         text: 'Bursa neden Osmanlı mirası açısından özel bir öneme sahiptir?',
-        options: ['Osmanlı\'nın son başkenti ve denizcilik merkezi olduğu için', 'Osmanlı\'nın ilk başkenti (1326-1365) olup Yeşil Cami ve Yeşil Türbe gibi erken Osmanlı şaheserlerini barındırdığı için', 'Osmanlı padişahlarının yazlık sarayının bulunduğu yer olduğu için', 'Osmanlı\'nın Avrupa\'ya açılan kapısı ve en büyük tersanesi olduğu için'],
-        correct: 1,
+        options: ['Osmanlı\'nın son başkenti ve denizcilik merkezi olduğu için', 'Osmanlı padişahlarının yazlık sarayının bulunduğu yer olduğu için', 'Osmanlı\'nın Avrupa\'ya açılan kapısı ve en büyük tersanesi olduğu için', 'Osmanlı\'nın ilk başkenti (1326-1365) olup Yeşil Cami ve Yeşil Türbe gibi erken Osmanlı şaheserlerini barındırdığı için'],
+        correct: 3,
         wikiTitle: 'Bursa',
         imageCaption: 'Bursa Yeşil Cami ve Türbe — erken Osmanlı mirası (UNESCO, 2014)',
         explanation: 'Bursa, 1326-1365 yılları arasında Osmanlı\'nın ilk başkentiydi. Yeşil Cami, Yeşil Türbe ve Bursa Büyük Camii erken Osmanlı mimarisinin şaheserleridir. Cumalıkızık köyüyle birlikte 2014\'te UNESCO listesine alındı.'
@@ -298,8 +298,8 @@ const REGIONS = [
       },
       {
         text: 'Kapalıçarşı\'nın (İstanbul) özgün tarihsel işlevi neydi?',
-        options: ['Osmanlı padişahlarına özel alışveriş alanı', 'Ticaretin, zanaatkârlığın ve lonca sisteminin merkezlendiği kapalı çarşı', 'Yabancı elçilerin misafir edildiği han', 'Osmanlı\'nın silah ve barut imal ettiği üretim merkezi'],
-        correct: 1,
+        options: ['Ticaretin, zanaatkârlığın ve lonca sisteminin merkezlendiği kapalı çarşı', 'Osmanlı padişahlarına özel alışveriş alanı', 'Yabancı elçilerin misafir edildiği han', 'Osmanlı\'nın silah ve barut imal ettiği üretim merkezi'],
+        correct: 0,
         wikiTitle: 'Grand Bazaar, Istanbul',
         imageCaption: 'Kapalıçarşı — İstanbul (1461, dünyanın en eski kapalı çarşısı)',
         explanation: 'Kapalıçarşı (1461, Fatih Sultan Mehmet), ticaret, zanaat ve lonca sisteminin merkeziydi. 61 kapalı cadde ve 4000\'den fazla dükkanıyla dünyanın bilinen en eski ve en büyük kapalı çarşılarından biridir.'
@@ -323,24 +323,24 @@ const REGIONS = [
     questions: [
       {
         text: 'Nemrut Dağı\'ndaki devasa taş başlar hangi hükümdar tarafından yaptırılmıştır?',
-        options: ['Hitit Büyük Kral I. Suppiluliuma', 'Kommagene Krallığı hükümdarı I. Antiokhus (MÖ 1. yüzyıl)', 'Urartu Kral Argişti', 'Roma İmparatoru Traianus'],
-        correct: 1,
+        options: ['Hitit Büyük Kral I. Suppiluliuma', 'Urartu Kral Argişti', 'Kommagene Krallığı hükümdarı I. Antiokhus (MÖ 1. yüzyıl)', 'Roma İmparatoru Traianus'],
+        correct: 2,
         wikiTitle: 'Mount Nemrut',
         imageCaption: 'Nemrut Dağı — Adıyaman (UNESCO, 1987)',
         explanation: 'Nemrut Dağı\'ndaki (Adıyaman, 2150 m) tanrı ve kral başları MÖ 1. yüzyılda Kommagene Krallığı hükümdarı I. Antiokhus tarafından yaptırıldı. Hükümdar kendini tanrılarla eşit tutarak 9 metrelik heykellerle anıt mezarını inşa ettirdi. 1987\'de UNESCO listesine alındı.'
       },
       {
         text: 'Ani Harabeleri (Kars) hangi uygarlığın başkentiydi?',
-        options: ['Urartu Krallığı\'nın', 'Selçuklu İmparatorluğu\'nun', 'Ortaçağ Ermeni Bagratid Krallığı\'nın', 'Bizans İmparatorluğu\'nun'],
-        correct: 2,
+        options: ['Urartu Krallığı\'nın', 'Selçuklu İmparatorluğu\'nun', 'Bizans İmparatorluğu\'nun', 'Ortaçağ Ermeni Bagratid Krallığı\'nın'],
+        correct: 3,
         wikiTitle: 'Ani',
         imageCaption: 'Ani Harabeleri — Kars (UNESCO, 2016)',
         explanation: 'Ani, 10.-11. yüzyıllarda Ermeni Bagratid Krallığı\'nın başkentiydi. 100.000 kişilik nüfusuyla döneminin büyük şehirlerinden biriydi. Camileri, kiliseleri ve saraylarıyla "1001 Kilise Şehri" olarak anılırdı. 2016\'da UNESCO listesine alındı.'
       },
       {
         text: 'Arslantepe (Malatya) arkeoloji dünyasında neden öncü bir keşif alanıdır?',
-        options: ['Türkiye\'nin en büyük Osmanlı kervansarayı burada bulunmuştur', 'MÖ 3300\'e tarihlenen dünyanın en erken saray yapısı ve devlet organizasyonu izleri burada keşfedilmiştir', 'İlk Hristiyan kilisesinin bu alanda inşa edildiği kanıtlanmıştır', 'Sümer çivi yazısının Anadolu\'ya bu noktadan yayıldığı kanıtlanmıştır'],
-        correct: 1,
+        options: ['MÖ 3300\'e tarihlenen dünyanın en erken saray yapısı ve devlet organizasyonu izleri burada keşfedilmiştir', 'Türkiye\'nin en büyük Osmanlı kervansarayı burada bulunmuştur', 'İlk Hristiyan kilisesinin bu alanda inşa edildiği kanıtlanmıştır', 'Sümer çivi yazısının Anadolu\'ya bu noktadan yayıldığı kanıtlanmıştır'],
+        correct: 0,
         wikiTitle: 'Arslantepe',
         imageCaption: 'Arslantepe höyüğü — Malatya (UNESCO, 2021)',
         explanation: 'Arslantepe (Malatya), MÖ 3300\'e tarihlenen dünyanın en eski saray yapılarından birine ev sahipliği yapar. Erken devlet organizasyonu, artı değer depolama ve ilk metal silahların bu bölgeden yayıldığı düşünülmektedir. 2021\'de UNESCO listesine alındı.'
@@ -355,8 +355,8 @@ const REGIONS = [
       },
       {
         text: 'Van Kalesi Urartu uygarlığı hakkında ne anlatır?',
-        options: ['Osmanlı döneminde inşa edilmiş askeri garnizon olduğunu', 'MÖ 9. yüzyılda kayaya oyulmuş yazıtları ve sarp kayalık üzerine inşa edilmiş surlarıyla Urartu Krallığı\'nın güçlü merkezi olduğunu', 'Selçuklu döneminde tahıl ve su depolamak için yapıldığını', 'Bizans döneminde manastır yerleşimi olarak kullanıldığını'],
-        correct: 1,
+        options: ['Osmanlı döneminde inşa edilmiş askeri garnizon olduğunu', 'Selçuklu döneminde tahıl ve su depolamak için yapıldığını', 'Bizans döneminde manastır yerleşimi olarak kullanıldığını', 'MÖ 9. yüzyılda kayaya oyulmuş yazıtları ve sarp kayalık üzerine inşa edilmiş surlarıyla Urartu Krallığı\'nın güçlü merkezi olduğunu'],
+        correct: 3,
         wikiTitle: 'Van Fortress',
         imageCaption: 'Van Kalesi — Urartu dönemi (MÖ 9. yüzyıl)',
         explanation: 'Van Kalesi, MÖ 9. yüzyılda Urartu Krallığı\'nın merkezi olan Tuşpa şehrinin kalıntısıdır. Sarp kayalık üzerindeki surlar ve kaya yazıtları Urartu dilinin ve medeniyetinin en önemli belgelerinden biridir.'
@@ -380,16 +380,16 @@ const REGIONS = [
     questions: [
       {
         text: 'Göbekli Tepe\'deki T biçimli dikilitaşlar neyi sembolize eder?',
-        options: ['Mısır piramitleri gibi mezar anıtlarını', 'İnsan ve tanrı figürlerini: T biçimi stilize edilmiş insan bedeni, üstteki yassı baş ise başı temsil eder', 'Su kaynağı ve nehir tanrılarını', 'Gece gökyüzünü ve yıldız haritalarını'],
-        correct: 1,
+        options: ['Mısır piramitleri gibi mezar anıtlarını', 'Su kaynağı ve nehir tanrılarını', 'İnsan ve tanrı figürlerini: T biçimi stilize edilmiş insan bedeni, üstteki yassı baş ise başı temsil eder', 'Gece gökyüzünü ve yıldız haritalarını'],
+        correct: 2,
         wikiTitle: 'Göbekli Tepe',
         imageCaption: 'Göbekli Tepe — Şanlıurfa (UNESCO, 2018) — MÖ 10.000',
         explanation: 'Göbekli Tepe\'deki T biçimli dikilitaşların büyük çoğunluğu stilize insan figürü olarak yorumlanır: T biçimi gövde ve omuzları, üstteki yassı kısım başı temsil eder. Üzerlerindeki hayvan ve sembol kabartmaları dönemin dini inanç dünyasını yansıtır.'
       },
       {
         text: 'Diyarbakır surları hangi taştan yapılmış olup neden benzersizdir?',
-        options: ['Beyaz kireçtaşından; Türkiye\'nin en uzun şehir surları olduğu için', 'Siyah bazalt taşından; MS 4. yüzyıldan kalma, 5,5 km uzunluğu ve 72 kulesiyle Anadolu\'nun en iyi korunmuş antik surları olduğu için', 'Tuğladan; Mezopotamya geleneğini yaşattığı için', 'Gri granit taşından; 10 km uzunluğuyla Çin Seddi\'nden sonra en uzun sur olduğu için'],
-        correct: 1,
+        options: ['Siyah bazalt taşından; MS 4. yüzyıldan kalma, 5,5 km uzunluğu ve 72 kulesiyle Anadolu\'nun en iyi korunmuş antik surları olduğu için', 'Beyaz kireçtaşından; Türkiye\'nin en uzun şehir surları olduğu için', 'Tuğladan; Mezopotamya geleneğini yaşattığı için', 'Gri granit taşından; 10 km uzunluğuyla Çin Seddi\'nden sonra en uzun sur olduğu için'],
+        correct: 0,
         wikiTitle: 'Diyarbakır',
         imageCaption: 'Diyarbakır Surları — siyah bazalt (UNESCO, 2015)',
         explanation: 'Diyarbakır surları, bölgeye özgü siyah bazalt taşından MS 4. yüzyılda inşa edilmiştir. Yaklaşık 5,5 km uzunluğu ve 72 kulesiyle Anadolu\'nun en iyi korunmuş antik kentsel surlarından biridir. Hevsel Bahçeleri ile birlikte 2015\'te UNESCO listesine alındı.'
@@ -404,16 +404,16 @@ const REGIONS = [
       },
       {
         text: 'Mardin\'in tarihi kentsel dokusunu oluşturan yapı malzemesi ve mimari özellik nedir?',
-        options: ['Kırmızı tuğla ve Mezopotamya tarzı düz çatılı yapılar', 'Bal-sarı kireçtaşından inşa edilmiş, ince oyma motifli taş evler ve eğimli araziyi kullanan basamaklı yerleşim dokusu', 'Ahşap ve kerpiç; geleneksel Osmanlı konak mimarisi', 'Siyah bazalt taş; Diyarbakır geleneğinin devamı olarak monoton cepheler'],
-        correct: 1,
+        options: ['Kırmızı tuğla ve Mezopotamya tarzı düz çatılı yapılar', 'Ahşap ve kerpiç; geleneksel Osmanlı konak mimarisi', 'Siyah bazalt taş; Diyarbakır geleneğinin devamı olarak monoton cepheler', 'Bal-sarı kireçtaşından inşa edilmiş, ince oyma motifli taş evler ve eğimli araziyi kullanan basamaklı yerleşim dokusu'],
+        correct: 3,
         wikiTitle: 'Mardin',
         imageCaption: 'Mardin tarihi kent dokusu — bal sarısı kireçtaşı evler',
         explanation: 'Mardin, bölgeye özgü sarı-bal renkli kireçtaşıyla inşa edilmiştir. Yumuşak olan bu taş ince oyma motiflerine olanak tanır. Yüksek bir tepe üzerine kurulu şehrin basamaklı, terasa yerleşim dokusu ve süslü taş cepheleri UNESCO Geçici Listesi\'ndedir.'
       },
       {
         text: 'Şanlıurfa Balıklıgöl\'ün kültürel önemi nedir?',
-        options: ['Fırat Nehri\'nin kaynağı olup antik sulama kanallarının başlangıç noktasıdır', 'İbrahimî geleneğe göre Hz. İbrahim\'in ateşe atıldığı ve Allah\'ın mucizesiyle gölün oluştuğuna inanılan kutsal mekân', 'Asur uygarlığına ait en erken çivi yazısı tabletlerinin bulunduğu arkeolojik alan', 'Roma döneminde kutsal Diana tapınağının sunak havuzu olarak kullanılan yer'],
-        correct: 1,
+        options: ['Fırat Nehri\'nin kaynağı olup antik sulama kanallarının başlangıç noktasıdır', 'Asur uygarlığına ait en erken çivi yazısı tabletlerinin bulunduğu arkeolojik alan', 'İbrahimî geleneğe göre Hz. İbrahim\'in ateşe atıldığı ve Allah\'ın mucizesiyle gölün oluştuğuna inanılan kutsal mekân', 'Roma döneminde kutsal Diana tapınağının sunak havuzu olarak kullanılan yer'],
+        correct: 2,
         wikiTitle: 'Balıklıgöl',
         imageCaption: 'Balıklıgöl — Şanlıurfa; "Peygamberler Şehri"nin kutsal mekânı',
         explanation: 'Balıklıgöl, İbrahimî geleneğe göre Hz. İbrahim\'in Nemrut Kral tarafından ateşe atıldığı ve Allah\'ın ateşi suya, odunları balığa çevirdiğine inanılan kutsal bir mekândır. Bu inanç Şanlıurfa\'ya "Peygamberler Şehri" unvanını kazandırmıştır.'
