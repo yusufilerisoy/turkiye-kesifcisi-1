@@ -25,13 +25,7 @@ const REGIONS = [
     id: 'karadeniz', number: 1,
     name: 'Karadeniz Bölgesi',
     icon: '🏛️', color: '#72B841',
-        badge: 'Osmanlı Mirası Koruyucusu',
-    cities: [
-      { name: 'Safranbolu', il: 'Karabük',  heritage: 'Osmanlı konakları — UNESCO 1994' },
-      { name: 'Sümela Manastırı', il: 'Trabzon', heritage: 'Bizans dönemi kaya manastırı — MS 386' },
-      { name: 'Hattuşaş', il: 'Çorum',      heritage: 'Hitit İmparatorluğu başkenti — UNESCO 1986' },
-      { name: 'Sinop Kalesi', il: 'Sinop',  heritage: 'Helenistik dönem kıyı kalesi' },
-    ],
+    badge: 'Osmanlı Mirası Koruyucusu',
     infoCards: [
       { label: 'UNESCO (1994)', value: 'Safranbolu' },
       { label: 'Bizans Eseri',  value: 'Sümela Manastırı' },
@@ -88,13 +82,7 @@ const REGIONS = [
     id: 'akdeniz', number: 2,
     name: 'Akdeniz Bölgesi',
     icon: '🏺', color: '#1BBFB0',
-        badge: 'Likya Kaşifi',
-    cities: [
-      { name: 'Xanthos-Letoon', il: 'Muğla/Antalya', heritage: 'Likya başkenti ve kutsal alan — UNESCO 1988' },
-      { name: 'Aspendos', il: 'Antalya',    heritage: 'MS 155 tarihli Roma tiyatrosu — 15 000 kişilik' },
-      { name: 'Antakya (Antioch)', il: 'Hatay', heritage: 'Dünyanın en büyük Roma mozaik koleksiyonu' },
-      { name: 'Perge', il: 'Antalya',       heritage: 'Helenistik-Roma antik kenti' },
-    ],
+    badge: 'Likya Kaşifi',
     infoCards: [
       { label: 'UNESCO (1988)', value: 'Xanthos-Letoon' },
       { label: 'Antik Tiyatro', value: 'Aspendos (MS 155)' },
@@ -151,13 +139,7 @@ const REGIONS = [
     id: 'ic-anadolu', number: 3,
     name: 'İç Anadolu Bölgesi',
     icon: '🗿', color: '#F4D03F',
-        badge: 'Anadolu Medeniyetleri Uzmanı',
-    cities: [
-      { name: 'Göreme', il: 'Nevşehir',     heritage: 'Peri bacaları ve kilise freskleri — UNESCO 1985' },
-      { name: 'Derinkuyu Yeraltı Şehri', il: 'Nevşehir', heritage: 'Erken Hristiyan dönemine ait 8 katlı yeraltı şehri' },
-      { name: 'Mevlana Müzesi', il: 'Konya', heritage: 'Selçuklu türbesi ve dergâh — 13. yy' },
-      { name: 'Çatalhöyük', il: 'Konya',    heritage: 'MÖ 7500 tarihli en eski şehir — UNESCO 2012' },
-    ],
+    badge: 'Anadolu Medeniyetleri Uzmanı',
     infoCards: [
       { label: 'UNESCO (1985)', value: 'Göreme/Kapadokya' },
       { label: 'UNESCO (1986)', value: 'Hattuşaş — Hitit Başkenti' },
@@ -214,13 +196,7 @@ const REGIONS = [
     id: 'ege', number: 4,
     name: 'Ege Bölgesi',
     icon: '🏟️', color: '#9B59B6',
-        badge: 'Antik Dünya Kaşifi',
-    cities: [
-      { name: 'Efes', il: 'İzmir/Selçuk',   heritage: 'Büyük İskender dönemi antik kenti — UNESCO 2015' },
-      { name: 'Hierapolis-Pamukkale', il: 'Denizli', heritage: 'Roma hamamları ve travertenler — UNESCO 1988' },
-      { name: 'Bergama (Pergamon)', il: 'İzmir', heritage: 'Helenistik akropol ve kütüphane — UNESCO 2014' },
-      { name: 'Afrodisias', il: 'Aydın',    heritage: 'Mermer heykelciliğiyle ünlü antik kent — UNESCO 2017' },
-    ],
+    badge: 'Antik Dünya Kaşifi',
     infoCards: [
       { label: 'UNESCO (2015)', value: 'Efes Antik Kenti' },
       { label: 'UNESCO (2014)', value: 'Bergama/Pergamon' },
@@ -277,13 +253,7 @@ const REGIONS = [
     id: 'marmara', number: 5,
     name: 'Marmara Bölgesi',
     icon: '🕌', color: '#F5A42A',
-        badge: 'Osmanlı Başkenti Uzmanı',
-    cities: [
-      { name: 'Ayasofya & Topkapı', il: 'İstanbul', heritage: 'Bizans & Osmanlı imparatorluk yapıları — UNESCO 1985' },
-      { name: 'Selimiye Camii', il: 'Edirne', heritage: 'Mimar Sinan'ın şaheseri — UNESCO 2011' },
-      { name: 'Bursa Tarihi Merkezi', il: 'Bursa', heritage: 'İlk Osmanlı başkenti, Yeşil Cami ve türbeler — UNESCO 2014' },
-      { name: 'Kapalıçarşı', il: 'İstanbul', heritage: 'Dünyanın en büyük kapalı çarşısı — 1461'den beri açık' },
-    ],
+    badge: 'Osmanlı Başkenti Uzmanı',
     infoCards: [
       { label: 'UNESCO (1985)', value: 'İstanbul Tarihi Alanları' },
       { label: 'UNESCO (2011)', value: 'Selimiye Camii — Edirne' },
@@ -340,13 +310,7 @@ const REGIONS = [
     id: 'dogu-anadolu', number: 6,
     name: 'Doğu Anadolu Bölgesi',
     icon: '⛰️', color: '#5B9BD5',
-        badge: 'Kadim Uygarlıklar Dedektifi',
-    cities: [
-      { name: 'Akdamar Kilisesi', il: 'Van',  heritage: 'Ermeni taş kabartmaları — MS 915, Kutsal Haç Kilisesi' },
-      { name: 'İshak Paşa Sarayı', il: 'Ağrı', heritage: 'Osmanlı-Safevi saray mimarisi — 18. yy' },
-      { name: 'Çifte Minareli Medrese', il: 'Erzurum', heritage: 'Anadolu Selçuklu taş işçiliği — 1253' },
-      { name: 'Ani Harabeleri', il: 'Kars',   heritage: 'Ortaçağ Ermeni krallığı başkenti — UNESCO 2016' },
-    ],
+    badge: 'Kadim Uygarlıklar Dedektifi',
     infoCards: [
       { label: 'UNESCO (1987)', value: 'Nemrut Dağı — Kommagene' },
       { label: 'UNESCO (2016)', value: 'Ani Harabeleri — Kars' },
@@ -403,13 +367,7 @@ const REGIONS = [
     id: 'guneydogu', number: 7,
     name: 'Güneydoğu Anadolu Bölgesi',
     icon: '🏺', color: '#E07B6A',
-        badge: 'İnsanlığın Kökenleri Uzmanı',
-    cities: [
-      { name: 'Göbeklitepe', il: 'Şanlıurfa', heritage: 'MÖ 10.000 — dünyanın en eski tapınağı — UNESCO 2018' },
-      { name: 'Zeugma Mozaikleri', il: 'Gaziantep', heritage: 'Roma dönemi en büyük mozaik koleksiyonu — MS 1-3. yy' },
-      { name: 'Mardin Tarihi Doku', il: 'Mardin', heritage: 'Süryani taş mimarisi ve kültürü — UNESCO'nun geçici listesi' },
-      { name: 'Dara Antik Kenti', il: 'Mardin', heritage: 'Bizans sınır kenti ve su sarnıçları — MS 505' },
-    ],
+    badge: 'İnsanlığın Kökenleri Uzmanı',
     infoCards: [
       { label: 'UNESCO (2018)', value: 'Göbekli Tepe — Şanlıurfa' },
       { label: 'UNESCO (2015)', value: 'Diyarbakır Surları ve Hevsel' },
@@ -559,101 +517,34 @@ function createParticles(){
   }
 }
 
-// ── HARİTA (Leaflet) ────────────────────────────────────────
-let _leafletMap = null;
-let _regionLayers = {};
-
+// ── HARİTA ──────────────────────────────────────────────────
 function initMap(){
-  if(_leafletMap){
-    // Already initialized: refresh layer styles
-    _refreshLayerStyles();
-    return;
-  }
-
-  _leafletMap = L.map('leaflet-map',{
-    center:[39.0,35.5],
-    zoom:6,
-    zoomControl:true,
-    attributionControl:true,
-    scrollWheelZoom:true,
-    dragging:true,
-  });
-
-  // OSM tile layer
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
-    maxZoom:10,
-    minZoom:5,
-    attribution:'© OpenStreetMap contributors',
-  }).addTo(_leafletMap);
-
   const hoverCard=$('region-hover-card');
   const rcIcon=$('rc-icon'),rcName=$('rc-name'),rcStatus=$('rc-status');
 
-  fetch('regions.geojson')
-    .then(r=>r.json())
-    .then(geojson=>{
-      L.geoJSON(geojson,{
-        style(feature){
-          return _layerStyle(feature.properties.id,false);
-        },
-        onEachFeature(feature,layer){
-          const rid=feature.properties.id;
-          const region=REGIONS.find(r=>r.id===rid);
-          _regionLayers[rid]=layer;
+  document.querySelectorAll('.region-polygon').forEach(el=>{
+    const rid=el.dataset.region;
+    const region=REGIONS.find(r=>r.id===rid);
+    if(!region)return;
 
-          layer.on('mouseover',()=>{
-            const done=State.completedRegions[rid];
-            rcIcon.textContent=region.icon;
-            rcName.textContent=`${region.number}. ${region.name}`;
-            rcStatus.textContent=done?` — ${region.badge} ✓ (${done.score} puan)`:' — Keşfedilmedi';
-            rcStatus.style.color=done?'var(--accent)':'var(--text-dim)';
-            const citiesEl=$('rc-cities');
-            if(citiesEl && region.cities){
-              citiesEl.innerHTML=region.cities.map(c=>
-                `<li><span class="rc-city-name">📍 ${c.name}</span><span class="rc-city-il">${c.il}</span><span class="rc-city-heritage">${c.heritage}</span></li>`
-              ).join('');
-            }
-            hoverCard.style.display='flex';
-            if(!State.completedRegions[rid])
-              layer.setStyle({fillOpacity:0.75,weight:3});
-          });
-          layer.on('mouseout',()=>{
-            hoverCard.style.display='none';
-            layer.setStyle(_layerStyle(rid,!!State.completedRegions[rid]));
-          });
-          layer.on('click',()=>{ SFX.click(); enterRegion(rid); });
+    if(State.completedRegions[rid]) el.classList.add('completed');
 
-          // Region name label in center
-          const center=layer.getBounds().getCenter();
-          L.marker(center,{
-            icon:L.divIcon({
-              className:'leaflet-region-label',
-              html:`<span data-region="${rid}">${region.icon} ${region.name}</span>`,
-              iconSize:[120,24],
-              iconAnchor:[60,12],
-            }),
-            interactive:false,
-          }).addTo(_leafletMap);
-        }
-      }).addTo(_leafletMap);
+    el.addEventListener('mouseenter',()=>{
+      const done=State.completedRegions[rid];
+      rcIcon.textContent=region.icon;
+      rcName.textContent=`${region.number}. ${region.name}`;
+      rcStatus.textContent=done?` — ${region.badge} ✓ (${done.score} puan)`:' — Keşfedilmedi';
+      rcStatus.style.color=done?'var(--accent)':'var(--text-dim)';
+      hoverCard.style.display='flex';
     });
-}
+    el.addEventListener('mouseleave',()=>{ hoverCard.style.display='none'; });
+    el.addEventListener('click',()=>{ SFX.click(); enterRegion(rid); });
+  });
 
-function _layerStyle(rid,completed){
-  const region=REGIONS.find(r=>r.id===rid);
-  const color=region?region.color:'#888';
-  return {
-    color:'#fff',
-    weight:1.5,
-    fillColor: completed ? '#4ade80' : color,
-    fillOpacity: completed ? 0.9 : 0.55,
-    dashArray: completed ? null : null,
-  };
-}
-
-function _refreshLayerStyles(){
-  Object.entries(_regionLayers).forEach(([rid,layer])=>{
-    layer.setStyle(_layerStyle(rid,!!State.completedRegions[rid]));
+  // Etiket tıklaması
+  document.querySelectorAll('.region-label').forEach(t=>{
+    t.style.cursor='pointer';
+    t.addEventListener('click',()=>{ SFX.click(); enterRegion(t.dataset.region); });
   });
 }
 
@@ -663,7 +554,9 @@ function updateMapUI(){
   $('progress-text').textContent=`${done}/7 Bölge Tamamlandı`;
   $('total-score').textContent=State.sessionScore.toLocaleString('tr-TR');
 
-  _refreshLayerStyles();
+  document.querySelectorAll('.region-polygon').forEach(el=>{
+    el.classList.toggle('completed',!!State.completedRegions[el.dataset.region]);
+  });
 
   // Rozetler
   const strip=$('badges-strip');strip.innerHTML='';
@@ -681,7 +574,6 @@ function updateMapUI(){
   if(Object.keys(State.completedRegions).length===REGIONS.length)
     setTimeout(showFinalScreen,800);
 }
-
 
 // ── BÖLGE GİRİŞ ─────────────────────────────────────────────
 function enterRegion(rid){
@@ -903,12 +795,12 @@ window.addEventListener('DOMContentLoaded',()=>{
     }
     SFX.click();
     State.reset();State.playerName=name;State.save();
-    initMap();updateMapUI();showScreen('map');setTimeout(()=>_leafletMap&&_leafletMap.invalidateSize(),200);
+    initMap();updateMapUI();showScreen('map');
   });
   $('btn-start-quiz').addEventListener('click',()=>{ SFX.click(); startQuiz(); });
-  $('btn-back-map').addEventListener('click',()=>{ SFX.click(); showScreen('map'); setTimeout(()=>_leafletMap&&_leafletMap.invalidateSize(),200); });
+  $('btn-back-map').addEventListener('click',()=>{ SFX.click(); showScreen('map'); });
   $('btn-next-q').addEventListener('click',()=>{ SFX.click(); nextQuestion(); });
-  $('btn-continue-map').addEventListener('click',()=>{ SFX.click(); updateMapUI(); showScreen('map'); setTimeout(()=>_leafletMap&&_leafletMap.invalidateSize(),200); });
+  $('btn-continue-map').addEventListener('click',()=>{ SFX.click(); updateMapUI(); showScreen('map'); });
   $('btn-print-cert').addEventListener('click',()=>{ SFX.click(); window.print(); });
   $('btn-play-again').addEventListener('click',()=>{ SFX.click(); State.reset(); $('player-name-input').value=''; showScreen('intro'); });
   $('btn-install')?.addEventListener('click',()=>PWA.install());

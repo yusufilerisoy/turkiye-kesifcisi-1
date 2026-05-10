@@ -1,1118 +1,454 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Türkiye Kültürel Miras Avcısı | TÜBİTAK 4006</title>
-  <link rel="manifest" href="manifest.json"/>
-  <meta name="theme-color" content="#5D2E2E"/>
-  <meta name="apple-mobile-web-app-capable" content="yes"/>
-  <meta name="apple-mobile-web-app-title" content="Miras Avcısı"/>
-  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png"/>
-  <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Patrick+Hand&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <style>
-:root{
-  --paper:#F5F0E1; --cream:#FAF6EC; --deep:#ECE2C9;
-  --ink:#3E2723; --ink2:#5C463E; --ink3:#8C7567;
-  --title:#5D2E2E; --rule:#C9B68A; --rule2:#E1D2AA;
-  --gold:#B8862F; --red:#C62828; --red2:#8B1C1C;
-  --green:#558B2F; --warn:#F9A825;
-  --fd:'Caveat',cursive; --fh:'Patrick Hand',cursive;
-  --fb:'Quicksand',system-ui,sans-serif;
-  --s1:0 1px 3px rgba(62,39,35,.09),0 2px 8px rgba(62,39,35,.06);
-  --s2:0 2px 8px rgba(62,39,35,.11),0 8px 28px rgba(62,39,35,.07);
-  --s3:0 6px 18px rgba(62,39,35,.13),0 24px 56px rgba(62,39,35,.10);
-}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%;font-family:var(--fb);color:var(--ink);background:var(--paper)}
-body{-webkit-font-smoothing:antialiased}
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#4facfe">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Miras Avcısı">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <meta name="description" content="Hikayeleştirilmiş oyun tabanlı coğrafya öğrenme ortamı — TÜBİTAK 4006 Projesi">
 
-/* Kâğıt dokusu */
-.paper{
-  background-color:var(--paper);
-  background-image:
-    radial-gradient(at 20% 15%,rgba(212,188,154,.28) 0%,transparent 45%),
-    radial-gradient(at 80% 85%,rgba(184,134,47,.14) 0%,transparent 50%);
-}
-.cream{background-color:var(--cream);}
-
-/* Ekranlar */
-.screen{display:none;min-height:100vh;}
-.screen.active{display:flex;flex-direction:column;}
-
-/* Kart */
-.card{background:var(--cream);border:1.5px solid var(--rule2);border-radius:12px;padding:18px 20px;box-shadow:var(--s1);}
-.card-inset{box-shadow:var(--s2);position:relative;}
-.card-inset::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
-  box-shadow:inset 0 0 0 1px rgba(184,134,47,.16),inset 0 0 60px rgba(184,134,47,.06);}
-
-/* Köşe süsü */
-.corners{pointer-events:none;}
-.corner{position:absolute;width:44px;height:44px;color:var(--gold);opacity:.8;}
-.corner.tl{top:14px;left:14px;}
-.corner.tr{top:14px;right:14px;transform:scaleX(-1);}
-.corner.bl{bottom:14px;left:14px;transform:scaleY(-1);}
-.corner.br{bottom:14px;right:14px;transform:scale(-1,-1);}
-
-/* Butonlar */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;
-  padding:11px 22px;border-radius:10px;font-family:var(--fb);font-size:16px;font-weight:700;
-  cursor:pointer;border:1.5px solid transparent;transition:transform .15s,filter .15s;user-select:none;}
-.btn:hover{transform:translateY(-1px);filter:brightness(1.05);}
-.btn:active{transform:translateY(0);}
-.btn-primary{background:var(--red);color:#FFF7EB;border-color:var(--red2);
-  box-shadow:0 2px 0 var(--red2),0 8px 20px rgba(198,40,40,.24);}
-.btn-secondary{background:var(--cream);color:var(--title);border-color:var(--ink3);
-  box-shadow:0 2px 0 rgba(140,117,103,.45);}
-.btn-ghost{background:transparent;color:var(--red);border-color:transparent;
-  text-decoration:underline;text-underline-offset:4px;}
-.btn-lg{min-height:54px;padding:14px 28px;font-size:18px;}
-.btn-sm{min-height:36px;padding:7px 14px;font-size:14px;}
-
-/* Input */
-.input{width:100%;font-family:var(--fb);font-size:17px;color:var(--ink);
-  background:var(--cream);border:1.5px solid var(--ink3);border-radius:6px;
-  padding:13px 16px;outline:none;transition:border-color .15s,box-shadow .15s;}
-.input:focus{border-color:var(--red);box-shadow:0 0 0 3px rgba(198,40,40,.12);}
-.input::placeholder{color:var(--ink3);font-style:italic;}
-
-/* Tipografi */
-.td{font-family:var(--fd);font-weight:700;color:var(--title);}
-.th{font-family:var(--fh);color:var(--title);}
-.tl{font-family:'Source Sans 3',system-ui;color:var(--ink2);text-transform:uppercase;
-  letter-spacing:.13em;font-weight:600;}
-
-/* Harita */
-#map-el{width:100%;height:100%;}
-.leaflet-container{background:#D9EAF7 !important;}
-.rl-label{background:none;border:none;box-shadow:none;pointer-events:none;}
-.rl-label span{font-family:var(--fh);font-size:12px;font-weight:700;color:#fff;
-  white-space:nowrap;text-shadow:0 1px 4px rgba(0,0,0,.75),0 0 8px rgba(0,0,0,.5);}
-
-/* Quiz seçenekler */
-.opt{display:flex;align-items:center;gap:14px;text-align:left;width:100%;
-  padding:14px 18px;border-radius:10px;border:2px solid var(--rule2);
-  background:var(--cream);font-family:var(--fb);font-size:15px;color:var(--ink);
-  cursor:pointer;transition:all .15s;box-shadow:var(--s1);}
-.opt:hover{border-color:var(--red);background:#FFF3E5;}
-.opt.sel{border-color:var(--red);background:#FFF3E5;}
-.opt.ok{border-color:var(--green);background:#E9F4DC;}
-.opt.ng{border-color:#D32F2F;background:#FFEBEE;}
-.opt-l{width:30px;height:30px;border-radius:50%;flex-shrink:0;display:grid;
-  place-items:center;font-family:var(--fh);font-size:15px;font-weight:700;
-  border:2px solid var(--ink3);color:var(--ink2);}
-.opt.sel .opt-l{background:var(--red);border-color:var(--red2);color:#FFF7EB;}
-.opt.ok  .opt-l{background:var(--green);border-color:var(--green);color:#FFF7EB;}
-.opt.ng  .opt-l{background:#D32F2F;border-color:#D32F2F;color:#FFF7EB;}
-
-/* Animasyonlar */
-@keyframes float-y{0%,100%{transform:translateY(0);}50%{transform:translateY(-4px);}}
-@keyframes pop{0%{transform:scale(.3);opacity:0;}70%{transform:scale(1.1);}100%{transform:scale(1);opacity:1;}}
-@keyframes fall{0%{transform:translateY(-20px) rotate(0deg);opacity:1;}
-  100%{transform:translateY(105vh) rotate(720deg);opacity:0;}}
-.float{animation:float-y 4s ease-in-out infinite;}
-
-/* Konfeti parçası */
-.cfti{position:fixed;pointer-events:none;border-radius:2px;animation:fall linear forwards;}
-
-/* Bölge renk çubukları (rozet kuşağı) */
-.badge-dot{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;
-  font-size:18px;transition:all .3s;flex-shrink:0;}
-
-/* Progress bar */
-.prog-bar{height:6px;background:var(--deep);border-radius:999;overflow:hidden;}
-.prog-fill{height:100%;border-radius:999;background:var(--red);transition:width .4s;}
-
-/* Sınıf butonu */
-.grade-btn{flex:1;padding:10px 6px;border-radius:10px;border:2px solid var(--ink3);
-  background:var(--cream);color:var(--title);font-family:var(--fh);font-size:20px;
-  font-weight:700;cursor:pointer;transition:all .15s;}
-.grade-btn.active{background:var(--red);border-color:var(--red2);color:#FFF7EB;
-  box-shadow:0 2px 0 var(--red2);}
-  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;900&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <div id="game-container">
 
-<!-- EKRAN: WELCOME -->
-<div id="s-welcome" class="screen paper active" style="align-items:center;justify-content:center;padding:48px 24px;position:relative;overflow:hidden;">
-  <svg class="corner tl" viewBox="0 0 44 44" fill="none"><path d="M4 40L4 4L40 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity=".6"/><circle cx="4" cy="4" r="2.5" fill="currentColor" opacity=".8"/><path d="M12 4 Q4 12 4 20" stroke="currentColor" stroke-width="1.2" fill="none" opacity=".4" stroke-dasharray="3 4"/></svg>
-  <svg class="corner tr" viewBox="0 0 44 44" fill="none"><path d="M4 40L4 4L40 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity=".6"/><circle cx="4" cy="4" r="2.5" fill="currentColor" opacity=".8"/><path d="M12 4 Q4 12 4 20" stroke="currentColor" stroke-width="1.2" fill="none" opacity=".4" stroke-dasharray="3 4"/></svg>
-  <svg class="corner bl" viewBox="0 0 44 44" fill="none"><path d="M4 40L4 4L40 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity=".6"/><circle cx="4" cy="4" r="2.5" fill="currentColor" opacity=".8"/><path d="M12 4 Q4 12 4 20" stroke="currentColor" stroke-width="1.2" fill="none" opacity=".4" stroke-dasharray="3 4"/></svg>
-  <svg class="corner br" viewBox="0 0 44 44" fill="none"><path d="M4 40L4 4L40 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity=".6"/><circle cx="4" cy="4" r="2.5" fill="currentColor" opacity=".8"/><path d="M12 4 Q4 12 4 20" stroke="currentColor" stroke-width="1.2" fill="none" opacity=".4" stroke-dasharray="3 4"/></svg>
-
-  <div style="max-width:620px;width:100%;display:flex;flex-direction:column;align-items:center;text-align:center;">
-    <div class="float">
-      <svg width="260" height="143" viewBox="0 0 220 120">
-        <rect x="8" y="8" width="204" height="104" rx="14" fill="#FAF6EC" stroke="#C9B68A" stroke-width="2"/>
-        <text x="110" y="44" text-anchor="middle" font-family="Caveat,cursive" font-size="30" font-weight="700" fill="#5D2E2E">TÜRKİYE</text>
-        <text x="110" y="68" text-anchor="middle" font-family="Patrick Hand,cursive" font-size="14" fill="#8C7567">KÜLTÜREL MİRAS</text>
-        <text x="110" y="92" text-anchor="middle" font-family="Caveat,cursive" font-size="22" font-weight="700" fill="#C62828">AVCISI</text>
-        <text x="110" y="112" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#8C7567" letter-spacing="3">TÜBİTAK 4006</text>
-      </svg>
-    </div>
-
-    <div style="margin-top:16px;">
-      <div class="td" style="font-size:66px;line-height:.9;text-shadow:1px 2px 0 rgba(184,134,47,.2);">Türkiye'yi Keşfet</div>
-      <div class="th" style="font-size:21px;color:var(--ink2);font-style:italic;margin-top:6px;">✦ Kültürel Miras Macerası ✦</div>
-    </div>
-
-    <div class="card card-inset" style="max-width:540px;margin-top:26px;position:relative;border-color:var(--rule);">
-      <div style="position:absolute;top:-14px;left:24px;background:var(--red);color:#FFF7EB;padding:3px 14px;font-family:var(--fh);font-size:13px;letter-spacing:.15em;border-radius:6px;transform:rotate(-2deg);">GÖREV BRİFİ</div>
-      <p style="margin:8px 0 0;font-size:15px;line-height:1.65;">
-        Türkiye Kültürel Miras Akademisi seni <b style="color:var(--red);">«Miras Avcısı»</b> adayı olarak seçti.
-        7 bölgeyi keşfedip her birinden bir <b>uzmanlık rozeti</b> kazanman gerekiyor!
-      </p>
-    </div>
-
-    <div style="margin-top:22px;width:560px;max-width:100%;display:flex;gap:16px;flex-wrap:wrap;align-items:flex-end;">
-      <div style="flex:1 1 240px;min-width:200px;">
-        <label class="tl" style="display:block;font-size:11px;margin-bottom:6px;text-align:left;">Kaşifin adı</label>
-        <input class="input" id="name-input" placeholder="örn. Ahmet Kaşif" autocomplete="off"/>
+    <!-- EKRAN 1: GİRİŞ -->
+    <div id="screen-intro" class="screen active">
+      <div class="particles" id="particles-intro"></div>
+      <div class="intro-content">
+        <div class="logo-pulse">
+          <img src="icons/icon.svg" class="logo-map-img" alt="Türkiye Kültürel Miras Avcısı"/>
+        </div>
+        <h1 class="game-title">TÜRKİYE<br><span class="game-title-sub">KÜLTÜREL MİRAS AVCISI</span></h1>
+        <p class="game-subtitle">7 Bölge · 20 UNESCO Mirası · 35 Soru</p>
+        <div class="badge-row">
+          <span class="badge-chip">🏛️ Osmanlı Mirası</span>
+          <span class="badge-chip">🗿 Antik Kentler</span>
+          <span class="badge-chip">🏺 UNESCO Alanları</span>
+        </div>
+        <div class="intro-buttons">
+          <button class="btn-primary" id="btn-start">MACERAYA BAŞLA</button>
+          <button class="btn-secondary" id="btn-about">Proje Hakkında</button>
+          <button class="btn-install" id="btn-install" style="display:none;">📲 Uygulamayı Yükle</button>
+        </div>
+        <p class="tubitak-tag">TÜBİTAK 4006 - Bilim Fuarı Projesi</p>
       </div>
-      <div style="flex:0 1 240px;min-width:220px;">
-        <label class="tl" style="display:block;font-size:11px;margin-bottom:6px;text-align:left;">Hangi sınıftasın?</label>
-        <div style="display:flex;gap:6px;" id="grade-btns">
-          <button type="button" class="grade-btn active" data-g="5" onclick="pickGrade(5)">5</button>
-          <button type="button" class="grade-btn" data-g="6" onclick="pickGrade(6)">6</button>
-          <button type="button" class="grade-btn" data-g="7" onclick="pickGrade(7)">7</button>
-          <button type="button" class="grade-btn" data-g="8" onclick="pickGrade(8)">8</button>
+    </div>
+
+    <!-- EKRAN 2: AD GİRİŞİ -->
+    <div id="screen-name" class="screen">
+      <div class="modal-card">
+        <div class="modal-icon">👨‍🎓</div>
+        <h2>Kaşifin kim?</h2>
+        <p>Türkiye'nin 7 coğrafi bölgesini keşfetmek için adını gir!</p>
+        <input type="text" id="player-name-input" placeholder="Adın ve Soyadın..." maxlength="30" autocomplete="off">
+        <button class="btn-primary" id="btn-enter-game">Keşfe Çık!</button>
+        <button class="btn-ghost" id="btn-back-intro">Geri</button>
+      </div>
+    </div>
+
+    <!-- EKRAN 3: HARİTA (ANA OYUN) -->
+    <div id="screen-map" class="screen">
+      <header class="game-header">
+        <div class="header-left">
+          <span class="player-label" id="header-player-name">Kaşif</span>
+        </div>
+        <div class="header-center">
+          <span class="progress-text" id="progress-text">0/7 Bölge Tamamlandı</span>
+        </div>
+        <div class="header-right">
+          <span class="score-display">Puan: <strong id="total-score">0</strong></span>
+        </div>
+      </header>
+
+      <div class="map-wrapper">
+        <h2 class="map-title">Keşfetmek istediğin bölgeyi seç!</h2>
+        <div class="map-container">
+          <svg id="turkey-map" viewBox="0 0 1000 540" preserveAspectRatio="xMidYMid meet">
+          <defs>
+            <filter id="rgn-shadow" x="-5%" y="-5%" width="110%" height="110%">
+              <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="rgba(0,0,0,0.25)"/>
+            </filter>
+          </defs>
+          <rect x="0" y="0" width="1000" height="540" fill="#aed6f1"/>
+          <text x="500" y="68" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" font-weight="700" fill="#1a6fa0" letter-spacing="5" opacity="0.85">KARADENİZ</text>
+          <text x="18" y="330" text-anchor="middle" font-family="Arial,sans-serif" font-size="11" font-weight="700" fill="#1a6fa0" letter-spacing="3" opacity="0.85" transform="rotate(-90,18,330)">EGE DENİZİ</text>
+          <text x="415" y="528" text-anchor="middle" font-family="Arial,sans-serif" font-size="13" font-weight="700" fill="#1a6fa0" letter-spacing="5" opacity="0.85">AKDENİZ</text>
+          <path id="map-ic-anadolu" d="M431.9,407.8L426.2,409.7L420.4,408.6L415.3,411.2L408.4,411.5L395.0,420.2L387.4,422.8L391.2,430.7L400.0,436.3L400.6,437.7L399.7,439.9L391.9,443.1L379.2,445.4L372.4,444.5L367.3,440.8L364.8,437.6L362.5,430.9L363.2,426.3L360.6,421.7L354.4,420.3L351.5,411.4L332.5,394.2L326.6,391.9L313.4,391.0L309.2,389.3L306.7,386.1L308.4,382.7L308.8,378.6L313.0,365.0L311.7,353.8L314.2,350.5L320.3,347.8L321.3,345.4L319.7,343.1L303.4,329.8L302.8,327.1L324.2,313.9L320.9,311.4L319.8,308.4L321.5,302.9L325.7,294.8L325.1,286.5L314.0,286.8L309.8,284.9L305.8,275.7L302.7,275.0L297.8,279.0L290.3,282.5L285.2,279.3L280.9,281.7L279.3,284.3L272.0,287.4L267.8,283.7L266.5,280.7L263.9,279.7L262.0,274.9L257.4,270.5L257.1,263.2L248.4,254.9L250.8,250.4L243.8,250.6L241.6,248.2L241.7,245.1L245.2,241.1L248.3,240.2L253.8,241.0L259.1,236.1L262.6,236.0L265.3,234.6L267.3,231.9L269.7,223.5L277.4,222.0L283.9,223.7L286.6,226.4L284.6,223.9L288.6,219.0L293.1,216.0L292.6,209.8L293.8,207.5L303.8,211.6L318.7,213.9L325.5,211.8L329.9,212.5L335.3,211.7L347.2,207.0L358.4,207.5L363.5,200.7L361.2,193.4L364.7,190.3L366.6,184.7L365.6,182.2L374.1,175.1L390.6,171.6L393.0,167.3L398.4,168.2L403.8,171.1L406.5,174.1L409.3,175.0L430.3,166.9L431.5,168.0L431.6,169.5L428.2,172.9L427.9,174.9L430.1,177.6L440.2,181.5L441.3,184.5L440.7,191.7L443.6,201.2L446.3,206.5L446.2,208.5L443.7,212.9L436.8,216.7L432.5,216.3L442.4,218.9L443.7,224.5L448.2,230.1L441.4,235.4L441.5,237.8L452.2,236.1L457.9,232.8L477.9,232.7L483.0,229.3L490.5,230.5L496.5,226.9L496.0,219.6L504.1,218.6L506.5,220.9L512.9,221.0L518.9,227.1L533.8,227.6L536.2,235.5L542.7,235.5L548.1,233.7L558.7,235.3L566.8,232.7L570.3,230.2L572.0,226.9L571.4,223.9L575.0,219.0L584.6,221.4L590.0,219.0L594.4,221.0L607.5,223.2L609.4,218.1L613.7,215.8L613.5,213.3L614.8,211.6L615.1,207.9L618.0,205.4L621.1,211.5L624.1,212.7L627.0,211.8L630.5,208.7L636.6,207.6L643.0,201.9L644.3,204.5L647.5,220.2L657.7,226.5L663.5,225.4L673.4,229.4L672.4,234.0L671.0,234.9L657.4,234.1L655.7,235.6L653.4,240.8L654.3,242.6L661.1,241.4L662.7,242.7L661.1,244.4L657.3,245.3L653.3,251.5L652.5,260.0L654.9,267.5L654.6,280.8L652.8,283.7L648.8,284.5L644.3,287.7L632.4,288.5L624.6,291.9L615.1,291.4L613.3,294.4L615.5,301.8L614.4,305.4L602.2,315.4L589.1,317.2L582.2,314.2L573.0,316.4L571.3,317.6L570.2,321.9L561.1,332.8L557.0,324.5L551.9,324.0L544.1,327.7L537.3,340.9L521.2,348.2L518.3,354.4L509.2,356.5L500.8,354.2L499.0,354.8L498.0,356.6L498.4,361.2L497.4,362.8L489.8,369.5L481.7,369.0L479.6,370.1L478.7,372.1L480.7,376.9L480.8,380.1L477.3,383.6L477.0,387.8L472.7,387.9L467.6,390.5L463.6,390.6L462.8,389.2L463.8,391.5L462.8,392.7L454.2,398.2L443.0,403.6L438.0,403.9L431.9,407.8Z M398.2,207.3L397.7,206.4L387.1,196.7L398.2,207.3Z M425.1,215.7L424.2,216.8L426.3,215.7L425.1,215.7Z M434.1,249.9L434.0,250.0L434.6,249.5L434.1,249.9Z M435.5,289.8L435.6,289.8L418.7,281.8L435.5,289.8Z M433.0,294.8L434.9,291.5L435.2,290.8L433.0,294.8Z M435.7,302.7L435.9,302.2L433.0,294.8L435.7,302.7Z M448.6,311.3L449.0,311.7L448.7,310.8L448.6,311.3Z M455.6,323.5L452.1,315.0L452.0,314.9L455.6,323.5Z M457.9,325.5L458.7,326.0L455.6,323.5L457.9,325.5Z M457.7,341.9L457.8,341.8L457.9,337.2L457.7,341.9Z M443.7,351.1L445.0,351.2L444.7,350.9L443.7,351.1Z M452.8,358.5L451.6,356.8L448.8,354.4L452.8,358.5Z M460.8,372.8L460.8,369.9L460.7,369.7L460.8,372.8Z M458.0,378.2L457.7,380.1L460.8,372.8L458.0,378.2Z M457.2,383.2L457.4,384.3L457.3,382.5L457.2,383.2Z M459.1,384.7L458.9,384.6L457.4,384.3L459.1,384.7Z M461.8,387.4L461.6,387.0L459.9,385.5L461.8,387.4Z M328.6,287.3L325.3,286.5L328.2,287.5L328.6,287.3Z M331.7,285.9L330.1,286.7L331.6,286.0L331.7,285.9Z M338.1,279.3L333.2,282.0L334.3,281.6L338.1,279.3Z M338.7,285.8L342.7,288.3L334.3,281.6L338.7,285.8Z M346.0,290.0L344.9,289.7L345.6,290.1L346.0,290.0Z M367.4,289.0L363.2,292.3L363.3,292.3L367.4,289.0Z M381.1,282.9L376.6,287.1L381.2,282.9L381.1,282.9Z M430.0,309.0L422.8,309.3L429.9,309.0L430.0,309.0Z M435.1,395.1L435.2,395.2L443.3,397.0L435.1,395.1Z M379.9,416.7L370.6,414.5L370.7,414.6L379.9,416.7Z M367.9,412.0L367.8,411.5L367.8,411.9L367.9,412.0Z M368.0,410.4L369.0,409.2L368.0,410.3L368.0,410.4Z M371.6,406.2L371.9,405.8L372.7,404.3L371.6,406.2Z M373.8,399.0L373.5,402.6L373.8,402.0L373.8,399.0Z M384.3,398.7L382.6,394.8L382.5,395.0L384.3,398.7Z M382.9,393.9L384.9,389.9L384.2,390.4L382.9,393.9Z M385.9,389.2L392.0,388.2L387.0,388.5L385.9,389.2Z M395.1,384.5L396.0,384.3L395.3,384.3L395.1,384.5Z M403.8,388.9L406.7,389.0L406.8,388.9L403.8,388.9Z M408.4,387.7L409.8,383.6L409.3,384.3L408.4,387.7Z M411.5,381.1L412.8,379.5L412.5,379.6L411.5,381.1Z M407.2,319.6L406.6,321.6L407.6,319.1L407.2,319.6Z M401.1,337.0L401.1,337.9L401.2,336.7L401.1,337.0Z M401.2,339.7L407.1,351.5L401.2,339.1L401.2,339.7Z M409.8,354.8L413.6,355.7L409.7,354.7L409.8,354.8Z M427.9,354.3L428.9,354.1L427.6,354.3L427.9,354.3Z M289.5,231.2L290.2,231.1L289.0,231.0L289.5,231.2Z M332.6,248.4L334.9,254.3L335.3,254.9L332.6,248.4Z M336.9,257.5L339.8,262.3L339.7,261.9L336.9,257.5Z M339.9,263.6L340.4,270.9L340.6,269.2L339.9,263.6Z M339.7,277.9L339.6,278.5L339.7,278.4L339.7,277.9Z M286.9,230.2L286.9,230.3L287.2,230.4L286.9,230.2Z M421.4,220.3L420.8,221.7L423.7,217.5L421.4,220.3Z M419.6,235.4L419.7,234.8L419.6,234.5L419.6,235.4Z M418.8,238.9L418.9,238.8L419.0,238.5L418.8,238.9Z M410.6,243.4L410.5,243.5L411.9,242.7L410.6,243.4Z M406.8,247.2L406.6,247.8L407.0,247.0L406.8,247.2Z M405.0,253.3L405.0,254.8L405.5,251.4L405.0,253.3Z M471.5,327.3L477.1,330.6L477.3,330.6L471.5,327.3Z M480.5,330.2L477.7,330.6L478.9,330.7L480.5,330.2Z M483.2,328.5L482.0,329.6L483.0,329.2L483.2,328.5Z M483.4,324.5L483.6,326.9L483.9,325.9L483.4,324.5Z M483.1,322.4L483.2,323.1L483.2,322.2L483.1,322.4Z M484.0,319.7L483.9,319.9L484.0,319.7L484.0,319.7Z M487.7,291.4L485.4,304.1L487.8,291.4L487.7,291.4Z M514.8,279.9L510.9,280.9L520.1,280.0L514.8,279.9Z M521.2,279.7L520.9,279.9L521.0,279.9L521.2,279.7Z M528.9,271.8L527.5,274.3L527.7,274.1L528.9,271.8Z M534.6,280.3L531.3,275.5L534.4,280.0L534.6,280.3Z M539.3,283.9L535.6,281.2L537.5,283.2L539.3,283.9Z M552.1,284.2L540.1,284.2L540.3,284.3L552.1,284.2Z M567.2,281.5L567.1,281.5L575.2,281.6L567.2,281.5Z M580.4,284.1L580.1,283.8L575.2,281.6L580.4,284.1Z M582.1,285.6L580.9,284.5L583.4,288.6L582.1,285.6Z M464.7,329.2L463.6,328.8L464.5,329.3L464.7,329.2Z M486.9,326.5L490.7,334.8L490.8,334.8L487.4,326.5L486.9,326.5Z M499.5,336.7L499.3,336.5L493.7,336.3L499.5,336.7Z M503.0,341.9L503.0,341.6L501.5,338.5L503.0,341.9Z M503.0,349.4L503.1,349.3L503.0,345.2L503.0,349.4Z M464.4,258.4L464.3,258.7L464.7,258.9L464.4,258.4Z M477.4,266.3L477.6,268.7L477.7,268.8L477.4,266.3Z M481.4,270.7L483.8,271.9L483.8,271.9L481.4,270.7Z M453.9,300.1L453.8,300.2L453.4,303.0L453.9,300.1Z" class="region-polygon" data-region="ic-anadolu" filter="url(#rgn-shadow)"/>
+          <path id="map-karadeniz" d="M618.0,205.4L615.1,207.9L614.8,211.6L613.5,213.3L613.7,215.8L609.4,218.1L607.5,223.2L594.4,221.0L590.0,219.0L584.6,221.4L575.0,219.0L571.4,223.9L571.9,227.1L569.6,231.3L558.7,235.3L548.1,233.7L542.7,235.5L536.2,235.5L533.8,227.6L518.9,227.1L512.9,221.0L506.0,220.7L504.1,218.6L496.0,219.6L496.5,226.9L490.5,230.5L483.7,229.3L477.3,232.8L457.9,232.8L454.3,235.4L446.1,236.3L441.1,238.0L441.7,235.0L448.3,229.9L443.7,224.5L442.5,219.0L436.8,216.7L443.7,212.9L446.4,207.7L440.7,191.7L441.3,184.5L440.2,181.5L429.8,177.4L428.0,175.5L428.2,172.9L431.6,169.5L431.5,168.0L430.0,166.8L411.4,174.9L408.2,174.9L399.8,168.9L393.0,167.3L390.6,171.6L374.1,175.1L365.7,182.1L366.6,184.0L365.7,188.8L361.2,193.4L363.5,200.7L359.1,207.0L347.2,207.0L335.3,211.7L329.9,212.5L325.5,211.8L318.7,213.9L303.8,211.6L293.8,207.5L292.6,209.8L293.1,216.0L288.6,219.0L284.6,223.9L277.4,222.0L272.9,213.9L272.3,212.3L273.4,209.3L270.9,205.8L274.9,201.4L282.4,201.3L286.4,200.2L288.2,198.1L288.6,191.6L290.1,189.2L285.5,185.8L284.6,182.8L286.2,178.8L291.2,174.9L292.5,172.3L289.6,168.3L301.5,166.8L307.5,164.5L310.9,159.9L310.6,156.4L311.5,156.3L310.1,155.1L310.5,153.7L321.3,149.8L334.8,141.3L341.3,139.6L341.4,138.3L343.1,138.6L342.6,137.9L347.4,136.4L354.0,129.7L356.8,129.5L358.8,127.6L360.5,128.5L364.6,124.8L368.2,124.2L368.6,123.2L385.0,120.5L390.6,117.2L397.6,115.6L405.9,111.7L422.6,114.1L440.8,114.0L453.7,116.4L462.6,114.3L463.5,115.4L468.9,116.4L477.8,115.6L483.1,111.5L485.2,108.5L485.0,107.1L488.5,107.3L490.2,109.3L489.8,110.4L491.5,111.3L497.2,110.5L497.9,112.2L494.6,111.5L492.4,115.0L492.1,117.6L494.1,121.3L497.9,124.7L497.2,125.3L497.9,126.8L501.3,129.9L515.5,134.9L519.9,134.4L534.6,128.7L539.7,131.6L542.6,135.3L543.4,145.1L548.8,151.5L554.4,154.1L553.5,155.1L555.9,157.4L558.6,158.0L562.3,157.1L564.9,155.4L567.5,150.7L569.2,150.0L569.5,150.8L569.5,150.1L569.4,149.8L579.3,152.2L585.9,155.6L587.3,157.3L587.0,159.9L587.7,161.4L593.6,163.8L600.6,163.9L600.6,165.2L605.2,166.2L612.5,171.4L616.1,169.7L619.7,164.4L620.8,165.8L624.8,165.6L624.4,168.9L625.9,171.1L628.8,171.7L629.4,173.4L641.4,175.2L635.8,187.6L641.4,175.3L645.2,176.3L649.3,175.9L652.9,178.0L654.5,177.1L661.4,177.6L666.1,174.2L670.6,175.6L675.6,171.9L678.3,171.9L681.3,170.0L687.2,170.4L692.6,167.9L698.6,169.6L705.2,166.2L708.5,167.1L712.4,171.1L716.1,172.6L723.0,172.5L727.6,175.4L735.5,175.0L739.7,177.9L745.2,176.9L752.9,171.0L758.3,170.1L760.8,170.9L769.3,167.4L773.3,162.9L786.3,159.5L790.6,155.7L793.8,155.0L796.4,152.0L803.2,149.5L810.0,141.2L815.3,143.7L817.9,142.9L818.3,144.2L821.5,144.9L823.5,146.7L830.0,141.3L834.6,143.1L841.3,141.9L842.3,143.1L852.3,144.8L855.5,146.4L861.0,159.1L859.7,161.5L851.9,167.5L848.5,173.6L845.7,174.7L837.1,174.8L832.9,176.8L827.5,194.1L823.6,195.4L818.2,192.9L814.9,192.8L804.1,198.7L800.9,197.7L799.7,193.5L802.6,187.9L802.0,186.2L792.8,185.7L789.1,184.0L774.6,193.3L757.6,200.4L759.7,203.5L761.5,214.3L764.9,217.5L772.6,218.7L773.1,220.2L771.4,223.1L757.3,230.8L752.3,230.9L739.3,228.1L727.9,231.8L722.8,236.9L715.0,239.2L706.2,239.9L697.6,236.2L690.3,231.6L681.2,228.3L673.4,229.4L663.5,225.4L658.0,226.6L647.8,220.6L646.6,213.2L641.1,195.8L643.0,201.9L636.6,207.6L630.5,208.7L627.0,211.8L623.1,212.6L621.0,211.3L616.9,201.6L618.0,205.4Z M691.9,170.4L690.7,174.3L693.4,168.2L691.9,170.4Z M719.6,234.0L719.9,234.7L723.2,236.4L719.6,234.0Z M584.7,190.3L584.9,190.3L582.8,188.2L584.7,190.3Z M616.0,199.4L615.9,199.2L609.1,198.7L616.0,199.4Z M586.2,169.6L586.1,169.8L593.6,165.8L586.2,169.6Z M571.4,179.7L570.6,183.0L570.9,183.4L571.2,181.8L571.4,179.7Z M569.3,178.7L568.2,178.9L571.4,179.7L569.3,178.7Z M571.3,184.0L578.8,187.5L571.1,183.7L571.3,184.0Z M457.9,156.1L452.8,162.6L459.5,154.7L457.9,156.1Z M459.9,154.3L459.8,154.4L460.4,154.4L459.9,154.3Z M461.9,154.5L461.6,154.5L464.1,156.1L461.9,154.5Z M478.8,160.6L479.0,160.6L464.1,156.1L478.8,160.6Z M482.2,157.7L480.2,160.8L480.4,160.8L482.2,157.7Z M486.9,167.7L486.5,167.1L486.7,167.6L486.9,167.7Z M492.3,167.2L487.5,167.9L488.6,168.1L492.3,167.2Z M511.4,171.8L511.3,171.7L492.3,167.2L511.4,171.8Z M521.7,179.6L519.4,177.0L520.5,178.9L521.7,179.6Z M529.1,180.7L522.2,179.9L522.3,179.9L529.1,180.7Z M542.4,180.4L539.5,181.8L539.9,182.0L542.4,180.4Z M545.9,178.1L545.6,178.4L545.8,178.3L545.9,178.1Z M548.5,173.7L547.0,173.8L548.9,173.8L548.5,173.7Z M559.1,180.4L555.4,178.1L559.0,180.4L559.1,180.4Z M564.9,179.5L559.6,180.4L561.5,180.6L564.9,179.5Z M543.2,205.5L544.5,205.7L545.6,205.1L543.2,205.5Z M559.0,193.7L559.4,193.2L559.7,191.5L559.0,193.7Z M560.1,189.6L560.2,189.3L559.9,188.6L560.1,189.6Z M492.3,190.8L494.7,191.9L492.0,190.0L492.3,190.8Z M495.6,192.4L500.3,192.5L495.4,192.3L495.6,192.4Z M509.8,204.4L510.5,198.1L510.4,197.9L509.8,204.4Z M363.9,180.1L353.9,176.1L364.2,180.5L363.9,180.1Z M354.1,172.1L344.6,171.5L329.5,170.5L335.7,171.5L354.1,172.1Z M345.2,166.6L344.6,168.1L344.6,171.5L345.2,166.6Z M324.0,178.1L324.8,177.7L326.5,176.3L324.0,178.1Z M327.0,175.8L327.2,175.7L328.1,173.3L327.0,175.8Z M386.8,152.7L385.3,155.6L385.3,155.7L386.8,152.7Z M385.2,157.7L385.2,159.8L385.7,161.0L385.2,157.7Z M389.4,163.2L388.8,162.5L385.7,161.0L389.4,163.2Z M341.5,140.1L342.1,141.4L355.0,154.3L341.5,140.1Z M361.1,157.4L370.0,152.3L370.8,151.6L361.1,157.4Z M371.2,151.1L372.3,150.1L374.4,144.9L371.2,151.1Z M377.2,143.4L379.0,141.2L378.9,141.2L377.2,143.4Z M380.7,137.1L385.6,139.5L387.7,141.4L386.9,140.0L380.7,137.1Z M354.8,158.5L354.7,158.5L354.6,158.6L354.8,158.5Z M504.0,157.7L506.5,156.9L506.7,156.6L504.0,157.7Z M509.9,151.1L507.7,155.7L508.4,155.0L509.9,151.1Z M754.6,176.1L754.5,176.0L756.2,179.1L754.6,176.1Z M756.7,180.3L756.6,180.0L759.0,188.1L756.7,180.3Z M677.4,204.8L677.2,198.5L677.1,198.8L677.4,204.8Z M682.0,190.3L685.9,187.1L682.2,189.8L682.0,190.3Z M691.8,185.5L691.9,186.0L697.7,190.6L691.8,185.5Z M717.3,198.7L699.9,192.4L716.6,198.9L717.3,198.7Z M719.6,198.0L720.2,197.8L720.3,197.7L719.6,198.0Z M725.5,195.3L725.5,195.4L728.4,195.6L725.5,195.3Z M730.2,198.1L731.2,198.4L728.4,195.6L730.2,198.1Z M731.8,198.7L732.3,198.8L732.4,198.6L731.8,198.7Z M732.5,195.1L733.5,197.2L732.7,194.6L732.5,195.1Z M732.8,194.1L734.0,193.0L732.9,193.7L732.8,194.1Z M739.1,198.3L735.8,194.2L734.0,193.0L739.1,198.3Z M737.9,202.8L738.4,201.7L739.1,198.3L737.9,202.8Z M744.1,202.5L744.6,202.4L738.4,201.7L744.1,202.5Z M724.1,225.2L721.0,227.7L724.1,225.4L724.1,225.2Z M724.8,223.3L724.6,223.9L724.8,223.4L724.8,223.3Z M736.2,206.9L735.9,207.3L736.0,207.2L736.2,206.9Z M690.4,175.5L690.4,178.4L690.5,175.3L690.4,175.5Z M690.5,181.8L690.7,182.6L690.5,181.6L690.5,181.8Z M803.2,168.6L800.0,170.4L799.7,170.7L803.1,168.7L803.2,168.6Z M359.2,127.5L359.2,127.7L359.2,127.8L359.1,127.6L359.2,127.5Z M656.9,176.9L656.8,176.9L656.8,176.7L656.9,176.8L656.9,176.9Z M587.8,160.8L587.7,160.7L587.7,160.7L587.8,160.7L587.8,160.8Z M587.6,160.7L587.6,160.7L587.5,160.6L587.6,160.7Z M569.4,149.9L569.5,150.2L569.3,150.2L569.2,150.0L569.4,149.9Z" class="region-polygon" data-region="karadeniz" filter="url(#rgn-shadow)"/>
+          <path id="map-akdeniz" d="M224.1,464.2L223.3,464.7L223.8,463.9L224.1,464.2Z M228.7,463.8L229.6,462.7L230.1,463.3L228.7,463.8Z M224.6,463.2L224.6,463.1L225.0,463.0L224.9,463.3L224.6,463.2Z M224.7,462.6L224.5,462.7L224.5,462.6L224.7,462.6Z M222.2,462.5L219.9,463.9L221.5,461.2L222.2,462.5Z M223.0,462.1L223.1,462.0L223.3,462.1L223.0,462.1Z M223.5,462.0L223.3,462.1L223.5,462.0L223.5,462.0Z M216.7,461.7L216.8,461.6L217.8,461.7L216.3,462.1L216.7,461.7Z M223.1,461.6L223.1,461.4L223.2,461.4L223.2,461.5L223.1,461.6Z M223.4,461.4L223.3,461.5L223.3,461.5L223.3,461.4L223.4,461.4Z M235.2,461.2L235.2,461.0L235.3,461.0L235.4,461.1L235.2,461.2Z M233.5,461.1L233.4,461.0L233.5,460.9L233.6,461.1L233.5,461.1Z M233.3,460.9L233.5,460.8L233.4,461.0L233.3,460.9Z M219.5,460.2L219.2,460.1L219.4,460.0L219.5,460.2Z M213.8,459.2L213.8,459.0L214.0,458.9L213.9,459.2L213.8,459.2Z M209.7,458.6L209.5,458.3L210.3,458.1L209.7,458.6Z M210.5,457.9L210.5,457.7L210.8,457.7L210.7,458.0L210.5,457.9Z M415.3,464.0L415.4,463.7L415.4,463.4L415.6,463.9L415.3,464.0Z M423.6,461.5L423.6,461.6L423.3,461.5L423.5,461.5L423.6,461.5Z M235.8,460.6L233.7,461.0L237.4,459.3L235.8,460.6Z M261.6,460.6L261.4,459.7L261.6,459.7L261.7,460.4L261.6,460.6Z M237.2,459.9L237.1,459.8L237.3,459.7L237.3,459.9L237.2,459.9Z M426.5,460.2L426.7,459.8L427.6,459.1L427.5,460.1L426.5,460.2Z M261.2,459.3L261.4,459.0L261.5,459.0L261.4,459.4L261.2,459.3Z M236.8,459.1L236.6,459.0L236.6,458.8L236.8,459.0L236.8,459.1Z M236.8,458.8L236.4,458.6L237.0,458.4L236.8,458.8Z M265.2,457.4L264.7,457.0L264.9,456.7L265.3,457.3L265.2,457.4Z M248.5,455.3L248.5,455.3L248.7,455.3L248.6,455.4L248.5,455.3Z M268.9,443.8L268.5,443.8L268.7,443.6L268.9,443.8Z M323.4,432.5L323.5,432.5L323.5,432.6L323.4,432.5Z M363.2,426.3L362.5,430.9L364.8,437.6L367.3,440.8L372.4,444.5L381.4,445.3L391.9,443.1L399.7,439.9L400.6,437.7L400.0,436.3L391.2,430.7L387.4,422.8L395.0,420.2L408.7,411.4L415.3,411.2L419.8,408.7L425.7,409.8L430.4,408.4L437.7,404.0L445.2,402.9L454.2,398.2L462.6,392.9L463.6,390.6L468.0,390.4L473.3,387.8L477.2,388.2L477.3,383.6L480.8,380.1L480.7,376.9L478.7,372.1L479.2,370.5L481.3,369.0L489.0,369.7L491.7,368.5L498.2,361.7L497.9,356.9L499.6,354.5L510.2,356.5L518.3,354.4L521.2,348.2L537.6,340.6L544.9,327.0L551.9,324.0L555.5,323.9L557.7,325.3L561.1,332.8L559.3,335.0L565.7,328.1L570.3,321.6L572.1,316.7L582.2,314.2L589.1,317.2L600.3,316.1L599.6,318.6L595.7,322.3L595.9,324.2L608.6,324.7L620.6,330.3L624.2,333.2L624.1,338.5L617.4,356.7L612.0,365.3L606.5,370.5L607.1,375.3L614.4,378.6L616.8,380.8L616.6,386.0L613.5,388.6L595.3,391.5L586.7,398.4L584.4,397.5L582.7,390.8L581.5,389.5L572.8,394.9L563.1,405.0L558.7,414.2L570.3,422.3L567.8,425.9L568.3,429.0L565.9,433.1L566.4,437.6L564.1,441.4L565.9,447.4L567.6,447.8L567.8,450.0L566.8,451.4L569.7,451.4L570.0,453.1L571.4,453.7L571.6,456.2L567.4,458.2L561.3,457.1L560.1,459.1L556.5,457.8L556.6,459.7L555.5,461.0L556.5,466.1L555.6,471.1L552.5,470.9L551.6,471.6L551.8,473.7L547.4,474.0L545.8,477.0L545.2,482.1L542.6,479.1L537.8,478.2L537.3,474.7L533.8,476.0L532.9,475.2L535.9,470.0L531.8,461.7L526.1,453.3L526.1,451.9L527.9,449.6L529.7,449.1L532.5,444.5L536.1,442.8L538.7,439.3L546.5,435.5L547.5,431.8L546.4,429.0L546.9,427.7L546.1,427.6L547.1,424.4L541.1,417.1L537.8,415.6L533.8,418.2L534.2,419.5L533.6,418.7L526.8,425.4L520.5,425.3L518.6,426.6L517.7,428.5L517.4,427.7L517.2,429.3L516.8,428.7L515.4,428.6L515.0,429.4L515.8,428.9L516.5,430.5L518.7,428.0L518.4,427.3L519.9,426.9L519.5,428.9L520.0,427.6L519.9,428.9L523.3,428.6L519.4,431.2L518.3,435.0L515.6,437.4L508.3,435.9L504.4,439.0L503.5,436.9L504.7,435.1L501.7,433.7L501.0,432.2L500.7,433.0L500.0,432.1L501.1,431.6L500.0,430.6L496.6,429.8L495.7,430.8L503.7,437.8L487.6,428.5L483.5,427.8L485.2,426.1L483.2,427.9L480.5,424.5L476.0,422.8L470.7,422.9L466.1,425.2L459.6,431.5L452.2,436.2L446.8,443.3L442.4,446.6L442.0,452.1L440.6,453.5L438.3,453.0L436.6,457.3L435.4,453.8L432.1,452.2L430.2,454.1L430.6,454.7L429.4,454.8L429.1,456.8L423.6,460.7L423.7,462.6L423.2,463.1L421.1,459.6L418.4,460.6L416.9,463.6L412.6,461.6L408.7,463.7L406.6,461.9L403.5,463.4L396.5,462.9L393.3,467.0L391.8,465.5L386.8,464.9L382.8,466.9L379.6,470.2L373.5,468.8L368.2,464.7L366.4,465.6L364.0,464.6L354.6,457.1L353.6,453.9L350.7,451.1L348.2,446.2L341.5,439.0L339.3,439.6L338.5,437.9L328.9,435.1L327.5,433.0L323.9,432.7L318.4,428.6L309.8,425.5L309.9,424.5L307.0,422.8L291.1,419.9L278.9,420.7L276.0,418.3L272.2,420.3L269.9,423.7L269.7,430.8L268.9,432.6L269.1,434.6L270.7,435.9L266.6,443.1L266.7,444.9L265.3,445.2L265.8,446.0L265.0,447.3L267.6,451.2L264.6,452.4L265.6,454.5L261.5,458.6L261.7,454.7L259.8,455.1L255.4,452.3L251.4,452.3L248.9,453.2L249.1,454.9L248.4,454.5L247.3,456.4L244.6,455.6L240.7,458.3L237.8,457.1L236.2,458.5L236.0,459.6L234.0,459.4L233.2,459.8L234.2,459.6L231.4,462.6L227.9,461.4L226.0,463.3L225.7,462.0L224.6,462.3L223.4,461.0L224.4,460.8L224.1,459.4L221.1,460.0L223.4,458.9L214.1,458.6L214.8,457.6L212.6,457.7L212.9,455.6L211.7,455.4L210.5,455.4L209.7,457.4L205.0,453.2L207.1,452.1L208.5,444.7L220.6,434.4L222.1,424.6L225.5,418.9L226.0,416.3L223.1,411.6L219.3,409.8L217.5,410.0L214.3,413.5L211.8,414.3L212.5,410.8L211.4,406.9L211.8,402.3L220.9,386.9L220.9,385.4L218.5,383.8L218.3,376.1L235.0,365.4L245.7,365.2L250.1,362.5L251.6,360.3L250.6,357.6L252.6,352.9L254.7,350.8L267.0,340.6L273.1,337.0L281.0,334.4L295.9,320.9L303.1,326.2L302.8,328.7L303.7,330.2L321.1,344.6L320.3,347.8L314.2,350.5L311.8,353.5L313.0,365.0L306.7,386.1L309.2,389.3L312.9,390.9L326.6,391.9L332.5,394.2L351.5,411.4L354.4,420.3L361.0,422.1L363.2,426.3Z M371.9,454.0L371.3,448.2L371.8,454.1L371.9,454.0Z M369.6,462.8L371.2,457.6L371.8,454.4L368.8,463.9L369.6,462.8Z M232.4,411.3L228.9,415.4L232.2,412.0L232.4,411.3Z M233.9,405.0L234.1,404.3L234.0,404.4L233.9,405.0Z M234.3,403.9L236.9,401.1L235.5,401.8L234.3,403.9Z M243.9,397.2L256.7,393.2L255.8,393.2L243.9,397.2Z M258.2,393.3L259.2,393.5L259.1,393.3L258.2,393.3Z M281.2,398.0L284.9,390.1L284.4,390.3L281.2,398.0Z M285.9,389.5L286.9,389.3L286.7,389.2L285.9,389.5Z M302.2,386.3L299.6,388.2L290.6,391.0L299.6,388.2L302.2,386.3Z M268.2,369.4L273.6,369.6L267.0,368.7L268.2,369.4Z M279.3,380.0L285.9,387.2L285.4,386.0L279.3,380.0Z M242.9,367.9L243.3,368.5L243.5,368.6L242.9,367.9Z M245.6,369.4L257.5,361.5L257.4,361.4L245.6,369.4Z M262.7,365.8L263.1,366.4L264.7,367.3L262.7,365.8Z M534.3,414.0L532.6,417.2L532.8,417.4L534.6,413.7L534.3,414.0Z M549.5,410.9L539.0,409.9L539.9,410.0L549.5,410.9Z M487.7,408.9L484.3,406.3L484.5,406.8L487.7,408.9Z M491.1,420.8L491.1,420.2L490.4,413.2L491.1,420.8Z M489.4,425.1L491.0,422.3L491.0,421.6L489.4,425.1Z M483.4,403.3L482.8,400.9L479.4,393.5L483.4,403.3Z M539.2,403.3L539.8,404.5L539.8,404.0L539.2,403.3Z M531.2,390.1L531.1,397.0L531.2,390.0L531.2,390.1Z M538.6,377.3L538.4,377.6L543.6,374.0L538.6,377.3Z M544.5,373.4L544.4,373.5L551.8,372.5L544.5,373.4Z M548.9,378.5L550.2,376.7L554.6,366.7L551.8,372.5L548.9,378.5Z M547.4,381.6L549.0,389.3L549.4,389.4L547.5,381.2L547.4,381.6Z M554.4,390.4L551.0,389.9L553.1,390.6L554.4,390.4Z M552.6,361.7L554.6,366.2L554.6,365.2L552.6,361.7Z M558.0,336.5L557.9,336.6L553.4,351.9L558.0,336.5Z M270.6,423.2L270.6,423.3L270.5,423.2L270.6,423.1L270.6,423.2Z M429.9,455.3L429.9,455.2L430.0,455.0L430.1,455.2L429.9,455.3Z M501.6,433.1L501.4,432.9L501.6,433.0L501.6,433.1Z M501.2,432.8L501.0,432.7L501.1,432.6L501.2,432.7L501.2,432.8Z M498.0,432.3L498.0,432.4L497.8,432.4L497.9,432.3L498.0,432.3Z M498.1,432.1L498.0,432.0L498.1,432.0L498.1,432.1Z M498.1,431.8L498.2,431.7L498.2,431.8L498.1,431.8Z M498.1,430.7L498.1,430.7L498.0,430.6L498.0,430.6L498.1,430.7Z M516.8,429.4L516.7,429.1L516.8,429.1L516.8,429.4L516.8,429.4Z M517.3,429.3L517.5,429.0L517.6,429.0L517.5,429.3L517.3,429.3Z M521.0,428.5L521.2,428.4L521.3,428.4L521.1,428.6L521.0,428.5Z M546.2,428.0L546.1,428.0L546.0,427.9L546.2,427.9L546.2,428.0Z M522.3,427.9L522.0,427.9L522.0,427.7L522.3,427.9L522.3,427.9Z" class="region-polygon" data-region="akdeniz" filter="url(#rgn-shadow)"/>
+          <path id="map-ege" d="M84.2,342.6L84.3,342.6L84.2,342.8L84.2,342.6Z M84.1,342.1L84.3,342.0L84.1,342.3L84.1,342.1Z M66.1,340.7L66.3,340.5L66.4,340.6L66.3,340.8L66.1,340.7Z M65.8,340.0L66.0,339.9L66.1,340.2L65.8,340.1L65.8,340.0Z M66.5,339.8L66.9,339.7L66.8,340.0L66.5,339.8Z M82.6,339.9L82.6,339.7L82.7,339.8L82.7,339.9L82.6,339.9Z M54.9,334.2L55.0,333.9L55.1,334.4L54.9,334.2Z M78.1,331.8L78.1,332.0L77.9,332.1L77.9,331.9L78.1,331.8Z M67.0,329.7L67.2,330.2L67.0,330.3L66.6,329.9L67.0,329.7Z M83.3,329.3L83.7,329.3L83.2,329.8L83.3,329.3Z M67.4,329.3L67.6,328.9L67.7,329.3L67.4,329.3Z M66.7,328.5L66.9,328.6L66.8,328.7L66.7,328.5Z M66.7,328.2L66.8,328.3L66.7,328.4L66.7,328.2Z M67.4,328.1L67.6,327.7L67.6,328.6L67.4,328.1Z M83.3,328.1L83.6,327.8L83.7,328.1L83.3,328.2L83.3,328.1Z M67.8,327.8L67.8,328.0L67.8,328.1L67.7,327.8L67.8,327.8Z M68.9,327.5L69.0,327.6L68.8,327.6L68.8,327.5L68.9,327.5Z M82.6,327.2L82.8,327.4L82.6,327.6L82.5,327.2L82.6,327.2Z M83.7,327.2L83.9,326.9L84.0,327.4L83.7,327.4L83.7,327.2Z M83.1,326.9L83.2,326.7L83.3,326.9L83.3,327.0L83.1,326.9Z M59.9,326.8L59.9,326.4L60.2,326.8L60.1,327.0L59.9,326.8Z M63.1,325.9L63.7,325.7L63.9,326.5L63.0,326.2L63.1,325.9Z M62.8,325.6L63.1,325.8L62.8,326.2L62.8,325.6Z M60.7,325.4L62.4,324.5L62.3,326.2L61.0,326.5L60.7,325.4Z M82.1,324.7L82.5,324.5L82.9,325.4L82.3,325.8L82.1,324.7Z M80.7,322.1L81.6,323.0L81.2,324.3L78.9,323.1L79.1,319.0L80.6,320.1L80.7,322.1Z M70.4,312.7L70.5,312.8L70.6,312.9L70.4,312.8L70.4,312.7Z M70.0,312.2L70.3,312.5L69.8,312.5L70.0,312.2Z M80.3,311.4L80.6,311.5L80.5,311.7L80.3,311.4Z M79.8,311.3L80.0,311.2L79.7,311.5L79.8,311.3Z M79.6,309.8L80.4,310.3L80.3,310.7L79.6,310.4L79.6,309.8Z M79.6,308.9L79.6,309.1L79.5,309.3L79.5,309.1L79.6,308.9Z M80.7,307.9L80.8,307.9L80.8,308.0L80.7,308.0L80.7,307.9Z M84.4,297.0L84.6,296.3L85.3,296.6L85.2,297.3L84.4,297.0Z M84.2,295.9L84.3,295.7L84.4,296.0L84.2,295.9Z M84.0,291.3L83.9,292.1L83.7,292.2L83.7,291.5L84.0,291.3Z M83.4,291.3L83.5,291.7L83.3,292.0L83.1,291.5L83.4,291.3Z M113.8,426.9L113.9,426.8L114.3,427.1L113.8,426.9Z M108.8,414.3L109.0,414.3L109.0,414.3L108.9,414.4L108.8,414.3Z M118.2,413.4L115.9,413.2L115.0,411.6L117.7,412.8L118.2,413.4Z M105.2,412.4L105.3,412.2L105.4,412.5L105.2,412.4Z M103.5,411.9L103.6,411.8L103.7,411.8L103.7,411.9L103.5,411.9Z M112.6,411.7L112.9,411.3L112.8,412.0L112.6,411.7Z M103.9,411.5L104.7,410.6L105.0,410.9L104.0,411.6L103.9,411.5Z M102.8,411.0L102.9,411.1L102.9,411.1L102.8,411.2L102.8,411.0Z M111.6,410.8L111.7,411.0L111.6,411.1L111.5,410.8L111.6,410.8Z M103.8,408.4L103.9,408.4L103.9,408.7L103.7,408.5L103.8,408.4Z M104.1,406.1L104.4,406.1L104.4,406.4L104.0,406.5L104.1,406.1Z M105.3,406.1L105.6,406.0L105.8,406.2L105.3,406.1Z M106.5,403.5L106.5,403.4L106.6,403.5L106.6,403.6L106.5,403.5Z M112.9,403.1L113.3,403.0L113.1,403.3L112.9,403.1Z M112.0,401.7L111.8,401.0L112.5,401.4L112.0,401.7Z M111.3,401.1L111.4,400.8L111.6,400.9L111.7,401.0L111.3,401.1Z M112.1,394.5L111.9,394.7L111.8,394.7L112.0,394.4L112.1,394.5Z M110.1,391.6L110.3,391.7L110.2,392.2L109.9,392.0L110.1,391.6Z M114.0,386.8L114.2,386.7L114.1,387.0L114.0,387.0L114.0,386.8Z M102.8,377.9L102.9,377.8L102.9,378.0L102.8,377.9Z M100.8,375.2L100.8,374.8L101.8,376.4L100.8,375.2Z M94.0,372.5L94.2,372.4L94.1,372.7L94.0,372.5Z M94.4,372.4L94.6,372.3L94.6,372.5L94.4,372.4Z M94.7,370.1L94.8,370.1L94.8,370.2L94.7,370.2L94.7,370.1Z M88.0,350.5L88.1,350.3L88.2,350.4L88.2,350.5L88.0,350.5Z M94.6,349.0L94.6,349.1L94.5,349.1L94.5,349.0L94.6,349.0Z M86.8,348.9L86.8,349.1L86.7,349.0L86.7,349.0L86.8,348.9Z M92.5,325.3L92.6,325.4L92.5,325.8L92.4,325.7L92.5,325.3Z M90.2,325.1L90.1,325.0L90.4,325.2L90.2,325.1Z M86.5,319.8L86.8,319.9L86.8,319.9L86.5,319.8Z M87.2,319.8L87.2,319.9L86.9,319.9L87.0,319.7L87.2,319.8Z M85.0,319.1L85.4,319.6L85.3,320.0L84.8,319.2L85.0,319.1Z M106.7,356.9L107.4,355.0L106.1,352.8L100.9,352.7L93.1,347.3L88.9,348.0L87.2,350.0L85.3,342.3L83.8,341.4L82.8,342.1L82.7,340.0L83.6,339.8L82.0,338.5L80.8,339.4L76.0,339.3L75.4,343.4L74.4,343.2L75.0,345.1L73.8,345.6L72.8,343.2L72.3,344.7L70.8,344.1L70.2,340.5L69.6,341.3L68.8,340.0L67.2,340.3L66.4,338.7L65.3,338.5L65.8,339.9L63.8,338.4L63.9,336.1L62.7,338.2L61.2,338.2L58.7,335.9L56.1,335.8L56.2,334.1L58.1,334.4L58.5,332.4L59.6,332.6L58.7,329.2L59.5,330.5L60.2,329.3L60.4,332.0L61.7,331.8L63.3,333.3L63.6,330.9L64.5,332.4L68.4,329.3L68.1,327.7L66.9,326.2L68.8,327.8L70.1,326.2L66.2,323.3L64.0,325.1L65.0,322.2L63.0,320.1L62.1,313.6L62.4,312.3L65.2,311.1L70.5,312.9L70.4,314.1L72.4,315.7L72.7,318.3L75.5,320.0L76.3,323.7L73.6,323.6L74.5,324.8L73.5,326.3L74.8,326.5L77.9,333.1L79.3,332.6L77.9,330.9L78.6,330.7L77.9,328.6L79.5,325.8L80.9,326.1L82.4,329.8L84.5,330.5L94.8,326.7L98.2,327.9L101.2,325.0L102.3,325.4L101.7,323.8L99.4,324.9L95.2,323.8L91.4,325.9L88.2,321.4L85.5,320.2L88.4,321.2L86.4,318.3L85.2,318.9L86.4,318.3L86.0,316.6L82.0,315.0L82.6,313.7L80.2,312.8L81.8,312.0L80.7,311.4L81.1,307.4L83.1,307.7L85.3,306.2L85.8,307.4L86.9,306.7L88.7,307.9L89.3,306.0L90.9,306.0L88.6,302.5L89.7,302.9L91.2,301.8L91.1,303.2L92.4,303.7L93.1,302.6L92.1,302.1L92.5,301.2L97.2,299.4L95.8,298.4L96.7,297.2L96.1,295.5L94.2,296.8L94.8,297.2L92.4,296.4L92.4,295.3L86.9,297.2L86.5,296.0L84.1,295.0L83.9,292.2L84.9,290.5L84.0,291.1L84.0,290.1L88.4,287.5L85.8,283.5L82.3,281.7L91.8,276.5L102.6,266.9L114.0,269.2L119.3,267.3L124.1,270.5L127.3,271.3L138.0,270.7L139.1,272.4L137.3,275.9L138.0,277.9L143.7,279.4L145.9,281.7L148.7,288.3L150.6,289.3L166.1,284.6L173.7,281.2L175.7,282.2L175.7,278.1L182.2,275.1L186.6,270.1L189.4,261.0L189.2,259.1L190.6,256.8L196.9,259.6L203.7,258.7L205.5,250.7L208.9,245.7L212.4,237.9L214.6,236.8L220.1,238.8L225.7,238.0L226.5,239.5L226.2,242.7L227.9,247.8L239.2,251.3L250.8,250.4L248.4,254.8L257.1,263.2L257.2,270.1L262.0,274.9L263.9,279.7L266.5,280.7L268.3,284.2L271.7,287.3L279.3,284.3L280.9,281.7L285.2,279.3L290.3,282.5L297.8,279.0L302.7,275.0L305.8,275.7L309.8,284.9L313.4,286.8L325.1,286.5L325.7,294.8L321.5,302.9L319.8,308.4L320.9,311.4L324.2,313.9L303.6,326.2L301.1,325.5L297.0,321.1L295.2,321.1L281.0,334.4L273.1,337.0L267.0,340.6L254.7,350.8L252.6,352.9L250.6,357.6L251.4,360.7L249.8,362.8L246.0,365.0L240.0,364.6L234.0,366.0L218.3,376.1L218.5,383.8L220.9,385.4L220.9,386.9L218.1,392.6L212.6,400.1L211.4,406.9L212.5,409.9L211.9,414.4L214.3,413.5L217.5,410.0L219.3,409.8L223.1,411.6L225.7,415.4L225.5,418.9L222.1,424.6L220.6,434.4L208.3,445.0L208.5,447.1L206.8,452.5L205.3,453.2L200.5,450.8L199.2,449.6L199.5,448.5L197.3,448.0L198.9,445.6L198.5,443.6L197.3,442.8L198.6,441.5L198.5,438.7L196.6,437.4L194.8,437.8L195.0,439.0L192.8,438.7L194.7,437.8L193.5,436.1L194.3,434.1L196.1,434.4L196.2,432.5L197.4,432.9L196.8,434.1L198.1,433.7L197.4,431.0L195.0,430.4L194.0,428.9L193.0,429.1L193.4,428.4L190.6,428.0L188.9,426.0L188.9,427.3L187.2,428.6L187.9,429.0L185.7,429.5L185.9,431.1L185.0,431.5L186.0,433.3L186.5,432.4L187.8,432.9L184.8,436.0L183.7,433.8L185.0,433.1L183.4,431.8L182.2,432.3L182.8,431.2L182.0,430.2L179.0,428.6L176.1,429.8L175.0,428.0L173.6,429.1L173.9,427.7L173.0,427.3L174.3,426.1L173.3,425.8L174.2,424.5L172.1,422.4L170.2,421.5L169.2,422.9L169.5,424.2L167.2,423.4L167.7,422.3L165.9,422.7L165.6,418.6L161.8,420.5L164.1,421.2L162.7,424.3L158.5,422.3L158.6,423.7L157.2,423.9L156.2,422.5L158.5,422.3L158.7,421.8L155.9,420.6L154.6,423.1L155.8,423.8L155.4,425.0L156.4,426.5L158.1,427.5L156.0,427.4L154.2,429.2L154.2,430.0L151.2,430.3L148.4,435.8L146.4,435.6L144.4,437.6L143.7,436.7L144.0,437.4L142.1,438.1L141.4,436.5L142.1,436.1L141.0,435.2L146.2,435.0L147.8,432.5L146.7,431.7L145.9,433.2L146.5,432.0L145.7,431.9L146.7,430.8L145.6,430.9L145.2,429.8L144.3,431.2L141.3,430.3L146.1,427.9L148.0,427.7L147.3,428.3L148.0,429.0L149.5,427.8L147.3,426.7L148.7,424.9L149.7,425.9L149.0,423.2L147.2,423.6L145.7,425.8L145.4,424.3L143.8,425.8L141.0,425.7L139.7,426.8L129.9,425.6L127.7,427.8L127.3,431.9L122.1,430.2L119.2,430.7L117.4,432.5L111.8,430.2L111.8,428.7L114.6,428.5L115.0,426.4L123.9,425.5L125.4,422.7L128.2,424.2L131.9,424.0L134.6,422.6L144.8,424.1L146.3,422.1L143.3,421.3L144.7,421.0L143.1,420.2L146.0,418.7L143.8,417.0L145.3,416.8L144.2,415.9L148.0,415.0L151.0,415.8L151.4,417.0L150.9,414.7L153.3,414.3L153.8,412.8L152.8,412.5L153.7,412.3L153.8,411.5L155.5,412.0L156.3,410.4L159.4,409.5L159.0,408.3L148.1,409.4L148.8,410.5L148.1,410.7L147.4,409.7L142.1,409.5L140.5,410.5L139.5,409.6L132.4,411.9L127.6,411.2L125.8,411.5L125.2,412.8L122.2,411.8L121.7,412.9L119.4,411.7L117.7,412.2L114.8,409.3L114.2,410.4L113.4,409.7L112.4,411.5L112.7,409.8L110.2,410.5L110.7,411.5L108.7,413.1L108.9,414.0L106.9,413.6L106.2,409.6L105.0,407.9L108.4,404.8L106.4,404.8L106.5,403.6L106.9,404.2L107.4,403.0L109.2,404.5L109.8,401.9L110.9,403.6L111.9,402.0L113.1,402.8L112.4,403.4L112.9,404.2L115.1,403.7L117.1,406.6L120.4,403.7L122.5,403.3L121.0,403.3L121.5,402.2L120.6,402.2L120.8,400.4L119.8,399.8L122.0,398.8L123.1,399.9L122.2,400.7L124.2,400.2L122.2,398.6L124.1,394.7L121.3,394.8L120.5,396.3L121.1,396.8L120.2,396.4L119.0,397.8L118.5,397.2L119.6,396.5L119.4,394.9L116.3,396.2L118.4,392.6L117.4,390.9L115.7,393.4L112.9,391.8L112.8,390.1L115.2,388.7L114.4,386.3L112.1,387.6L111.6,389.2L110.1,388.8L110.2,391.0L108.0,390.1L106.4,391.4L103.3,390.3L104.2,387.6L105.3,387.2L105.1,383.2L105.0,382.3L102.9,383.1L103.9,382.2L103.8,380.6L103.5,379.6L102.8,382.6L103.3,378.8L102.2,379.4L101.8,376.5L102.5,378.7L104.6,376.2L94.1,372.1L95.5,370.2L98.8,370.8L105.2,368.4L107.0,364.5L107.1,362.7L105.5,361.3L107.6,358.2L106.7,356.9Z M100.4,303.5L100.0,305.2L102.2,298.5L100.4,303.5Z M105.2,307.6L105.2,307.4L100.0,305.2L105.2,307.6Z M155.4,350.6L171.5,345.2L170.7,345.2L155.4,350.6Z M120.1,352.7L120.0,352.8L129.4,352.6L120.1,352.7Z M115.7,356.7L118.2,355.1L119.3,353.4L115.7,356.7Z M173.2,375.0L179.6,375.6L173.4,375.0L173.2,375.0Z M170.2,377.3L172.4,375.5L171.4,376.1L170.2,377.3Z M170.5,378.9L172.9,382.9L166.6,381.9L173.1,383.0L173.3,386.3L173.2,383.2L170.2,377.3L170.5,378.9Z M118.6,377.4L119.1,377.2L118.8,377.1L118.6,377.4Z M176.8,344.9L172.7,345.1L177.2,345.1L176.8,344.9Z M182.0,343.2L178.6,345.8L178.5,345.9L182.0,343.2Z M183.0,349.4L182.5,348.9L178.3,346.7L178.2,347.1L183.0,349.4Z M185.8,352.1L183.8,350.2L185.6,352.4L185.8,352.1Z M186.4,369.8L184.9,365.9L186.3,369.9L186.4,369.8Z M205.5,418.3L207.7,415.1L205.4,418.3L205.5,418.3Z M208.5,414.0L208.6,413.9L209.0,409.2L208.8,409.3L208.5,414.0Z M173.4,388.1L179.8,390.2L173.4,387.9L173.4,388.1Z M240.3,307.3L245.3,304.6L246.2,303.8L240.3,307.3Z M246.9,303.1L247.3,302.7L247.9,301.3L246.9,303.1Z M252.9,291.0L254.7,287.1L254.4,287.3L252.9,291.0Z M260.5,284.5L262.9,282.2L263.2,281.6L260.5,284.5Z M224.3,331.2L225.8,326.6L225.5,326.7L224.3,331.2Z M229.5,324.6L234.4,326.3L237.9,327.4L237.8,327.1L229.5,324.6Z M243.5,337.5L243.4,336.7L239.5,330.0L243.5,337.5Z M242.6,341.2L243.6,338.5L243.6,338.0L242.6,341.2Z M185.2,328.5L185.2,328.2L183.8,330.5L185.2,328.5Z M184.6,321.1L184.5,322.5L185.1,326.7L184.6,321.1Z M184.9,317.2L184.9,317.3L184.8,317.7L184.9,317.2Z M224.4,298.9L221.6,299.4L219.0,300.8L224.4,298.9Z M234.8,300.7L226.2,298.6L225.6,298.7L234.8,300.7Z M236.2,305.1L236.2,304.5L234.8,300.7L236.2,305.1Z M181.6,286.0L177.8,284.9L178.0,285.2L181.6,286.0Z M186.8,287.5L186.0,287.3L187.3,288.2L186.8,287.5Z M190.3,291.5L189.3,290.4L191.5,293.9L190.3,291.5Z M191.8,294.6L191.8,294.5L191.9,294.8L191.8,294.6Z M194.0,300.9L193.6,300.5L194.0,301.6L194.0,300.9Z M87.8,300.8L88.2,300.6L88.4,301.1L87.8,301.1L87.8,300.8Z M88.6,300.1L88.6,300.0L88.6,300.2L88.6,300.1Z M95.9,298.9L95.8,298.9L95.9,298.8L95.9,298.9L95.9,298.9Z M85.7,297.5L86.0,297.7L86.0,297.9L85.7,297.7L85.7,297.5Z M144.8,437.9L144.9,437.7L144.9,438.0L144.9,438.0L144.8,437.9Z M144.9,437.5L145.1,437.5L144.9,437.6L144.9,437.5Z M145.9,434.2L146.0,434.3L145.8,434.5L145.9,434.2Z M145.6,433.8L145.7,433.7L145.8,433.9L145.6,433.8Z M145.5,432.4L145.8,432.3L146.1,432.5L145.5,432.4Z M118.9,431.8L119.1,431.7L119.0,432.0L118.9,431.8Z M144.5,431.7L144.9,431.0L145.4,431.9L145.2,432.3L144.5,431.7Z M143.8,431.1L143.8,431.3L143.8,431.3L143.7,431.1L143.8,431.1Z M145.2,430.9L145.2,431.2L145.1,431.2L145.1,431.0L145.2,430.9Z M145.4,430.4L145.3,430.4L145.2,430.3L145.4,430.3L145.4,430.4Z M142.5,429.2L142.6,429.0L142.7,429.2L142.5,429.2Z M142.9,428.8L143.0,428.7L143.0,428.8L142.9,428.9L142.9,428.8Z M143.1,428.3L143.3,428.3L143.4,428.5L143.1,428.3Z M143.9,428.0L144.8,427.7L143.9,428.6L143.9,428.0Z M141.3,426.3L141.3,426.2L141.5,426.2L141.4,426.4L141.3,426.3Z M132.8,426.2L132.9,426.2L132.9,426.2L132.8,426.3L132.8,426.2Z M131.5,426.1L131.4,426.3L131.3,426.3L131.3,426.2L131.5,426.1Z M132.1,425.9L132.1,426.1L132.0,426.2L132.0,426.1L132.1,425.9Z M133.6,425.7L133.7,425.7L133.7,425.8L133.5,425.9L133.6,425.7Z M144.8,425.7L144.8,425.6L145.0,425.7L145.0,425.8L144.8,425.7Z M116.9,425.2L117.0,425.1L117.1,425.3L116.9,425.2Z M116.5,425.0L116.6,424.8L116.8,425.1L116.5,425.0Z M144.0,419.3L144.4,419.3L144.5,419.4L144.0,419.3L144.0,419.3Z M144.8,419.1L145.0,419.1L144.7,419.3L144.8,419.1Z M145.2,419.0L145.2,418.8L145.4,418.8L145.4,418.9L145.2,419.0Z M144.8,418.2L144.9,418.3L144.8,418.4L144.8,418.3L144.8,418.2Z M122.9,412.6L123.5,412.9L123.5,413.4L123.0,413.3L122.9,412.6Z M122.5,412.8L122.4,412.8L122.4,412.7L122.5,412.7L122.5,412.8Z M126.2,412.7L126.2,412.6L126.3,412.8L126.2,412.7Z M117.0,404.3L117.3,404.0L117.2,404.3L117.0,404.3Z M117.6,403.6L117.6,403.9L117.4,403.9L117.4,403.7L117.6,403.6Z M120.1,401.6L119.9,403.0L118.0,403.0L118.3,402.1L120.1,401.6Z M119.5,399.7L119.6,399.6L119.7,399.7L119.5,399.7Z M121.0,399.6L121.0,399.3L121.1,399.6L121.0,399.6Z M120.9,396.5L121.0,396.3L121.7,396.8L120.9,396.5Z M121.5,396.2L121.5,396.2L121.5,396.3L121.4,396.3L121.5,396.2Z M195.2,438.9L195.3,438.8L195.4,438.8L195.3,439.0L195.2,438.9Z M195.6,438.0L195.9,438.0L196.1,438.1L195.5,438.0L195.6,438.0Z M149.2,435.3L149.4,435.3L149.5,435.6L149.1,435.4L149.2,435.3Z M180.6,433.7L180.7,433.6L180.8,433.7L180.6,433.7L180.6,433.7Z M197.2,432.2L197.6,432.1L197.3,432.6L197.2,432.2Z M194.4,431.6L194.6,431.4L195.0,431.7L194.5,432.2L194.4,431.6Z M186.9,431.4L187.8,431.4L187.8,432.2L186.9,431.4Z M188.3,430.4L189.4,430.9L188.2,432.1L187.9,431.0L188.3,430.4Z M193.8,431.0L194.1,431.2L194.2,431.3L193.8,431.2L193.8,431.0Z M177.2,429.7L177.5,429.6L177.5,429.8L177.1,429.8L177.2,429.7Z M189.0,429.6L189.1,429.5L189.1,429.7L189.0,429.7L189.0,429.6Z M192.7,429.7L192.7,429.4L193.0,429.6L193.0,429.7L192.7,429.7Z M188.6,429.4L188.8,429.3L188.9,429.5L188.7,429.8L188.6,429.4Z M189.1,428.9L189.2,429.1L189.0,429.4L189.1,428.9Z M188.9,428.7L189.1,428.6L189.1,428.9L188.9,428.7Z M155.2,428.5L155.4,428.5L155.3,428.6L155.2,428.5Z M189.4,427.1L189.9,427.8L189.3,428.3L189.1,427.9L189.4,427.1Z M146.3,427.2L146.1,427.7L145.4,427.8L145.7,427.2L146.3,427.2Z M145.9,425.6L146.1,425.6L146.0,425.8L145.9,425.8L145.9,425.6Z M149.3,425.7L149.2,425.6L149.4,425.6L149.4,425.7L149.3,425.7Z M164.6,424.7L164.9,425.1L164.3,425.1L164.6,424.7Z M172.5,423.5L172.6,423.5L172.6,423.6L172.5,423.5Z M155.6,422.9L155.9,422.8L155.9,423.5L155.1,422.9L155.6,422.9Z M156.8,422.1L157.3,422.1L157.3,422.2L156.8,422.1Z M165.0,419.6L165.0,419.5L165.1,419.7L165.0,419.6Z M150.8,415.1L150.9,415.3L150.8,415.4L150.7,415.3L150.8,415.1Z M150.7,414.8L150.7,414.6L150.9,414.7L150.8,414.8L150.7,414.8Z M152.6,413.7L152.9,413.6L153.0,413.9L152.5,413.9L152.6,413.7Z M153.1,411.8L153.3,411.7L153.5,412.0L153.0,412.0L153.1,411.8Z M153.4,411.4L153.5,411.6L153.2,411.5L153.2,411.4L153.4,411.4Z M155.0,411.2L155.0,411.3L154.8,411.3L154.8,411.2L155.0,411.2Z" class="region-polygon" data-region="ege" filter="url(#rgn-shadow)"/>
+          <path id="map-marmara" d="M73.1,275.5L73.8,274.0L74.2,273.9L74.4,275.1L73.1,275.5Z M70.5,272.8L70.8,272.8L70.6,272.9L70.5,272.8Z M77.0,272.7L77.0,272.6L77.1,272.6L77.1,272.7L77.0,272.7Z M70.8,272.6L70.9,272.2L71.5,272.6L70.8,272.6Z M74.0,271.9L74.5,271.5L74.8,272.1L74.0,271.9Z M72.9,272.1L73.0,271.6L73.1,271.4L73.2,271.8L72.9,272.1Z M78.3,271.4L78.9,271.1L79.0,271.5L78.3,271.4Z M73.5,271.5L74.0,271.1L74.3,271.5L73.5,271.5Z M77.4,271.0L77.5,270.9L77.8,270.8L77.7,271.0L77.4,271.0Z M75.4,270.7L74.2,269.0L77.7,268.7L75.4,269.9L78.7,272.1L75.3,272.5L74.6,271.0L75.4,270.7Z M78.9,270.1L78.9,269.8L79.0,269.8L79.1,270.0L78.9,270.1Z M79.3,269.7L79.3,269.3L79.5,269.2L79.6,269.7L79.3,269.7Z M72.7,269.4L72.7,269.1L72.9,269.0L73.0,269.3L72.7,269.4Z M73.6,270.1L73.0,268.7L74.4,268.4L73.6,270.1Z M48.4,242.1L48.8,244.2L47.7,245.0L42.8,242.0L48.4,242.1Z M48.7,237.2L48.9,237.1L49.0,237.2L48.7,237.2Z M47.2,236.5L47.2,236.4L47.3,236.5L47.2,236.5Z M48.3,236.1L48.6,236.1L47.7,235.9L48.3,236.1Z M31.8,226.9L28.2,224.9L28.5,223.1L34.1,219.8L42.0,217.9L43.6,219.4L43.0,223.3L45.4,222.5L44.4,224.5L31.8,226.9Z M76.3,208.2L75.8,210.7L73.8,213.1L69.8,215.1L65.6,219.1L62.3,220.2L63.4,223.8L55.7,229.4L53.1,229.6L58.4,219.4L58.4,217.2L56.0,215.1L56.6,213.6L55.4,213.2L61.0,210.6L67.1,206.0L75.5,202.0L79.3,201.8L81.5,198.9L82.6,199.8L85.8,197.6L85.0,193.7L82.1,191.0L83.7,193.1L74.7,194.3L71.0,197.0L67.4,195.5L65.1,196.6L50.8,197.0L47.7,194.2L47.8,191.5L46.2,188.5L50.8,187.3L52.5,183.7L55.4,182.4L54.6,181.4L55.9,178.7L57.0,179.1L57.7,177.3L59.0,178.6L58.9,176.5L62.1,175.3L60.6,173.6L62.4,171.0L60.4,168.8L60.8,166.0L59.9,165.6L61.0,163.9L59.8,162.2L61.0,157.4L64.9,157.2L70.7,151.9L73.8,153.0L76.0,151.4L74.0,135.9L71.1,135.2L69.2,132.7L62.8,130.0L61.4,127.3L63.3,122.9L71.6,122.4L73.3,120.2L72.7,117.2L75.4,114.3L81.7,115.6L83.1,114.2L86.0,114.7L92.6,112.6L92.6,113.9L93.1,110.9L94.9,109.9L95.3,108.1L97.3,107.4L104.2,109.0L104.2,107.9L106.4,106.6L110.1,107.9L114.4,113.5L119.0,115.9L121.1,118.9L121.9,116.7L126.8,115.7L128.0,114.5L133.4,116.7L134.6,116.2L133.9,114.1L135.8,113.1L138.4,114.8L144.7,113.7L146.0,119.9L143.6,119.2L141.7,121.1L145.2,129.0L148.3,132.7L147.6,134.5L152.9,139.9L152.0,141.0L152.9,140.0L156.6,143.0L181.7,154.6L190.7,157.5L196.2,157.4L197.9,158.4L197.8,160.1L194.2,163.3L195.9,165.2L194.0,169.6L191.2,171.3L189.4,169.7L189.6,168.8L189.2,169.9L191.6,172.3L183.7,175.4L180.8,173.7L173.7,175.0L172.4,174.2L172.1,171.6L170.9,171.6L169.8,173.5L163.2,169.9L154.6,168.0L149.2,169.0L146.0,163.6L149.2,169.0L143.8,170.6L141.0,174.0L141.4,174.7L137.1,174.7L131.5,171.8L119.1,174.1L116.7,178.8L116.3,181.8L110.9,186.5L109.1,190.4L102.7,194.9L95.4,196.8L93.7,199.1L89.0,200.3L79.1,205.2L79.2,207.2L76.3,208.2Z M92.6,114.6L93.4,117.8L92.6,114.5L92.6,114.6Z M91.9,126.7L92.4,124.1L93.4,117.8L91.9,126.7Z M89.5,132.0L91.5,128.9L91.6,128.7L89.5,132.0Z M93.9,139.0L94.0,138.9L93.8,135.4L93.9,139.0Z M89.9,144.6L88.9,147.2L92.6,141.2L89.9,144.6Z M88.0,149.4L88.1,149.9L88.1,149.0L88.0,149.4Z M88.9,152.1L89.3,152.3L88.7,151.6L88.9,152.1Z M88.6,164.3L90.8,161.3L90.8,161.1L88.6,164.3Z M81.3,169.0L81.3,170.6L81.5,168.8L81.3,169.0Z M80.6,183.7L80.7,183.9L80.7,178.4L80.6,183.7Z M87.0,187.8L87.2,187.7L86.3,187.8L87.0,187.8Z M92.9,184.6L92.4,184.6L88.0,187.3L92.9,184.6Z M95.0,185.0L94.9,184.9L94.3,184.8L95.0,185.0Z M152.9,150.9L154.5,142.8L150.9,157.2L152.9,150.9Z M150.6,158.1L150.6,157.9L147.4,160.0L150.6,158.1Z M91.6,153.2L96.4,152.4L90.4,152.7L91.6,153.2Z M46.3,187.6L46.2,187.4L46.2,187.3L46.2,187.4L46.3,187.6Z M46.0,186.2L46.0,186.4L45.2,185.2L45.8,185.8L46.0,186.2Z M82.1,269.8L82.2,269.6L82.5,269.4L82.5,269.6L82.1,269.8Z M80.3,269.5L80.3,269.4L80.5,269.4L80.5,269.5L80.3,269.5Z M79.4,267.8L79.5,267.6L79.8,267.5L79.7,267.8L79.4,267.8Z M143.4,206.1L138.1,209.0L140.9,211.2L153.8,208.5L168.3,208.7L166.9,210.6L168.5,208.7L175.2,210.9L182.4,208.8L186.0,209.3L188.7,211.1L195.0,210.6L196.6,207.4L200.0,206.9L196.9,204.0L194.0,203.7L192.9,202.6L194.0,203.7L191.1,205.1L186.6,203.7L185.2,202.1L181.5,201.4L182.2,199.3L189.0,196.5L191.9,193.8L206.2,192.9L211.8,190.4L214.1,191.3L217.7,188.1L218.0,189.3L217.3,189.5L220.1,191.3L232.3,188.7L238.5,189.3L238.6,187.2L230.9,188.1L228.4,186.2L222.6,185.6L209.8,187.2L208.7,183.6L205.0,184.4L206.8,182.6L205.7,182.7L205.4,182.0L206.1,182.4L208.6,180.8L209.5,179.1L208.2,181.0L205.2,181.3L199.5,178.5L197.1,175.6L193.9,174.6L194.2,173.8L192.7,172.0L194.9,169.7L195.6,166.5L197.1,165.6L195.9,164.1L196.6,161.9L200.5,159.2L205.0,158.6L221.3,162.5L222.4,161.7L234.8,164.0L235.7,166.8L234.9,164.1L249.1,164.4L252.7,163.0L252.6,161.5L253.9,161.5L255.0,160.0L258.8,161.1L259.8,162.5L273.7,164.9L278.8,167.5L289.6,168.3L292.6,171.6L291.2,174.9L286.2,178.8L284.6,182.4L285.5,185.8L290.2,189.4L288.3,192.3L288.1,198.5L286.4,200.2L283.0,201.2L274.9,201.4L270.8,206.0L273.4,209.3L272.3,212.3L277.4,222.0L269.7,223.5L267.3,231.9L264.5,235.2L259.1,236.1L253.8,241.0L247.7,240.2L244.5,241.6L241.6,245.9L241.7,248.5L243.8,250.6L239.2,251.3L227.9,247.8L226.2,242.7L225.9,238.5L218.9,238.7L214.6,236.8L212.6,237.7L205.5,250.7L204.5,257.3L203.3,258.9L196.9,259.6L190.5,256.9L189.2,259.1L189.4,261.0L186.6,270.1L182.2,275.1L175.7,278.1L175.7,282.2L172.8,281.3L166.1,284.6L151.3,289.5L148.7,288.3L145.9,281.7L143.0,278.8L138.0,277.9L137.3,275.9L139.1,272.4L138.0,270.7L127.3,271.3L124.1,270.5L119.3,267.3L114.0,269.2L102.6,266.9L91.8,276.5L83.3,281.8L81.1,280.0L80.0,276.6L74.7,275.8L75.5,273.4L76.7,272.7L77.0,273.9L75.7,274.3L77.7,275.4L77.4,273.8L84.3,268.6L83.9,266.2L86.8,265.8L86.9,263.5L90.5,263.0L91.6,259.1L90.1,257.2L88.1,257.1L86.0,258.7L82.8,257.9L77.6,258.6L67.3,260.9L62.8,263.3L57.7,263.2L56.6,264.3L51.1,265.0L47.8,263.5L49.9,257.1L51.7,255.4L52.7,252.7L51.6,246.8L52.7,243.2L51.4,241.8L53.4,233.0L54.4,231.7L58.0,232.3L61.1,230.7L62.7,226.3L64.9,225.2L64.5,220.6L70.5,219.3L72.9,215.6L74.5,215.5L81.7,208.3L95.5,209.1L98.3,205.9L101.5,205.3L104.0,206.4L108.0,203.9L110.3,207.8L108.9,208.4L109.1,210.1L118.2,214.0L122.5,213.7L122.2,216.1L122.8,213.3L131.4,214.0L137.2,210.0L134.5,208.5L133.1,209.4L130.6,206.6L130.9,205.5L127.7,204.1L127.6,202.3L131.0,200.8L132.2,200.9L132.5,202.1L133.0,201.3L136.8,201.4L144.7,203.6L143.4,206.1Z M150.0,213.6L149.2,219.8L149.2,225.5L150.1,213.5L150.0,213.6Z M181.9,254.7L182.1,254.7L181.7,254.4L181.9,254.7Z M77.6,252.8L78.6,250.3L77.6,252.6L77.6,252.8Z M80.6,249.3L80.3,249.3L78.6,250.3L80.6,249.3Z M116.1,232.9L118.8,225.1L118.8,225.0L116.1,232.9Z M118.3,223.6L117.2,220.5L117.0,220.7L118.3,223.6Z M220.4,199.1L214.6,199.2L220.2,199.2L220.4,199.1Z M230.1,195.7L223.0,198.3L230.6,195.8L230.1,195.7Z M241.1,197.8L237.5,197.7L237.9,197.8L241.1,197.8Z M239.3,201.8L238.1,199.0L238.7,200.6L239.3,201.8Z M241.9,205.4L240.6,204.4L240.7,204.5L241.9,205.4Z M250.9,209.7L248.1,210.1L248.4,210.3L250.9,209.7Z M260.2,208.3L258.8,208.5L261.8,208.8L260.2,208.3Z M234.3,203.5L235.0,202.8L234.5,203.1L234.3,203.5Z M232.2,207.4L233.0,205.6L232.2,206.9L232.2,207.4Z M233.3,215.3L233.3,215.2L231.7,218.1L233.3,215.3Z M231.2,236.5L231.2,234.2L230.9,236.9L231.2,236.5Z M230.3,237.9L230.6,237.4L230.0,237.9L230.3,237.9Z M249.1,195.2L242.7,197.7L251.7,194.9L249.1,195.2Z M253.0,194.5L253.5,194.3L256.3,187.2L253.0,194.5Z M259.9,180.9L260.1,180.8L260.1,180.5L259.9,180.9Z M259.9,164.5L260.1,164.4L260.0,163.9L259.9,164.5Z M224.5,172.0L229.2,169.4L224.3,172.0L224.5,172.0Z M235.5,167.8L235.6,167.3L234.7,168.0L235.5,167.8Z M132.4,210.0L132.4,209.9L132.8,209.7L132.7,210.0L132.4,210.0Z M79.4,209.4L79.5,209.3L79.8,209.1L79.9,209.6L79.4,209.4Z M126.2,205.7L125.9,205.3L126.6,204.4L126.7,205.7L126.2,205.7Z M146.2,205.0L146.8,204.8L147.1,205.3L146.2,205.0Z M121.6,204.3L121.8,204.3L121.8,204.4L121.7,204.5L121.6,204.3Z M122.6,203.5L123.8,203.6L123.4,201.9L124.5,201.8L126.0,202.9L125.0,204.1L125.9,205.3L122.4,204.7L122.6,203.5Z M119.4,200.2L121.1,201.2L119.7,202.4L120.3,203.2L118.0,204.4L117.4,202.8L119.4,200.2Z M122.5,202.8L122.1,202.6L122.6,200.8L122.8,202.1L122.5,202.8Z M128.9,201.1L128.8,201.0L128.8,200.9L128.9,201.0L128.9,201.1Z M116.8,200.1L116.9,199.6L118.8,199.6L116.8,200.1Z M80.7,195.6L81.1,195.4L81.1,195.7L80.7,195.6Z M81.8,195.4L81.9,195.2L82.0,195.3L81.8,195.4Z M130.5,194.5L123.9,198.0L120.0,196.7L120.1,193.7L125.2,192.4L130.5,194.5Z M131.2,194.6L131.2,194.5L131.3,194.5L131.3,194.6L131.2,194.6Z M117.9,194.3L117.5,194.0L117.8,193.7L118.0,193.7L117.9,194.3Z M127.2,193.0L127.2,192.8L127.3,192.7L127.4,192.8L127.2,193.0Z M147.6,205.1L147.7,205.2L147.8,205.5L147.4,205.3L147.6,205.1Z M148.0,204.5L148.0,204.3L148.3,204.3L148.3,204.4L148.0,204.5Z M169.7,198.5L170.5,198.6L169.5,199.6L170.0,200.9L169.0,201.8L168.6,198.6L169.7,198.5Z M197.8,183.4L198.0,183.3L198.0,183.5L197.8,183.4Z M199.7,181.8L199.3,181.5L199.4,181.2L199.7,181.6L199.7,181.8Z M197.9,182.3L197.6,180.9L199.2,180.4L197.9,182.3Z M191.9,180.8L191.9,180.6L192.1,180.6L192.1,180.8L191.9,180.8Z M190.8,180.1L191.0,180.0L191.1,180.1L190.8,180.1Z M196.0,180.5L197.1,179.5L197.5,180.2L196.0,180.5Z M195.9,179.9L195.0,180.0L195.3,179.4L195.9,179.9Z M196.1,179.7L196.1,179.5L196.2,179.4L196.3,179.5L196.1,179.7Z M194.6,178.5L194.3,177.8L194.9,177.7L195.2,178.2L194.6,178.5Z M259.8,161.9L259.7,161.9L259.8,161.9L259.8,161.9Z M254.2,159.6L254.6,159.6L254.4,159.8L254.2,159.6Z" class="region-polygon" data-region="marmara" filter="url(#rgn-shadow)"/>
+          <path id="map-dogu-anadolu" d="M727.0,322.0L724.5,326.3L720.7,329.6L712.7,329.7L704.2,331.7L697.7,329.7L683.0,333.3L690.5,331.5L691.6,334.7L690.6,339.9L688.3,343.1L684.8,344.7L677.6,346.2L667.6,346.2L663.1,344.3L666.1,341.6L666.6,339.8L662.2,338.0L658.6,338.7L642.0,346.4L644.3,356.6L634.0,360.1L626.7,358.8L624.0,359.7L622.4,361.6L613.6,363.1L620.5,349.4L624.2,338.2L624.2,333.2L620.6,330.3L608.9,324.8L596.1,324.3L595.7,322.3L599.6,318.6L600.6,315.9L610.1,309.6L614.4,305.4L615.5,301.8L613.3,294.4L615.1,291.4L624.6,291.9L632.4,288.5L643.9,287.8L650.5,283.7L655.6,284.9L652.8,283.7L654.7,279.3L654.9,267.5L652.5,260.0L653.4,251.2L657.5,245.0L661.1,244.4L662.7,242.7L661.1,241.4L655.2,242.7L653.5,242.0L654.2,238.6L657.4,234.1L671.0,234.9L672.4,234.0L673.4,229.4L681.1,228.6L690.3,231.6L703.5,239.0L707.8,239.9L721.6,237.6L727.9,231.8L739.8,228.1L757.6,230.7L771.2,223.3L773.0,220.5L772.3,218.5L763.0,216.4L761.4,214.0L759.7,203.5L758.3,200.4L774.6,193.3L789.1,184.0L792.8,185.7L802.0,186.2L802.6,187.9L799.7,193.5L800.9,197.7L804.1,198.7L815.5,192.7L824.1,195.4L827.8,193.7L832.9,176.8L837.1,174.8L845.7,174.7L848.5,173.6L851.9,167.5L859.7,161.5L861.0,159.1L855.5,146.4L857.9,146.3L857.7,144.0L860.3,142.1L860.8,138.8L867.1,136.9L873.4,137.8L872.7,140.6L871.3,141.8L872.1,143.2L874.2,144.4L874.9,142.8L876.3,142.5L876.8,143.9L880.0,145.7L882.7,150.0L886.5,151.4L887.9,153.6L891.4,154.7L887.6,157.4L890.9,157.6L892.6,162.1L899.5,160.5L903.0,161.9L904.7,164.9L903.6,167.1L904.7,170.9L911.0,173.5L914.8,176.9L914.8,181.9L916.6,183.8L918.3,188.4L917.7,190.1L918.4,191.7L913.1,198.9L913.4,200.6L912.6,200.2L908.3,203.8L911.9,207.4L910.7,212.2L913.0,215.8L915.0,216.9L915.0,218.6L911.4,220.4L914.1,219.3L916.6,222.4L913.7,223.5L913.7,225.7L926.0,231.2L944.6,229.4L954.6,234.3L958.1,238.1L960.3,242.7L961.5,242.6L961.3,243.3L963.9,245.0L965.1,244.6L965.2,246.2L970.7,251.6L971.1,254.7L966.2,249.8L963.0,248.3L961.4,245.6L955.1,250.5L954.8,254.4L952.2,258.5L953.0,262.1L951.6,267.5L945.6,269.8L941.7,267.5L939.3,268.0L938.2,269.5L937.5,269.3L937.8,268.1L934.1,267.8L933.1,270.5L932.3,269.8L935.1,272.3L935.0,274.3L936.2,274.9L935.5,276.8L936.3,279.9L941.4,283.7L942.1,286.0L939.9,285.1L938.2,286.5L940.6,287.9L941.5,290.3L939.6,292.4L941.7,298.5L943.3,300.7L946.3,301.9L946.4,303.9L944.3,309.0L945.5,311.6L944.8,313.1L947.3,314.5L947.4,321.7L946.3,328.7L949.7,330.0L953.2,328.7L955.8,332.1L950.8,336.7L950.6,343.1L948.6,344.1L949.4,345.9L948.1,345.8L946.6,347.6L946.1,349.9L943.3,354.1L943.8,355.4L942.5,358.5L944.3,359.7L947.4,359.2L951.2,360.4L951.1,362.4L953.8,363.8L953.5,365.5L959.0,365.6L960.8,366.4L962.1,368.7L959.3,372.8L962.0,375.1L962.1,377.1L961.1,378.4L961.4,382.7L960.4,384.9L963.3,385.9L964.6,388.4L966.8,388.9L971.2,393.1L971.7,395.0L969.0,398.0L970.3,402.6L962.1,400.3L955.9,405.8L948.0,408.5L948.7,409.8L946.4,413.4L943.9,412.4L942.9,408.4L940.7,405.6L942.6,402.1L945.0,401.0L944.4,397.3L942.4,394.8L937.7,392.6L932.3,392.0L928.3,396.2L925.6,397.4L914.3,397.6L906.1,395.4L903.0,391.6L903.0,380.2L905.8,368.3L883.8,365.7L880.8,363.1L880.9,360.4L883.4,355.5L879.2,348.6L873.4,347.8L868.6,350.9L856.8,345.1L850.5,343.5L846.9,340.5L842.5,338.8L836.9,339.7L833.5,344.0L831.2,342.4L828.1,342.9L816.2,340.1L816.5,330.3L814.2,321.6L812.2,319.5L803.0,320.3L801.8,319.0L802.5,315.6L801.6,313.7L796.8,309.6L795.4,306.9L796.1,308.4L778.6,316.3L759.7,315.2L758.4,316.3L757.2,321.2L755.7,323.2L748.2,323.4L736.5,323.4L727.0,322.0Z M745.8,235.5L746.0,236.0L747.9,230.0L745.8,235.5Z M954.9,370.4L955.8,369.8L959.0,365.6L954.9,370.4Z M748.5,318.9L748.4,318.8L748.2,323.4L748.5,318.9Z M858.8,205.8L860.3,197.1L860.1,196.4L858.8,205.8Z M857.4,207.9L857.6,207.8L858.8,205.8L857.4,207.9Z M839.0,216.8L839.1,216.9L839.6,215.0L839.0,216.8Z M856.0,246.9L855.6,246.3L846.3,243.4L856.0,246.9Z M857.2,248.6L857.2,248.4L857.0,248.2L857.2,248.6Z M848.3,264.6L855.1,263.0L855.1,262.9L848.3,264.6Z M857.5,269.3L857.6,269.5L857.2,268.6L857.5,269.3Z M867.1,280.4L865.3,277.1L865.3,277.1L867.1,280.4Z M868.8,287.2L868.2,282.5L868.1,282.3L868.8,287.2Z M848.4,295.7L847.9,295.9L856.4,296.4L848.4,295.7Z M833.4,302.6L832.7,303.0L839.0,302.5L833.4,302.6Z M832.2,303.3L832.2,304.2L832.3,303.2L832.2,303.3Z M832.3,304.8L834.9,308.2L832.3,304.7L832.3,304.8Z M814.2,315.8L813.8,315.9L825.5,316.5L814.2,315.8Z M673.8,292.4L671.2,285.2L672.4,289.9L673.8,292.4Z M676.0,299.3L673.2,298.1L675.2,299.3L676.0,299.3Z M681.7,298.4L679.3,299.0L687.0,298.4L681.7,298.4Z M721.8,303.0L715.6,303.8L720.4,303.7L721.8,303.0Z M724.5,301.4L724.0,301.9L724.3,301.7L724.5,301.4Z M727.4,289.2L727.4,289.2L730.0,286.7L727.4,289.2Z M736.5,285.6L734.8,286.4L735.2,286.4L736.5,285.6Z M751.2,278.5L749.6,279.3L751.3,278.6L751.2,278.5Z M752.9,280.3L751.8,279.2L753.4,282.7L752.9,280.3Z M748.0,289.3L750.9,285.7L748.0,288.7L748.0,289.3Z M747.9,295.2L747.9,293.4L747.9,295.0L747.9,295.2Z M751.2,300.3L749.6,299.8L751.3,300.5L751.2,300.3Z M752.9,303.6L751.8,301.4L752.8,303.8L752.9,303.6Z M747.1,310.1L747.9,308.5L747.8,308.5L747.1,310.1Z M745.6,315.4L745.7,313.8L745.6,314.0L745.6,315.4Z M661.1,285.2L656.2,285.0L656.4,285.1L661.1,285.2Z M665.5,291.4L664.3,293.3L664.4,293.5L665.5,291.4Z M666.4,306.9L659.8,307.3L659.0,307.7L666.4,306.9Z M658.3,308.1L658.1,308.2L657.4,309.3L658.3,308.1Z M653.4,315.3L652.5,316.7L652.6,317.3L653.4,315.3Z M669.0,327.1L676.0,327.7L675.8,327.6L669.0,327.1Z M790.7,297.7L790.8,297.8L790.8,297.5L790.7,297.7Z M792.3,272.2L791.5,274.7L792.6,271.9L792.3,272.2Z M793.8,270.8L793.3,271.3L794.3,270.7L793.8,270.8Z M808.4,272.1L807.2,271.5L808.7,272.4L808.4,272.1Z M818.1,281.6L818.4,281.6L815.4,279.7L815.6,280.0L818.1,281.6Z M824.1,282.3L819.8,281.8L823.8,282.4L824.1,282.3Z M842.8,267.5L841.7,269.2L843.2,267.3L842.8,267.5Z M672.5,282.7L673.4,281.2L673.3,281.3L672.5,282.7Z M674.3,280.9L679.4,279.3L679.8,278.7L674.3,280.9Z M674.4,275.3L676.0,272.9L675.7,273.0L674.4,275.3Z M692.1,263.6L689.4,264.4L700.3,262.2L700.1,262.2L692.1,263.6Z M708.1,263.5L713.6,262.9L713.4,262.8L708.1,263.5Z M714.5,263.3L714.0,263.1L715.0,265.4L714.5,263.3Z M740.8,258.7L747.2,259.4L760.5,259.3L740.8,258.7Z M764.6,260.6L764.3,257.4L764.3,260.5L760.5,259.3L764.6,260.6Z M767.5,261.5L776.1,258.3L776.0,258.3L767.5,261.5Z M777.4,258.7L778.2,259.0L778.1,258.9L777.4,258.7Z M779.9,260.9L780.2,261.3L780.3,261.4L779.9,260.9Z M735.9,283.7L735.8,283.5L735.6,284.3L735.9,283.7Z M735.8,279.0L735.4,279.8L735.4,279.9L735.8,279.0Z M888.6,283.9L888.7,283.8L882.0,286.4L882.6,286.3L888.6,283.9Z M885.6,275.0L889.6,277.8L889.6,277.7L885.6,275.0Z M895.9,268.0L895.9,268.0L898.0,268.2L895.9,268.0Z M905.7,272.4L902.5,268.8L905.5,272.3L905.7,272.4Z M910.5,274.8L906.9,273.0L910.3,274.8L910.5,274.8Z M941.8,366.4L940.6,365.5L942.7,369.4L942.8,369.1L941.8,366.4Z M941.5,373.1L941.5,373.2L941.9,373.4L941.5,373.1Z M942.6,373.9L942.8,374.0L946.9,372.2L942.6,373.9Z M951.7,372.7L951.8,372.7L952.4,372.3L951.7,372.7Z M868.6,335.2L867.6,339.4L867.7,339.5L868.6,335.2Z M866.2,326.3L866.1,326.5L866.2,326.8L866.2,326.3Z M890.0,304.3L890.1,304.2L884.2,308.5L890.0,304.3Z M888.0,296.2L887.8,296.0L881.8,292.6L881.8,292.8L888.0,296.2Z M863.4,237.1L863.7,237.2L867.2,237.2L863.4,237.1Z M895.9,228.2L896.0,227.7L895.9,228.1L895.9,228.2Z M896.5,226.1L896.8,225.8L896.6,225.8L896.5,226.1Z M901.8,221.4L909.2,221.3L909.5,221.2L901.8,221.4Z M903.9,246.2L905.0,246.2L900.9,244.6L903.9,246.2Z M930.7,251.1L938.6,250.6L930.5,251.0L930.7,251.1Z M942.1,251.9L942.8,251.9L938.6,250.6L942.1,251.9Z M945.5,252.0L946.8,251.5L943.5,251.9L945.5,252.0Z M899.9,234.7L900.9,236.6L900.9,236.2L899.9,234.7Z M875.8,180.0L875.3,181.1L875.3,181.2L875.8,180.0Z M878.7,176.3L877.3,176.9L877.2,177.2L878.7,176.3Z M882.6,174.6L887.0,173.5L888.9,172.7L885.0,173.5L882.6,174.6Z M892.3,171.1L892.3,170.9L891.8,171.3L892.3,171.1Z M894.3,167.6L894.3,167.4L893.6,168.8L894.3,167.6Z" class="region-polygon" data-region="dogu-anadolu" filter="url(#rgn-shadow)"/>
+          <path id="map-guneydogu" d="M592.1,431.8L590.6,433.9L587.5,431.7L588.9,427.9L583.4,424.5L576.5,423.4L575.6,422.2L575.5,423.0L570.2,420.6L567.7,420.9L558.7,414.2L563.5,404.6L572.8,394.9L581.0,389.6L582.6,390.5L584.5,397.6L586.7,398.4L595.3,391.5L615.4,387.7L616.7,385.6L616.8,380.8L606.6,374.6L606.9,369.4L615.4,362.2L622.4,361.6L624.0,359.7L627.3,358.7L634.4,360.0L644.3,356.6L642.0,346.4L655.0,339.8L661.8,337.9L666.6,339.8L666.1,341.6L663.1,344.3L667.6,346.2L677.6,346.2L684.8,344.7L688.3,343.1L690.1,340.7L691.6,335.4L690.5,331.5L697.7,329.7L704.2,331.7L712.7,329.7L720.7,329.6L724.5,326.3L727.0,322.0L736.5,323.4L755.4,323.3L756.7,322.3L758.3,316.5L759.7,315.2L778.6,316.3L796.1,308.4L801.3,313.3L802.4,316.3L801.8,319.0L804.3,322.2L803.6,320.5L804.2,320.0L811.9,319.3L814.2,321.4L816.5,330.9L816.4,339.4L814.8,345.6L816.2,340.1L828.1,342.9L831.2,342.4L833.5,344.0L836.9,339.7L842.5,338.8L868.1,351.0L873.4,347.8L879.2,348.6L883.4,355.5L880.9,360.4L880.8,363.1L884.1,365.8L897.1,368.0L905.9,368.0L903.0,380.2L902.9,390.6L906.1,395.4L899.7,391.8L897.5,393.3L889.7,389.1L883.4,390.2L880.2,392.5L874.1,390.7L871.6,388.9L868.2,390.8L868.8,392.4L866.7,393.2L866.7,394.4L865.0,395.8L861.4,402.6L850.2,404.9L848.8,400.3L849.8,397.8L846.8,394.6L843.1,394.9L843.7,392.5L835.1,400.1L810.5,406.3L796.4,406.7L793.8,407.6L791.4,405.9L780.6,404.0L775.7,405.1L772.3,404.2L760.7,409.8L755.4,410.9L746.4,416.4L726.0,426.0L695.8,431.4L685.6,429.1L671.4,428.9L663.1,421.0L655.0,417.6L644.9,417.0L630.8,424.2L618.4,427.5L610.0,432.8L592.1,431.8Z M870.2,361.7L870.3,361.7L880.8,363.1L870.2,361.7Z M631.3,380.9L634.7,382.0L625.0,379.0L631.3,380.9Z M637.9,385.3L636.0,385.2L640.4,386.3L637.1,384.4L637.9,385.3Z M643.7,387.1L651.6,382.5L643.3,387.0L643.7,387.1Z M675.9,373.2L676.0,373.1L665.7,376.9L675.9,373.2Z M682.5,366.3L683.5,363.9L682.3,366.4L682.5,366.3Z M683.5,358.5L683.4,358.6L683.5,363.9L683.5,358.5Z M686.5,354.2L684.2,356.9L683.7,358.0L686.5,354.2Z M693.4,349.9L694.1,349.0L687.8,352.6L693.4,349.9Z M697.7,351.8L705.7,352.6L704.9,352.0L697.7,351.8Z M725.9,365.4L725.1,364.4L722.1,361.7L725.9,365.4Z M727.0,375.4L726.9,366.9L726.6,366.5L727.0,375.4Z M728.1,379.8L729.7,383.2L727.0,375.4L728.1,379.8Z M744.0,377.6L746.8,377.5L738.5,376.2L744.0,377.6Z M747.6,377.4L754.4,372.9L747.4,377.4L747.6,377.4Z M785.7,368.8L786.0,369.1L785.7,368.7L785.7,368.8Z M830.2,373.3L826.8,367.9L825.9,366.8L826.0,367.2L830.2,373.3Z M820.6,382.8L819.5,383.5L827.4,381.7L820.6,382.8Z M819.4,385.0L819.4,391.3L819.5,383.5L819.4,385.0Z M820.3,393.7L821.4,394.2L820.2,393.5L820.3,393.7Z M825.5,394.4L825.2,393.4L825.0,393.5L825.5,394.4Z M632.3,387.3L635.3,385.2L634.8,385.2L632.3,387.3Z M635.9,415.2L635.3,414.5L635.9,415.6L635.9,415.2Z M575.8,421.4L576.4,420.5L575.9,420.8L575.8,421.4Z M592.6,411.0L593.9,411.6L593.3,411.0L592.6,411.0Z M595.5,413.1L598.0,419.4L595.9,413.5L595.5,413.1Z M740.4,410.2L740.4,410.3L742.7,414.6L740.4,410.2Z M837.4,370.5L831.6,370.0L833.3,370.7L837.4,370.5Z M847.8,369.9L845.7,370.1L847.6,370.0L847.8,369.9Z M862.0,359.0L861.8,359.1L865.7,359.0L862.0,359.0Z M696.6,341.4L694.7,340.3L696.6,341.7L696.6,341.4Z M695.8,347.0L696.4,343.1L695.1,347.8L695.8,347.0Z M825.3,366.0L825.2,365.9L824.9,365.9L825.3,366.0Z M803.6,356.9L803.4,356.7L803.3,356.7L803.6,356.9Z M787.9,365.5L788.6,363.4L787.7,365.6L787.9,365.5Z M788.2,356.7L784.7,359.9L784.7,360.0L788.2,356.7Z M795.7,326.0L795.2,326.3L794.8,327.7L795.7,326.0Z M803.8,323.2L804.0,322.8L803.7,323.2L803.8,323.2Z" class="region-polygon" data-region="guneydogu" filter="url(#rgn-shadow)"/>
+          <text class="region-label" data-region="karadeniz" x="500" y="133" text-anchor="middle">1. KARADENİZ</text>
+          <text class="region-label" data-region="karadeniz" x="500" y="147" text-anchor="middle">BÖLGESİ</text>
+          <text class="region-label" data-region="marmara" x="175" y="225" text-anchor="middle">5. MARMARA</text>
+          <text class="region-label" data-region="marmara" x="175" y="239" text-anchor="middle">BÖLGESİ</text>
+          <text class="region-label" data-region="ege" x="135" y="350" text-anchor="middle">4. EGE</text>
+          <text class="region-label" data-region="ege" x="135" y="364" text-anchor="middle">BÖLGESİ</text>
+          <text class="region-label" data-region="akdeniz" x="395" y="468" text-anchor="middle">2. AKDENİZ</text>
+          <text class="region-label" data-region="akdeniz" x="395" y="482" text-anchor="middle">BÖLGESİ</text>
+          <text class="region-label" data-region="ic-anadolu" x="465" y="305" text-anchor="middle">3. İÇ ANADOLU</text>
+          <text class="region-label" data-region="ic-anadolu" x="465" y="319" text-anchor="middle">BÖLGESİ</text>
+          <text class="region-label" data-region="dogu-anadolu" x="730" y="245" text-anchor="middle">6. DOĞU ANADOLU</text>
+          <text class="region-label" data-region="dogu-anadolu" x="730" y="259" text-anchor="middle">BÖLGESİ</text>
+          <text class="region-label" data-region="guneydogu" x="660" y="415" text-anchor="middle">7. GÜNEYDOĞU</text>
+          <text class="region-label" data-region="guneydogu" x="660" y="429" text-anchor="middle">ANADOLU BÖLGESİ</text>
+          <g id="region-badges-layer"></g>
+        </svg>
+        </div>
+
+        <!-- Bölge Bilgi Kartı -->
+        <div class="region-info-card" id="region-hover-card" style="display:none;">
+          <span class="region-card-icon" id="rc-icon"></span>
+          <div>
+            <strong id="rc-name"></strong>
+            <span id="rc-status"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Alt Rozet Çubuğu -->
+      <div class="badges-strip" id="badges-strip"></div>
+    </div>
+
+    <!-- EKRAN 4: BÖLGE GİRİŞ (HIKAYE) -->
+    <div id="screen-region-intro" class="screen">
+      <div class="region-intro-bg" id="ri-bg"></div>
+      <div class="region-intro-content">
+        <div class="region-intro-header">
+          <div class="region-flag" id="ri-flag"></div>
+          <div>
+            <p class="region-intro-label">Görev Bölgesi</p>
+            <h2 id="ri-name"></h2>
+          </div>
+        </div>
+        <div class="story-box" id="ri-story">
+          <p id="ri-story-text"></p>
+        </div>
+        <div class="info-grid" id="ri-info-grid"></div>
+        <div class="mission-card">
+          <h3>Görevin</h3>
+          <p id="ri-mission"></p>
+        </div>
+        <div class="badge-preview-card">
+          <span id="ri-badge-icon"></span>
+          <div>
+            <small>Bu bölgeyi tamamlarsan kazanacağın unvan:</small>
+            <strong id="ri-badge-name"></strong>
+          </div>
+        </div>
+        <div class="ri-buttons">
+          <button class="btn-primary" id="btn-start-quiz">Göreve Başla!</button>
+          <button class="btn-ghost" id="btn-back-map">Haritaya Dön</button>
         </div>
       </div>
     </div>
 
-    <div style="margin-top:18px;display:flex;gap:12px;flex-wrap:wrap;justify-content:center;">
-      <button class="btn btn-primary btn-lg" id="btn-start" disabled style="opacity:.45;cursor:not-allowed;">🎒 Maceraya Başla</button>
-      <button class="btn btn-secondary btn-lg" id="btn-continue" style="display:none;">📖 Devam Et</button>
-    </div>
-
-    <div class="th" style="margin-top:14px;font-size:14px;color:var(--ink3);">Anadolu'nun her bölgesinde seni bir kültürel miras sırrı bekliyor…</div>
-    <div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap;justify-content:center;">
-      <span style="padding:5px 12px;border-radius:999px;background:var(--cream);border:1.5px solid var(--rule);font-size:12px;color:var(--ink2);font-weight:600;">🏛️ Osmanlı Mirası</span>
-      <span style="padding:5px 12px;border-radius:999px;background:var(--cream);border:1.5px solid var(--rule);font-size:12px;color:var(--ink2);font-weight:600;">🗿 Antik Kentler</span>
-      <span style="padding:5px 12px;border-radius:999px;background:var(--cream);border:1.5px solid var(--rule);font-size:12px;color:var(--ink2);font-weight:600;">🏺 UNESCO Alanları</span>
-      <span style="padding:5px 12px;border-radius:999px;background:var(--cream);border:1.5px solid var(--rule);font-size:12px;color:var(--ink2);font-weight:600;">⛰️ 7 Bölge</span>
-    </div>
-  </div>
-</div>
-
-<!-- EKRAN: HARİTA -->
-<div id="s-map" class="screen" style="height:100vh;">
-  <div class="cream" style="display:flex;align-items:center;justify-content:space-between;padding:10px 20px;border-bottom:1.5px solid var(--rule2);box-shadow:0 2px 8px rgba(62,39,35,.08);flex-shrink:0;">
-    <div style="display:flex;align-items:center;gap:10px;">
-      <span style="font-size:20px;">🎒</span>
-      <span class="th" style="font-size:18px;" id="map-player-name">Kaşif</span>
-    </div>
-    <div style="text-align:center;">
-      <div class="tl" style="font-size:10px;">İLERLEME</div>
-      <div class="th" style="font-size:17px;color:var(--title);" id="map-progress">0/7 Bölge</div>
-    </div>
-    <div style="text-align:right;">
-      <div class="tl" style="font-size:10px;">PUAN</div>
-      <div class="th" style="font-size:17px;color:var(--red);" id="map-score">0</div>
-    </div>
-  </div>
-  <div style="flex:1;position:relative;overflow:hidden;">
-    <div id="map-el"></div>
-    <div id="map-tooltip" style="display:none;position:absolute;bottom:16px;left:50%;transform:translateX(-50%);background:rgba(250,246,236,.97);border:1.5px solid var(--rule);border-radius:14px;padding:12px 18px;z-index:1000;box-shadow:var(--s3);min-width:300px;max-width:420px;pointer-events:none;"></div>
-  </div>
-  <div class="cream" style="padding:8px 20px;border-top:1.5px solid var(--rule2);display:flex;align-items:center;gap:10px;overflow-x:auto;flex-shrink:0;" id="badge-strip">
-    <span class="tl" style="font-size:10px;flex-shrink:0;">ROZETLER</span>
-  </div>
-</div>
-
-<!-- EKRAN: BÖLGE GİRİŞ -->
-<div id="s-ri" class="screen paper" style="align-items:center;padding:32px 24px;overflow-y:auto;">
-  <div style="max-width:680px;width:100%;">
-    <button class="btn btn-ghost btn-sm" id="btn-ri-back" style="margin-bottom:16px;">← Haritaya Dön</button>
-    <div class="card card-inset" id="ri-header" style="margin-bottom:18px;display:flex;align-items:center;gap:16px;"></div>
-    <div class="card" style="margin-bottom:14px;position:relative;" id="ri-story-wrap">
-      <div style="position:absolute;top:-12px;left:20px;background:var(--gold);color:#FFF7EB;padding:2px 12px;font-family:var(--fh);font-size:13px;letter-spacing:.12em;border-radius:6px;">GÖREV BRİFİ</div>
-      <p id="ri-story" style="margin:8px 0 0;font-size:14px;line-height:1.7;font-style:italic;"></p>
-    </div>
-    <div id="ri-cards" style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:14px;"></div>
-    <div style="background:rgba(184,134,47,.08);border:1px dashed var(--rule);border-radius:10px;padding:10px 14px;margin-bottom:22px;">
-      <span class="th" style="font-size:13px;color:var(--gold);">💡 </span>
-      <span id="ri-fact" style="font-size:13px;color:var(--ink2);font-style:italic;"></span>
-    </div>
-    <div style="text-align:center;">
-      <button class="btn btn-primary btn-lg" id="btn-start-quiz">🗺️ Göreve Başla</button>
-    </div>
-  </div>
-</div>
-
-<!-- EKRAN: QUIZ -->
-<div id="s-quiz" class="screen paper" style="flex-direction:column;">
-  <div class="cream" style="padding:10px 20px;border-bottom:1.5px solid var(--rule2);display:flex;align-items:center;gap:14px;flex-shrink:0;">
-    <button class="btn btn-ghost btn-sm" id="btn-quiz-back">← Harita</button>
-    <div style="flex:1;">
-      <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
-        <span class="th" style="font-size:14px;" id="q-region-lbl"></span>
-        <span class="tl" style="font-size:11px;" id="q-counter"></span>
+    <!-- EKRAN 5: SORU -->
+    <div id="screen-quiz" class="screen">
+      <div class="quiz-header">
+        <div class="quiz-region-name" id="q-region-name"></div>
+        <div class="quiz-progress">
+          <div class="q-dots" id="q-dots"></div>
+        </div>
+        <div class="quiz-score-live">Puan: <strong id="q-score-live">0</strong></div>
       </div>
-      <div class="prog-bar"><div class="prog-fill" id="q-prog" style="width:0%"></div></div>
-    </div>
-    <div class="th" style="font-size:15px;color:var(--red);flex-shrink:0;" id="q-score-lbl">0 puan</div>
-  </div>
-  <div style="flex:1;padding:20px;max-width:760px;margin:0 auto;width:100%;display:flex;flex-direction:column;gap:18px;overflow-y:auto;">
-    <div style="display:flex;gap:16px;align-items:flex-start;">
-      <div id="q-img-wrap" style="display:none;flex:0 0 170px;border-radius:10px;overflow:hidden;border:2px solid var(--rule2);box-shadow:var(--s1);">
-        <img id="q-img" src="" alt="" style="width:100%;height:120px;object-fit:cover;display:block;"/>
-        <div id="q-img-cap" style="padding:4px 8px;font-size:10px;color:var(--ink3);text-align:center;font-style:italic;"></div>
+
+      <div class="timer-bar-container">
+        <div class="timer-bar" id="timer-bar"></div>
       </div>
-      <div style="flex:1;">
-        <div class="tl" style="font-size:10px;margin-bottom:6px;" id="q-num-lbl">SORU 1</div>
-        <div class="td" style="font-size:19px;line-height:1.45;color:var(--ink);" id="q-text"></div>
+
+      <div class="quiz-body">
+        <div class="question-number" id="q-number">Soru 1/4</div>
+        <div class="quiz-content-row">
+          <div class="q-image-wrap" id="q-image-wrap" style="display:none">
+            <img id="q-image" src="" alt="Kültürel Miras"/>
+            <span class="q-image-caption" id="q-image-caption"></span>
+          </div>
+          <div class="quiz-text-col">
+            <div class="question-text" id="q-text"></div>
+            <div class="options-grid" id="q-options"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="answer-feedback" id="answer-feedback" style="display:none;">
+        <div class="feedback-icon" id="fb-icon"></div>
+        <div class="feedback-middle">
+          <div class="feedback-text" id="fb-text"></div>
+          <div class="feedback-explanation" id="fb-explanation"></div>
+        </div>
+        <button class="btn-primary" id="btn-next-q">Devam Et</button>
       </div>
     </div>
-    <div id="q-opts" style="display:flex;flex-direction:column;gap:10px;"></div>
-    <div id="q-feedback" style="display:none;border-radius:10px;padding:12px 16px;"></div>
-    <div id="q-next-wrap" style="display:none;text-align:center;padding-bottom:20px;">
-      <button class="btn btn-primary btn-lg" id="btn-next-q">Sonraki Soru →</button>
+
+    <!-- EKRAN 6: BÖLGE TAMAMLANDI -->
+    <div id="screen-region-complete" class="screen">
+      <div class="complete-bg"></div>
+      <div class="complete-content">
+        <div class="stars-display" id="stars-display"></div>
+        <div class="badge-earned-anim" id="badge-earned">
+          <div class="badge-glow"></div>
+          <div class="badge-big-icon" id="bc-badge-icon"></div>
+          <h2 id="bc-badge-name"></h2>
+          <p id="bc-region-name"></p>
+        </div>
+        <div class="region-score-box">
+          <span>Bölge Puanı:</span>
+          <strong id="bc-score"></strong>
+          <span>/ 500</span>
+        </div>
+        <div class="complete-fact" id="bc-fact"></div>
+        <div class="complete-buttons">
+          <button class="btn-primary" id="btn-continue-map">Haritaya Dön</button>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
 
-<!-- EKRAN: ROZET -->
-<div id="s-badge" class="screen paper" style="align-items:center;justify-content:center;padding:40px 24px;text-align:center;position:relative;overflow:hidden;">
-  <svg class="corner tl" viewBox="0 0 44 44" fill="none"><path d="M4 40L4 4L40 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity=".6"/><circle cx="4" cy="4" r="2.5" fill="currentColor" opacity=".8"/></svg>
-  <svg class="corner br" viewBox="0 0 44 44" fill="none"><path d="M4 40L4 4L40 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity=".6"/><circle cx="4" cy="4" r="2.5" fill="currentColor" opacity=".8"/></svg>
-  <div id="badge-icon-wrap" style="transition:all .6s cubic-bezier(.34,1.56,.64,1);transform:scale(.3);opacity:0;">
-    <div id="badge-circle" style="width:130px;height:130px;border-radius:50%;display:grid;place-items:center;font-size:60px;margin:0 auto;box-shadow:inset 0 0 0 3px rgba(255,247,235,.7),0 4px 0 rgba(62,39,35,.18),0 8px 20px rgba(62,39,35,.2);"></div>
-  </div>
-  <div class="td" style="font-size:50px;margin-top:20px;">Rozet Kazandın!</div>
-  <div class="th" style="font-size:20px;color:var(--ink2);margin-top:4px;" id="badge-name"></div>
-  <div class="card" style="max-width:420px;margin-top:22px;padding:16px 24px;">
-    <div style="display:flex;justify-content:space-around;gap:16px;">
-      <div><div class="tl" style="font-size:10px;">DOĞRU</div><div class="td" id="b-correct" style="font-size:34px;color:var(--green);"></div></div>
-      <div><div class="tl" style="font-size:10px;">PUAN</div><div class="td" id="b-score" style="font-size:34px;color:var(--red);"></div></div>
-      <div><div class="tl" style="font-size:10px;">BAŞARI</div><div class="td" id="b-stars" style="font-size:28px;"></div></div>
+    <!-- EKRAN 7: OYUN BİTİŞ / SERTİFİKA -->
+    <div id="screen-final" class="screen">
+      <div class="final-bg"></div>
+      <div class="final-content" id="final-content">
+        <div class="final-trophy">🏆</div>
+        <h1 class="final-title">Tebrikler!</h1>
+        <h2 class="final-player-name" id="final-player-name"></h2>
+        <p class="final-subtitle">Türkiye'nin tüm 7 coğrafi bölgesini başarıyla keşfettin!</p>
+
+        <div class="final-badges-grid" id="final-badges-grid"></div>
+
+        <div class="final-stats">
+          <div class="stat-box">
+            <strong id="fs-score">0</strong>
+            <span>Toplam Puan</span>
+          </div>
+          <div class="stat-box">
+            <strong id="fs-accuracy">0%</strong>
+            <span>Doğruluk Oranı</span>
+          </div>
+          <div class="stat-box">
+            <strong id="fs-time">0s</strong>
+            <span>Ort. Yanıt Süresi</span>
+          </div>
+        </div>
+
+        <div class="certificate-box" id="certificate-box">
+          <div class="cert-logo">🗺️</div>
+          <h3>COĞRAFİ UZMANLIK SERTİFİKASI</h3>
+          <p>Bu belge,</p>
+          <h2 id="cert-name"></h2>
+          <p>adlı öğrencinin "Türkiye'yi Keşfet" eğitsel oyununu başarıyla tamamladığını ve</p>
+          <div class="cert-score-big" id="cert-score"></div>
+          <p>puan aldığını belgeler.</p>
+          <div class="cert-badges-row" id="cert-badges-row"></div>
+          <div class="cert-footer">
+            <span>TÜBİTAK 4006 - Bilim Fuarı Projesi</span>
+            <span id="cert-date"></span>
+          </div>
+        </div>
+
+        <div class="final-buttons">
+          <button class="btn-primary" id="btn-print-cert">Sertifikayı Yazdır</button>
+          <button class="btn-secondary" id="btn-play-again">Tekrar Oyna</button>
+        </div>
+      </div>
     </div>
-  </div>
-  <div class="th" style="font-size:14px;color:var(--ink3);margin-top:14px;max-width:400px;font-style:italic;" id="b-fact"></div>
-  <button class="btn btn-primary btn-lg" id="btn-badge-cont" style="margin-top:24px;">🗺️ Haritaya Dön</button>
-</div>
 
-<!-- EKRAN: FİNAL -->
-<div id="s-final" class="screen paper" style="align-items:center;justify-content:center;padding:40px 24px;text-align:center;position:relative;overflow:hidden;">
-  <svg class="corner tl" viewBox="0 0 44 44" fill="none"><path d="M4 40L4 4L40 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity=".6"/><circle cx="4" cy="4" r="2.5" fill="currentColor" opacity=".8"/></svg>
-  <svg class="corner tr" viewBox="0 0 44 44" fill="none"><path d="M4 40L4 4L40 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity=".6"/><circle cx="4" cy="4" r="2.5" fill="currentColor" opacity=".8"/></svg>
-  <svg class="corner bl" viewBox="0 0 44 44" fill="none"><path d="M4 40L4 4L40 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity=".6"/><circle cx="4" cy="4" r="2.5" fill="currentColor" opacity=".8"/></svg>
-  <svg class="corner br" viewBox="0 0 44 44" fill="none"><path d="M4 40L4 4L40 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity=".6"/><circle cx="4" cy="4" r="2.5" fill="currentColor" opacity=".8"/></svg>
-  <div class="float" style="font-size:72px;">🏆</div>
-  <div class="td" style="font-size:58px;margin-top:8px;line-height:.95;">Tebrikler!</div>
-  <div class="th" style="font-size:22px;color:var(--ink2);margin-top:6px;" id="final-name"></div>
-  <div class="card card-inset" style="max-width:540px;margin-top:26px;">
-    <div class="tl" style="font-size:11px;margin-bottom:12px;">KAZANILAN ROZETLER</div>
-    <div id="final-badges" style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;"></div>
-    <div style="margin-top:18px;display:flex;justify-content:space-around;">
-      <div><div class="tl" style="font-size:10px;">TOPLAM PUAN</div><div class="td" style="font-size:34px;color:var(--red);" id="final-score"></div></div>
-      <div><div class="tl" style="font-size:10px;">BÖLGE</div><div class="td" style="font-size:34px;color:var(--green);">7/7</div></div>
+    <!-- EKRAN 8: PROJE HAKKINDA -->
+    <div id="screen-about" class="screen">
+      <div class="about-content">
+        <button class="btn-back-abs" id="btn-back-from-about">← Geri</button>
+        <h2>Proje Hakkında</h2>
+        <div class="about-card">
+          <h3>Proje Adı</h3>
+          <p>Hikayeleştirilmiş Oyun Tabanlı Öğrenme: "Türkiye'yi Keşfet" Macera Senaryosu</p>
+        </div>
+        <div class="about-card">
+          <h3>Amaç</h3>
+          <p>Ortaokul öğrencilerinin Türkiye'nin coğrafi bölgelerine ilişkin temel bilgileri daha kalıcı ve anlamlı öğrenmelerini desteklemek amacıyla hikâyeleştirilmiş oyun tabanlı bir dijital öğrenme ortamı tasarlamak ve etkililiğini incelemek.</p>
+        </div>
+        <div class="about-card">
+          <h3>Özellikler</h3>
+          <ul>
+            <li>7 coğrafi bölge, her biri özgün bir görev</li>
+            <li>28 eğitsel soru + açıklayıcı geri bildirim</li>
+            <li>Unvan ve rozet sistemi (gamification)</li>
+            <li>Anlık puan takibi ve yıldız değerlendirme</li>
+            <li>Sertifika oluşturma ve yazdırma</li>
+          </ul>
+        </div>
+        <div class="about-card">
+          <h3>Kaynaklar</h3>
+          <ul>
+            <li>Gee, J. P. (2003). What Video Games Have to Teach Us About Learning and Literacy.</li>
+            <li>Prensky, M. (2001). Digital Game-Based Learning.</li>
+            <li>TÜBİTAK (2025). Proje Hazırlama Kılavuzu.</li>
+            <li>Yıldırım, A. &amp; Şimşek, H. (2021). Sosyal Bilimlerde Nitel Araştırma Yöntemleri.</li>
+          </ul>
+        </div>
+      </div>
     </div>
+
+  </div><!-- /game-container -->
+
+  <!-- PWA: Güncelleme bildirimi -->
+  <div id="pwa-update-banner" style="display:none;position:fixed;bottom:16px;left:50%;transform:translateX(-50%);
+    background:rgba(10,14,39,0.97);border:1px solid rgba(255,255,255,0.15);border-radius:14px;
+    padding:12px 20px;display:none;align-items:center;gap:12px;z-index:9999;
+    font-family:'Nunito',sans-serif;font-size:0.88rem;backdrop-filter:blur(12px);">
+    <span>🔄 Yeni sürüm hazır!</span>
+    <button onclick="PWA.applyUpdate()" style="background:var(--primary,#4facfe);color:#fff;border:none;
+      border-radius:8px;padding:6px 14px;font-size:0.82rem;font-weight:700;cursor:pointer;">Güncelle</button>
+    <button onclick="this.parentElement.style.display='none'" style="background:transparent;border:none;
+      color:rgba(255,255,255,0.4);cursor:pointer;font-size:1rem;">✕</button>
   </div>
-  <div style="margin-top:18px;padding:10px 18px;background:rgba(184,134,47,.09);border:1px dashed var(--rule);border-radius:10px;max-width:440px;font-size:13px;color:var(--ink2);font-style:italic;">
-    🎓 Türkiye'nin kültürel mirasını öğrendin! Bu bilgileri arkadaşlarınla paylaş.
-  </div>
-  <div style="margin-top:22px;display:flex;gap:12px;flex-wrap:wrap;justify-content:center;">
-    <button class="btn btn-primary btn-lg" id="btn-play-again">🔄 Yeniden Oyna</button>
-    <button class="btn btn-secondary btn-lg" onclick="window.print()">🖨️ Sertifika Yazdır</button>
-  </div>
-</div>
 
-<script>
-const REGIONS = [
-  {
-    id: 'karadeniz', number: 1,
-    name: 'Karadeniz Bölgesi',
-    icon: '🏛️', color: '#72B841',
-        badge: 'Osmanlı Mirası Koruyucusu',
-    cities: [
-      { name: 'Safranbolu', il: 'Karabük',  heritage: 'Osmanlı konakları — UNESCO 1994' },
-      { name: 'Sümela Manastırı', il: 'Trabzon', heritage: 'Bizans dönemi kaya manastırı — MS 386' },
-      { name: 'Hattuşaş', il: 'Çorum',      heritage: 'Hitit İmparatorluğu başkenti — UNESCO 1986' },
-      { name: 'Sinop Kalesi', il: 'Sinop',  heritage: 'Helenistik dönem kıyı kalesi' },
-    ],
-    infoCards: [
-      { label: 'UNESCO (1994)', value: 'Safranbolu' },
-      { label: 'Bizans Eseri',  value: 'Sümela Manastırı' },
-      { label: 'Hitit Mirası',  value: 'Hattuşaş (Çorum)' },
-      { label: 'Geleneksel',   value: 'Osmanlı cumbalı evleri' },
-    ],
-    story: 'Profesör Tarih şifreli mesaj gönderdi: "Kaşif, Karadeniz ormanlarının derinliklerine hoş geldin! Kaya yüzüne inşa edilmiş Sümela Manastırı\'nı buldun mu? Safranbolu\'nun Osmanlı sokakları seni çağırıyor. Bu bölge binlerce yıllık kültürel mirasın bekçisi!"',
-    mission: 'Safranbolu\'yu, Sümela Manastırı\'nı ve Osmanlı mimarisini keşfederek Osmanlı Mirası Koruyucusu unvanını kazan!',
-    funFact: 'Safranbolu, 17. yüzyıldan kalma 2000\'den fazla tescilli Osmanlı evi ile UNESCO Dünya Mirası Listesi\'ndedir (1994). Ahşap ve taşın birlikte kullanıldığı "cumbalı evler" bu şehrin simgesidir!',
-    questions: [
-      {
-        text: 'Safranbolu UNESCO Dünya Mirası listesine neden alınmıştır?',
-        options: ['Geç Osmanlı döneminden kalma özgün kentsel mimarisi ve 2000\'den fazla tescilli konağı nedeniyle', 'Doğal plajları ve ormanları nedeniyle', 'Büyük çelik fabrikaları nedeniyle', 'Yüksek dağları ve kayak merkezleri nedeniyle'],
-        correct: 0,
-        wikiTitle: 'Safranbolu',
-        imageCaption: 'Safranbolu — Osmanlı konakları (UNESCO, 1994)',
-        explanation: 'Safranbolu (Karabük), 1994\'te UNESCO listesine girdi. Geç Osmanlı döneminden kalma 2000\'den fazla tescilli taş ve ahşap konağıyla özgün kentsel dokusunu koruyan ender şehirlerden biridir.'
-      },
-      {
-        text: 'Sümela Manastırı nerede inşa edilmiştir ve hangi dönemden kalmadır?',
-        options: ['İstanbul surları içinde — Roma dönemi', 'Bursa dağlarında — Osmanlı dönemi', 'Trabzon\'da dik kaya yüzeyine — Bizans dönemi (MS 386)', 'Ankara yakınlarında — Selçuklu dönemi'],
-        correct: 2,
-        wikiTitle: 'Sumela Monastery',
-        imageCaption: 'Sümela Manastırı — Trabzon (MS 386, Bizans)',
-        explanation: 'Sümela Manastırı, Trabzon\'un Maçka ilçesinde dik bir kaya yüzeyine inşa edilmiştir. MS 386\'da Bizans döneminde kurulan manastır, Karadeniz\'in en çarpıcı kültürel miras yapısıdır.'
-      },
-      {
-        text: 'Osmanlı konaklarındaki "cumba" nedir?',
-        options: ['Avluda bulunan mermer çeşme', 'Çatı katındaki güvercin yuvası', 'Bodrumdaki serin kiler odası', 'Üst katlarda caddeye doğru taşan çıkıntılı oda bölümü'],
-        correct: 3,
-        wikiTitle: 'Safranbolu',
-        imageCaption: 'Safranbolu cumbalı evler — geleneksel Osmanlı mimarisi',
-        explanation: 'Cumba, Osmanlı konaklarında üst katlarda caddeye doğru uzanan çıkıntılı bölümdür. Safranbolu\'daki cumbalı evler bölgenin simgesi olup UNESCO mirasının temel özelliğidir.'
-      },
-      {
-        text: 'Hitit İmparatorluğu\'nun başkenti Hattuşaş hangi ilde bulunmaktadır?',
-        options: ['Trabzon', 'Çorum (Boğazkale ilçesi)', 'Samsun', 'Sinop'],
-        correct: 1,
-        wikiTitle: 'Hattusa',
-        imageCaption: 'Hattuşaş Aslan Kapısı — Hitit Başkenti (UNESCO, 1986)',
-        explanation: 'Hattuşaş, MÖ 17.-12. yüzyıllarda Hitit İmparatorluğu\'nun başkentiydi. Çorum\'un Boğazkale ilçesinde bulunur. Aslan Kapı, Sfenks Kapı ve devasa tapınaklarıyla 1986\'da UNESCO listesine alınmıştır.'
-      },
-      {
-        text: 'Kastamonu yazmacılığı hangi geleneksel el sanatıdır?',
-        options: ['Bakır üzerine kalem oyma sanatı', 'Camın boyanarak şekil verilmesi sanatı', 'Ahşap kalıpla kumaşa baskı yapılarak desen oluşturma sanatı', 'Çini karo üzerine resim yapma sanatı'],
-        correct: 2,
-        wikiTitle: 'Kastamonu',
-        imageCaption: 'Kastamonu — geleneksel yazmacılık ve tahta oyma',
-        explanation: 'Kastamonu yazmacılığı, ahşap kalıplarla kumaşa elle baskı yapılarak oluşturulan geleneksel bir tekstil sanatıdır. Karadeniz\'in zengin ormanları ahşap el sanatlarının gelişmesine zemin hazırlamıştır.'
-      }
-    ]
-  },
-  {
-    id: 'akdeniz', number: 2,
-    name: 'Akdeniz Bölgesi',
-    icon: '🏺', color: '#1BBFB0',
-        badge: 'Likya Kaşifi',
-    cities: [
-      { name: 'Xanthos-Letoon', il: 'Muğla/Antalya', heritage: 'Likya başkenti ve kutsal alan — UNESCO 1988' },
-      { name: 'Aspendos', il: 'Antalya',    heritage: 'MS 155 tarihli Roma tiyatrosu — 15 000 kişilik' },
-      { name: 'Antakya (Antioch)', il: 'Hatay', heritage: 'Dünyanın en büyük Roma mozaik koleksiyonu' },
-      { name: 'Perge', il: 'Antalya',       heritage: 'Helenistik-Roma antik kenti' },
-    ],
-    infoCards: [
-      { label: 'UNESCO (1988)', value: 'Xanthos-Letoon' },
-      { label: 'Antik Tiyatro', value: 'Aspendos (MS 155)' },
-      { label: 'Mozaik Merkezi', value: 'Hatay/Antakya' },
-      { label: 'Kaya Mezarları', value: 'Likya uygarlığı' },
-    ],
-    story: 'Profesör Tarih heyecanla haykırır: "Kaşif! Akdeniz kıyılarına geldin — ama bu yalnızca bir tatil beldesi değil! Burada Likya Uygarlığı\'nın kayalara oyulmuş mezarları var, 2000 yıllık Aspendos Tiyatrosu hâlâ konser veriyor, Hatay\'da dünyanın en büyük mozaik müzesi seni bekliyor!"',
-    mission: 'Xanthos-Letoon\'u, Aspendos Tiyatrosu\'nu ve Likya kaya mezarlarını keşfederek Likya Kaşifi unvanını kazan!',
-    funFact: 'Aspendos Antik Tiyatrosu (Antalya), MS 155\'te inşa edildi ve 15.000 kişilik kapasitesiyle günümüzde opera, bale ve festival mekânı olarak aktif biçimde kullanılıyor!',
-    questions: [
-      {
-        text: 'Xanthos-Letoon UNESCO Dünya Mirası hangi uygarlığa aittir?',
-        options: ['Likya (Lykia) uygarlığına', 'Roma İmparatorluğu\'na', 'Hitit İmparatorluğu\'na', 'Bizans İmparatorluğu\'na'],
-        correct: 0,
-        wikiTitle: 'Xanthos',
-        imageCaption: 'Xanthos Antik Kenti — Likya Uygarlığı (UNESCO, 1988)',
-        explanation: 'Xanthos-Letoon, Likya uygarlığının başkenti ve kutsal merkezi olup Muğla-Antalya sınırındadır. 1988\'de UNESCO listesine alınan bu alan, Likya yazısının da çözüldüğü yerdir.'
-      },
-      {
-        text: 'Aspendos Antik Tiyatrosu hangi özelliğiyle ünlüdür?',
-        options: ['Tamamen yeraltına inşa edilmiştir', 'Yalnızca Yunan dönemine aittir', 'Dünyanın en küçük antik tiyatrosudur', '15.000 kişilik kapasitesiyle dünyanın en iyi korunmuş Roma tiyatrolarından biridir'],
-        correct: 3,
-        wikiTitle: 'Aspendos',
-        imageCaption: 'Aspendos Tiyatrosu — Antalya (MS 155, Roma dönemi)',
-        explanation: 'Antalya\'nın Serik ilçesindeki Aspendos Tiyatrosu (MS 155), dünyanın en iyi korunmuş Roma tiyatrolarından biridir. Günümüzde operalar ve festivaller için kullanılmaktadır.'
-      },
-      {
-        text: 'Hatay Arkeoloji Müzesi hangi eserlerle dünyaca tanınmaktadır?',
-        options: ['Hitit hiyeroglifleri ve taş tabletleri', 'Roma dönemine ait 1500\'den fazla özgün mozaik eseri', 'Osmanlı saray mobilyaları koleksiyonu', 'Bizans dönemine ait altın takılar'],
-        correct: 1,
-        wikiTitle: 'Hatay Archaeology and Ethnography Museum',
-        imageCaption: 'Hatay Arkeoloji Müzesi — dünyanın en büyük mozaik koleksiyonlarından biri',
-        explanation: 'Hatay Arkeoloji Müzesi, Antakya (Antioch) kazılarından çıkarılan Roma dönemine ait devasa mozaiklere ev sahipliği yapar. 1.500\'den fazla mozaik eseriyle dünyanın sayılı mozaik koleksiyonlarından biridir.'
-      },
-      {
-        text: 'Likya kaya mezarları nasıl bir yapıya sahiptir?',
-        options: ['Yer altına oyulan tünel mezarlar', 'Düz alanlara dikilen taş dikilitaşlar', 'Kaya yüzeyine oyulmuş tapınak ya da ev cephesi biçiminde anıtsal mezarlar', 'Piramit biçiminde taş yığma mezarlar'],
-        correct: 2,
-        wikiTitle: 'Lycian rock-cut tombs',
-        imageCaption: 'Likya kaya mezarları — Kaş ve Fethiye çevresi',
-        explanation: 'Likya (Muğla-Antalya arası) kaya mezarları, kayalık yüzeylere oyulmuş tapınak ya da ev cephesi görünümlü anıtsal yapılardır. Kaş, Dalyan ve Fethiye çevresinde yoğun biçimde görülürler.'
-      },
-      {
-        text: 'Perge Antik Kenti hangi yapı topluluğuyla tanınmaktadır?',
-        options: ['Anıtsal kapılar, sütunlu cadde ve büyük tiyatrosuyla', 'Devasa yeraltı şehri ve kaya kiliseleriyle', 'Altın mozaikli Bizans sarayıyla', 'Dev su kemerleri ve hamam kompleksiyle'],
-        correct: 0,
-        wikiTitle: 'Perge',
-        imageCaption: 'Perge Antik Kenti — Antalya (Helenistik ve Roma dönemi)',
-        explanation: 'Perge (Antalya/Aksu), MÖ 1000\'lere dayanan tarihiyle Helenistik ve Roma dönemlerinde önemli bir kentti. Anıtsal giriş kapısı, sütunlu merkez caddesi ve tiyatrosuyla Akdeniz\'in başlıca antik kent kalıntılarından biridir.'
-      }
-    ]
-  },
-  {
-    id: 'ic-anadolu', number: 3,
-    name: 'İç Anadolu Bölgesi',
-    icon: '🗿', color: '#F4D03F',
-        badge: 'Anadolu Medeniyetleri Uzmanı',
-    cities: [
-      { name: 'Göreme', il: 'Nevşehir',     heritage: 'Peri bacaları ve kilise freskleri — UNESCO 1985' },
-      { name: 'Derinkuyu Yeraltı Şehri', il: 'Nevşehir', heritage: 'Erken Hristiyan dönemine ait 8 katlı yeraltı şehri' },
-      { name: 'Mevlana Müzesi', il: 'Konya', heritage: 'Selçuklu türbesi ve dergâh — 13. yy' },
-      { name: 'Çatalhöyük', il: 'Konya',    heritage: 'MÖ 7500 tarihli en eski şehir — UNESCO 2012' },
-    ],
-    infoCards: [
-      { label: 'UNESCO (1985)', value: 'Göreme/Kapadokya' },
-      { label: 'UNESCO (1986)', value: 'Hattuşaş — Hitit Başkenti' },
-      { label: 'UNESCO (2012)', value: 'Çatalhöyük' },
-      { label: 'UNESCO (1985)', value: 'Divriği Ulu Camii' },
-    ],
-    story: 'Profesör Tarih coşkuyla anlatır: "İç Anadolu\'ya hoş geldin! 9000 yıl önce burada ilk şehir kuruldu. Hitit İmparatorluğu bu topraklara hükmetti. Kapadokya\'nın peri bacaları Hristiyanlara sığınak oldu. Dört ayrı UNESCO Mirası bu bölgede!"',
-    mission: 'Çatalhöyük\'ten Hattuşaş\'a, Kapadokya\'dan Divriği\'ye İç Anadolu\'nun dört UNESCO mirasını keşfederek Anadolu Medeniyetleri Uzmanı unvanını kazan!',
-    funFact: 'Çatalhöyük (Konya), MÖ 7500\'de kurulan dünyanın en eski kentsel yerleşimlerinden biridir. Buradaki insanlar 9500 yıl önce duvara resim yapmış ve kilden heykel üretmiştir!',
-    questions: [
-      {
-        text: 'Çatalhöyük hangi açıdan insanlık tarihi için benzersizdir?',
-        options: ['Türkiye\'nin ilk camisi burada inşa edilmiştir', 'Roma\'nın Anadolu\'daki ilk sömürgesidir', 'İlk Osmanlı sarayı bu noktada kurulmuştur', 'MÖ 7500\'e tarihlenen, dünyanın en erken kentsel yerleşimlerinden biri ve ilk duvar resimleri burada bulunmuştur'],
-        correct: 3,
-        wikiTitle: 'Çatalhöyük',
-        imageCaption: 'Çatalhöyük kazı alanı — Konya (UNESCO, 2012)',
-        explanation: 'Çatalhöyük (Konya), MÖ 7500\'de kurulmuş dünyanın bilinen en eski kentsel yerleşimlerinden biridir. 2012\'de UNESCO listesine alınmış; duvar resimleri, ana tanrıça heykelcikleri ve toplu yaşam alanları ile erken insan toplumunu anlamamızı sağlar.'
-      },
-      {
-        text: 'Hattuşaş\'taki "Aslan Kapı" neyin girişidir?',
-        options: ['Roma arenasının ana girişi', 'Selçuklu dönemine ait kervansaray girişi', 'MÖ 14. yüzyılda inşa edilmiş Hitit başkentinin şehir surlarındaki törensel kapı', 'Osmanlı sarayının harem dairesi girişi'],
-        correct: 2,
-        wikiTitle: 'Hattusa',
-        imageCaption: 'Hattuşaş Aslan Kapısı — Hitit başkenti (UNESCO, 1986)',
-        explanation: 'Aslan Kapı, MÖ 14. yüzyılda inşa edilmiş Hattuşaş şehir surlarındaki törensel bir kapıdır. Kapının iki yanında aslan heykeli bulunur. Hitit İmparatorluğu\'nun başkenti olan Hattuşaş, 1986\'da UNESCO listesine alınmıştır.'
-      },
-      {
-        text: 'Göreme Açık Hava Müzesi\'ndeki kiliseler nasıl inşa edilmiştir?',
-        options: ['Tuğla ve harçla örülerek inşa edilmiştir', 'Volkanik tüf kayalarının içi oyularak oluşturulmuştur', 'Ahşap kiriş ve taşla yapılmıştır', 'Mermer bloklar üst üste dizilerek inşa edilmiştir'],
-        correct: 1,
-        wikiTitle: 'Göreme Open Air Museum',
-        imageCaption: 'Göreme Açık Hava Müzesi — Kapadokya (UNESCO, 1985)',
-        explanation: 'Göreme Açık Hava Müzesi\'ndeki kiliseler (MS 10.-13. yüzyıl), Kapadokya\'ya özgü volkanik tüf kayaları oyularak oluşturulmuştur. İçlerindeki freskler (duvar resimleri) mükemmel korunmuştur.'
-      },
-      {
-        text: 'Divriği Ulu Camii hangi özelliğiyle Türkiye\'nin ilk UNESCO mirası olmuştur?',
-        options: ['MS 1228\'de yapılan eşsiz üç boyutlu taş oymacılığı ve Selçuklu tıp evi Darüşşifa', 'Osmanlı mimarisinin en büyük kubbe sistemi', 'Bizans freskleriyle süslü Hristiyan şapeli', 'İlk ahşap minare ve Selçuklu çini sanatı'],
-        correct: 0,
-        wikiTitle: 'Great Mosque and Hospital of Divriği',
-        imageCaption: 'Divriği Ulu Camii ve Darüşşifa — Sivas (UNESCO, 1985)',
-        explanation: 'Sivas\'ın Divriği ilçesindeki Ulu Cami ve Darüşşifa (1228-29), taş oymacılığının baş yapıtı olarak Türkiye\'nin ilk UNESCO Dünya Mirası listesine alınan eseridir (1985). Kapılarındaki üç boyutlu taş işçiliği dünyada eşsizdir.'
-      },
-      {
-        text: 'Kapadokya\'daki yeraltı şehirlerinin (Derinkuyu, Kaymaklı) yapım amacı neydi?',
-        options: ['Hammadde ve tahıl depolamak için', 'Hitit döneminde altın madenciliği için', 'Roma döneminde su sarnıcı olarak kullanmak için', 'Saldırılar sırasında binlerce kişiyi saklayan, çok katlı savunma amaçlı yerleşimler'],
-        correct: 3,
-        wikiTitle: 'Derinkuyu underground city',
-        imageCaption: 'Derinkuyu Yeraltı Şehri — Kapadokya (8 kat derinliğinde)',
-        explanation: 'Kapadokya\'daki Derinkuyu ve Kaymaklı yeraltı şehirleri, Bizans döneminde Arap akınları sırasında binlerce kişiyi barındıran çok katlı savunma sığınaklarıdır. Derinkuyu 8 kat aşağıya kadar iner ve 20.000 kişiyi barındırabilirdi.'
-      }
-    ]
-  },
-  {
-    id: 'ege', number: 4,
-    name: 'Ege Bölgesi',
-    icon: '🏟️', color: '#9B59B6',
-        badge: 'Antik Dünya Kaşifi',
-    cities: [
-      { name: 'Efes', il: 'İzmir/Selçuk',   heritage: 'Büyük İskender dönemi antik kenti — UNESCO 2015' },
-      { name: 'Hierapolis-Pamukkale', il: 'Denizli', heritage: 'Roma hamamları ve travertenler — UNESCO 1988' },
-      { name: 'Bergama (Pergamon)', il: 'İzmir', heritage: 'Helenistik akropol ve kütüphane — UNESCO 2014' },
-      { name: 'Afrodisias', il: 'Aydın',    heritage: 'Mermer heykelciliğiyle ünlü antik kent — UNESCO 2017' },
-    ],
-    infoCards: [
-      { label: 'UNESCO (2015)', value: 'Efes Antik Kenti' },
-      { label: 'UNESCO (2014)', value: 'Bergama/Pergamon' },
-      { label: 'UNESCO (2017)', value: 'Afrodisias' },
-      { label: 'UNESCO (1988)', value: 'Hierapolis-Pamukkale' },
-    ],
-    story: 'Profesör Tarih heyecanla bağırır: "Dört UNESCO Mirası bir arada — Ege\'ye hoş geldin! Dünya\'nın Yedi Harikası\'ndan birinin bulunduğu Efes burada. Bergama Kütüphanesi İskenderiye\'nin rakibiydi. Afrodisias\'ta heykel okulu vardı. Pamukkale\'nin travertenleri binlerce yıl insanlara şifa verdi!"',
-    mission: 'Efes, Bergama, Afrodisias ve Pamukkale\'nin antik mirasını keşfederek Antik Dünya Kaşifi unvanını kazan!',
-    funFact: 'Efes\'teki Celsus Kütüphanesi (MS 117), yaklaşık 12.000 rulo eser barındırıyordu ve antik dünyanın İskenderiye ile Bergama\'dan sonra üçüncü büyük kütüphanesiydi!',
-    questions: [
-      {
-        text: 'Efes\'teki Celsus Kütüphanesi hangi dönemde inşa edilmiştir?',
-        options: ['MÖ 5. yüzyılda Yunan döneminde', 'MS 2. yüzyılda Roma döneminde', '6. yüzyılda Bizans döneminde', '15. yüzyılda Osmanlı döneminde'],
-        correct: 1,
-        wikiTitle: 'Library of Celsus',
-        imageCaption: 'Celsus Kütüphanesi — Efes (MS 117, Roma dönemi)',
-        explanation: 'Efes\'teki Celsus Kütüphanesi MS 117\'de Roma döneminde inşa edilmiş olup yaklaşık 12.000 rulo el yazması eseri barındırıyordu. Cephesi bugün hâlâ ayakta duran bu yapı, antik dünyanın en önemli kütüphanelerinden biriydi.'
-      },
-      {
-        text: 'Bergama\'da "parşömen" kâğıdı neden icat edilmiştir?',
-        options: ['Mısır\'ın papirüs ihracatını engellediğinde yazı için yeni malzeme arayışına girildi', 'Roma\'nın tahta tabletleri yasaklamasıyla alternatif arandı', 'Bergama\' iklimi papirüsü bozduğu için', 'Ticari rekabeti artırmak için'],
-        correct: 0,
-        wikiTitle: 'Pergamon',
-        imageCaption: 'Bergama/Pergamon Akropolü — İzmir (UNESCO, 2014)',
-        explanation: 'Efsaneye göre Mısır, Bergama\'nın kütüphanesinin İskenderiye\'yi geçeceği korkusuyla papirüs ihracatını durdurdu. Bunun üzerine Bergamalılar hayvan derisinden "parşömen" kâğıdını geliştirdi. "Parchment" (parşömen) kelimesi Pergamon\'dan gelir.'
-      },
-      {
-        text: 'Afrodisias Antik Kenti hangi sanat dalında antik dünyada öne çıkmıştır?',
-        options: ['Altın kaplama ve kuyumculuk', 'Cam işleme ve mozaik sanatı', 'Bronz döküm ve silah yapımı', 'Mermer heykeltraşlığı ve heykel okulu'],
-        correct: 3,
-        wikiTitle: 'Aphrodisias',
-        imageCaption: 'Afrodisias Antik Kenti — Aydın (UNESCO, 2017)',
-        explanation: 'Afrodisias (Aydın), Roma döneminde ünlü bir heykel okulu barındırıyordu. Yerel mermer ocakları ve ustalar sayesinde mermer heykeltraşlık bu kentte zirveye ulaştı. Müzesinde yüzlerce özgün heykel sergilenmektedir.'
-      },
-      {
-        text: 'Pamukkale\'deki beyaz teraskayalar (travertenler) nasıl oluşur?',
-        options: ['Dağlardan akan karların donup kalmasıyla', 'Volkanik patlamalar sonucu oluşan lav tabakalarıyla', 'Kalsiyumca zengin ılıca sularının yüzeye çıkarak kireç biriktirmesiyle', 'Rüzgarın kireçtaşını aşındırmasıyla'],
-        correct: 2,
-        wikiTitle: 'Pamukkale',
-        imageCaption: 'Pamukkale travertenleri — Denizli (UNESCO, 1988)',
-        explanation: 'Pamukkale\'nin (Denizli) beyaz teraskayaları "travertenler"dir. Kalsiyum bikarbonat içeren ılıca suları yüzeye çıktıkça buharlaşır ve kireç taşı biriktirir. Bu alan üzerindeki Hierapolis Antik Kenti ile birlikte 1988\'de UNESCO listesine alınmıştır.'
-      },
-      {
-        text: 'Troya (Truva) Antik Kenti hangi yapıyla ünlüdür ve hangi ilde bulunur?',
-        options: ['Sütunlu Agora — İzmir\'de', 'Efsanevi "Truva Atı" ve kenti çevreleyen surlar — Çanakkale\'de', 'Devasa amfitiyatro — Muğla\'da', 'Renkli mozaik zemin — Manisa\'da'],
-        correct: 1,
-        wikiTitle: 'Troy',
-        imageCaption: 'Troya (Truva) surları — Çanakkale (UNESCO, 1998)',
-        explanation: 'Troya, Çanakkale\'nin Tevfikiye köyündedir. MÖ 3000\'den MS 400\'e kadar 9 farklı katmanda iskân edilmiş, Homeros\'un İlyada destanına konu olan efsanevi kenttir. Truva Atı\'nın efsanesiyle ünlüdür. 1998\'de UNESCO listesine girmiştir.'
-      }
-    ]
-  },
-  {
-    id: 'marmara', number: 5,
-    name: 'Marmara Bölgesi',
-    icon: '🕌', color: '#F5A42A',
-        badge: 'Osmanlı Başkenti Uzmanı',
-    cities: [
-      { name: 'Ayasofya & Topkapı', il: 'İstanbul', heritage: 'Bizans & Osmanlı imparatorluk yapıları — UNESCO 1985' },
-      { name: 'Selimiye Camii', il: 'Edirne', heritage: 'Mimar Sinan'ın şaheseri — UNESCO 2011' },
-      { name: 'Bursa Tarihi Merkezi', il: 'Bursa', heritage: 'İlk Osmanlı başkenti, Yeşil Cami ve türbeler — UNESCO 2014' },
-      { name: 'Kapalıçarşı', il: 'İstanbul', heritage: 'Dünyanın en büyük kapalı çarşısı — 1461'den beri açık' },
-    ],
-    infoCards: [
-      { label: 'UNESCO (1985)', value: 'İstanbul Tarihi Alanları' },
-      { label: 'UNESCO (2011)', value: 'Selimiye Camii — Edirne' },
-      { label: 'UNESCO (2014)', value: 'Bursa ve Cumalıkızık' },
-      { label: 'UNESCO (1998)', value: 'Troya — Çanakkale' },
-    ],
-    story: 'Boğaz vapurunda Profesör Tarih hayranlıkla anlatır: "Osmanlı Başkenti Uzmanı adayı, Marmara\'ya hoş geldin! Dört UNESCO Mirası bu bölgede! Ayasofya 1500 yıllık, Topkapı Sarayı 400 yıl sultan görmüş, Selimiye Camii matematiksel mükemmeliyettir!"',
-    mission: 'İstanbul\'un tarihi yarımadasını, Edirne\'nin Selimiye Camii\'ni ve Bursa\'nın Osmanlı mirasını keşfederek Osmanlı Başkenti Uzmanı unvanını kazan!',
-    funFact: 'Ayasofya (İstanbul), MS 537\'de Bizans döneminde inşa edildi. Kubbesi 1000 yıl boyunca dünyanın en büyük kubbesi olma unvanını korudu!',
-    questions: [
-      {
-        text: 'Ayasofya\'nın mimari açıdan en devrimci özelliği nedir?',
-        options: ['MS 537\'de olağanüstü büyüklükte inşa edilen merkezi kubbe ve yarım kubbe sistemi', 'Dünyanın en uzun minareleri', 'Tamamen mermer kaplı dış cephesi', 'İki katlı revaklı avlusu'],
-        correct: 0,
-        wikiTitle: 'Hagia Sophia',
-        imageCaption: 'Ayasofya — İstanbul (MS 537, UNESCO 1985)',
-        explanation: 'Ayasofya (MS 537), dönemin tüm mühendislik bilgisini zorlayan dev merkezi kubbe sistemiyle inşa edildi. Kubbesi 1000 yıl boyunca dünyanın en büyük kubbesi olma unvanını korudu. 916 yıl Bizans katedrali, 481 yıl Osmanlı camii olarak hizmet verdi.'
-      },
-      {
-        text: 'Mimar Sinan Selimiye Camii\'ni neden "ustalık eseri" olarak tanımlamıştır?',
-        options: ['En uzun minarelere sahip olduğu için', 'En fazla çini kullanan cami olduğu için', 'Tek merkezi kubbe altında Ayasofya\'dan daha büyük iç mekan yaratıldığı için', 'İlk dört minareli cami olduğu için'],
-        correct: 2,
-        wikiTitle: 'Selimiye Mosque',
-        imageCaption: 'Selimiye Camii — Edirne, Mimar Sinan (UNESCO, 2011)',
-        explanation: 'Mimar Sinan, Selimiye\'yi (Edirne, 1575) kendi ustalık eseri olarak tanımladı. Tek merkezi kubbenin altında yarattığı iç mekan alanı Ayasofya\'nınkinden büyüktür. Dört ince minaresiyle Osmanlı mimarisinin zirvesidir.'
-      },
-      {
-        text: 'Bursa neden Osmanlı mirası açısından özel bir öneme sahiptir?',
-        options: ['Osmanlı\'nın son başkenti ve denizcilik merkezi olduğu için', 'Osmanlı padişahlarının yazlık sarayının bulunduğu yer olduğu için', 'Osmanlı\'nın Avrupa\'ya açılan kapısı ve en büyük tersanesi olduğu için', 'Osmanlı\'nın ilk başkenti (1326-1365) olup Yeşil Cami ve Yeşil Türbe gibi erken Osmanlı şaheserlerini barındırdığı için'],
-        correct: 3,
-        wikiTitle: 'Bursa',
-        imageCaption: 'Bursa Yeşil Cami ve Türbe — erken Osmanlı mirası (UNESCO, 2014)',
-        explanation: 'Bursa, 1326-1365 yılları arasında Osmanlı\'nın ilk başkentiydi. Yeşil Cami, Yeşil Türbe ve Bursa Büyük Camii erken Osmanlı mimarisinin şaheserleridir. Cumalıkızık köyüyle birlikte 2014\'te UNESCO listesine alındı.'
-      },
-      {
-        text: 'Topkapı Sarayı\'ndaki Harem bölümü ne işlev görüyordu?',
-        options: ['Yabancı elçilerin kabul edildiği resmi törenler alanı', 'Sultanın özel yaşam alanı; sultan, annesi ve ailesi burada yaşardı', 'Osmanlı hazinesinin depolandığı korunaklı bölüm', 'Saray mutfağı ve erzak depolarının bulunduğu alan'],
-        correct: 1,
-        wikiTitle: 'Topkapi Palace',
-        imageCaption: 'Topkapı Sarayı — İstanbul (1465-1856, ~400 yıl)',
-        explanation: 'Topkapı Sarayı\'nın Harem bölümü, sultanın ve ailesinin özel yaşam alanıydı. Sultan annesi (Valide Sultan) burada geniş bir otorite kullanırdı. Saray 1465\'ten 1856\'ya kadar yaklaşık 400 yıl 36 Osmanlı sultanına ev sahipliği yaptı.'
-      },
-      {
-        text: 'Kapalıçarşı\'nın (İstanbul) özgün tarihsel işlevi neydi?',
-        options: ['Ticaretin, zanaatkârlığın ve lonca sisteminin merkezlendiği kapalı çarşı', 'Osmanlı padişahlarına özel alışveriş alanı', 'Yabancı elçilerin misafir edildiği han', 'Osmanlı\'nın silah ve barut imal ettiği üretim merkezi'],
-        correct: 0,
-        wikiTitle: 'Grand Bazaar, Istanbul',
-        imageCaption: 'Kapalıçarşı — İstanbul (1461, dünyanın en eski kapalı çarşısı)',
-        explanation: 'Kapalıçarşı (1461, Fatih Sultan Mehmet), ticaret, zanaat ve lonca sisteminin merkeziydi. 61 kapalı cadde ve 4000\'den fazla dükkanıyla dünyanın bilinen en eski ve en büyük kapalı çarşılarından biridir.'
-      }
-    ]
-  },
-  {
-    id: 'dogu-anadolu', number: 6,
-    name: 'Doğu Anadolu Bölgesi',
-    icon: '⛰️', color: '#5B9BD5',
-        badge: 'Kadim Uygarlıklar Dedektifi',
-    cities: [
-      { name: 'Akdamar Kilisesi', il: 'Van',  heritage: 'Ermeni taş kabartmaları — MS 915, Kutsal Haç Kilisesi' },
-      { name: 'İshak Paşa Sarayı', il: 'Ağrı', heritage: 'Osmanlı-Safevi saray mimarisi — 18. yy' },
-      { name: 'Çifte Minareli Medrese', il: 'Erzurum', heritage: 'Anadolu Selçuklu taş işçiliği — 1253' },
-      { name: 'Ani Harabeleri', il: 'Kars',   heritage: 'Ortaçağ Ermeni krallığı başkenti — UNESCO 2016' },
-    ],
-    infoCards: [
-      { label: 'UNESCO (1987)', value: 'Nemrut Dağı — Kommagene' },
-      { label: 'UNESCO (2016)', value: 'Ani Harabeleri — Kars' },
-      { label: 'UNESCO (2021)', value: 'Arslantepe — Malatya' },
-      { label: 'Ermeni Mirası', value: 'Akdamar Kilisesi — Van' },
-    ],
-    story: 'Karlı dağların arasında Profesör Tarih fısıldar: "Kadim Uygarlıklar Dedektifi adayı! Tanrı başları bir dağın zirvesinde seni izliyor — Nemrut\'a hoş geldin! Kars\'ta Ani Harabeleri gizli bir medeniyetin tanığı. Malatya\'da 5500 yıllık saray var!"',
-    mission: 'Nemrut\'u, Ani Harabeleri\'ni ve Arslantepe\'yi keşfederek Kadim Uygarlıklar Dedektifi unvanını kazan!',
-    funFact: 'Nemrut Dağı\'nda MÖ 1. yüzyılda yaşayan Kommagene Kralı I. Antiokhus, kendini tanrılarla eşit gören devasa heykeller yaptırdı. Her biri 8-9 metre yüksekliğindeki bu başlar bugün hâlâ 2150 metrede seni bekliyor!',
-    questions: [
-      {
-        text: 'Nemrut Dağı\'ndaki devasa taş başlar hangi hükümdar tarafından yaptırılmıştır?',
-        options: ['Hitit Büyük Kral I. Suppiluliuma', 'Urartu Kral Argişti', 'Kommagene Krallığı hükümdarı I. Antiokhus (MÖ 1. yüzyıl)', 'Roma İmparatoru Traianus'],
-        correct: 2,
-        wikiTitle: 'Mount Nemrut',
-        imageCaption: 'Nemrut Dağı — Adıyaman (UNESCO, 1987)',
-        explanation: 'Nemrut Dağı\'ndaki (Adıyaman, 2150 m) tanrı ve kral başları MÖ 1. yüzyılda Kommagene Krallığı hükümdarı I. Antiokhus tarafından yaptırıldı. Hükümdar kendini tanrılarla eşit tutarak 9 metrelik heykellerle anıt mezarını inşa ettirdi. 1987\'de UNESCO listesine alındı.'
-      },
-      {
-        text: 'Ani Harabeleri (Kars) hangi uygarlığın başkentiydi?',
-        options: ['Urartu Krallığı\'nın', 'Selçuklu İmparatorluğu\'nun', 'Bizans İmparatorluğu\'nun', 'Ortaçağ Ermeni Bagratid Krallığı\'nın'],
-        correct: 3,
-        wikiTitle: 'Ani',
-        imageCaption: 'Ani Harabeleri — Kars (UNESCO, 2016)',
-        explanation: 'Ani, 10.-11. yüzyıllarda Ermeni Bagratid Krallığı\'nın başkentiydi. 100.000 kişilik nüfusuyla döneminin büyük şehirlerinden biriydi. Camileri, kiliseleri ve saraylarıyla "1001 Kilise Şehri" olarak anılırdı. 2016\'da UNESCO listesine alındı.'
-      },
-      {
-        text: 'Arslantepe (Malatya) arkeoloji dünyasında neden öncü bir keşif alanıdır?',
-        options: ['MÖ 3300\'e tarihlenen dünyanın en erken saray yapısı ve devlet organizasyonu izleri burada keşfedilmiştir', 'Türkiye\'nin en büyük Osmanlı kervansarayı burada bulunmuştur', 'İlk Hristiyan kilisesinin bu alanda inşa edildiği kanıtlanmıştır', 'Sümer çivi yazısının Anadolu\'ya bu noktadan yayıldığı kanıtlanmıştır'],
-        correct: 0,
-        wikiTitle: 'Arslantepe',
-        imageCaption: 'Arslantepe höyüğü — Malatya (UNESCO, 2021)',
-        explanation: 'Arslantepe (Malatya), MÖ 3300\'e tarihlenen dünyanın en eski saray yapılarından birine ev sahipliği yapar. Erken devlet organizasyonu, artı değer depolama ve ilk metal silahların bu bölgeden yayıldığı düşünülmektedir. 2021\'de UNESCO listesine alındı.'
-      },
-      {
-        text: 'Akdamar Kilisesi (Van) hangi mimari özelliğiyle dünyada benzersizdir?',
-        options: ['Dünyanın en yüksek rakımda inşa edilmiş kilisesidir', 'Van Gölü\'ndeki adada inşa edilmiş ve dış cephedeki kabartma İncil sahneleriyle Ermeni taş işçiliğinin zirvesidir', 'Tamamen altın mozaiklerle kaplı iç mekânıyla', 'İlk Hristiyan kilisesi olup en erken fresk boyamalarını barındırır'],
-        correct: 1,
-        wikiTitle: 'Cathedral of the Holy Cross, Akdamar',
-        imageCaption: 'Akdamar Kilisesi — Van Gölü (MS 921)',
-        explanation: 'Akdamar Kilisesi (MS 921), Van Gölü\'ndeki Akdamar Adası\'nda yer alır. Dış cephesindeki Eski ve Yeni Ahit sahnelerini konu alan kabartma heykeller, Ortaçağ Ermeni taş işçiliğinin en mükemmel örnekleridir.'
-      },
-      {
-        text: 'Van Kalesi Urartu uygarlığı hakkında ne anlatır?',
-        options: ['Osmanlı döneminde inşa edilmiş askeri garnizon olduğunu', 'Selçuklu döneminde tahıl ve su depolamak için yapıldığını', 'Bizans döneminde manastır yerleşimi olarak kullanıldığını', 'MÖ 9. yüzyılda kayaya oyulmuş yazıtları ve sarp kayalık üzerine inşa edilmiş surlarıyla Urartu Krallığı\'nın güçlü merkezi olduğunu'],
-        correct: 3,
-        wikiTitle: 'Van Fortress',
-        imageCaption: 'Van Kalesi — Urartu dönemi (MÖ 9. yüzyıl)',
-        explanation: 'Van Kalesi, MÖ 9. yüzyılda Urartu Krallığı\'nın merkezi olan Tuşpa şehrinin kalıntısıdır. Sarp kayalık üzerindeki surlar ve kaya yazıtları Urartu dilinin ve medeniyetinin en önemli belgelerinden biridir.'
-      }
-    ]
-  },
-  {
-    id: 'guneydogu', number: 7,
-    name: 'Güneydoğu Anadolu Bölgesi',
-    icon: '🏺', color: '#E07B6A',
-        badge: 'İnsanlığın Kökenleri Uzmanı',
-    cities: [
-      { name: 'Göbeklitepe', il: 'Şanlıurfa', heritage: 'MÖ 10.000 — dünyanın en eski tapınağı — UNESCO 2018' },
-      { name: 'Zeugma Mozaikleri', il: 'Gaziantep', heritage: 'Roma dönemi en büyük mozaik koleksiyonu — MS 1-3. yy' },
-      { name: 'Mardin Tarihi Doku', il: 'Mardin', heritage: 'Süryani taş mimarisi ve kültürü — UNESCO'nun geçici listesi' },
-      { name: 'Dara Antik Kenti', il: 'Mardin', heritage: 'Bizans sınır kenti ve su sarnıçları — MS 505' },
-    ],
-    infoCards: [
-      { label: 'UNESCO (2018)', value: 'Göbekli Tepe — Şanlıurfa' },
-      { label: 'UNESCO (2015)', value: 'Diyarbakır Surları ve Hevsel' },
-      { label: 'Mozaik Müzesi', value: 'Zeugma — Gaziantep' },
-      { label: 'Tarihi Kent',  value: 'Mardin taş evleri' },
-    ],
-    story: 'Profesör Tarih hayranlıkla anlatır: "İnsanlığın Kökenleri Uzmanı adayı — bu topraklar tüm insanlığın anayurdu! Göbekli Tepe tarımdan 6000 yıl önce inşa edildi ve tarihi yeniden yazdı. Diyarbakır\'ın siyah bazalt surları yüzyıllardır ayakta!"',
-    mission: 'Göbekli Tepe\'nin insanlık tarihine katkısını, Diyarbakır surlarını ve Zeugma mozaiklerini keşfederek İnsanlığın Kökenleri Uzmanı unvanını kazan!',
-    funFact: 'Göbekli Tepe (Şanlıurfa), MÖ 10.000\'e tarihlenen dünyanın en eski tapınak kompleksidir. İnşa edenler henüz çiftçi değildi — bu keşif "önce tarım, sonra din" tezini tamamen alt üst etti! 2018\'de UNESCO listesine alındı.',
-    questions: [
-      {
-        text: 'Göbekli Tepe\'deki T biçimli dikilitaşlar neyi sembolize eder?',
-        options: ['Mısır piramitleri gibi mezar anıtlarını', 'Su kaynağı ve nehir tanrılarını', 'İnsan ve tanrı figürlerini: T biçimi stilize edilmiş insan bedeni, üstteki yassı baş ise başı temsil eder', 'Gece gökyüzünü ve yıldız haritalarını'],
-        correct: 2,
-        wikiTitle: 'Göbekli Tepe',
-        imageCaption: 'Göbekli Tepe — Şanlıurfa (UNESCO, 2018) — MÖ 10.000',
-        explanation: 'Göbekli Tepe\'deki T biçimli dikilitaşların büyük çoğunluğu stilize insan figürü olarak yorumlanır: T biçimi gövde ve omuzları, üstteki yassı kısım başı temsil eder. Üzerlerindeki hayvan ve sembol kabartmaları dönemin dini inanç dünyasını yansıtır.'
-      },
-      {
-        text: 'Diyarbakır surları hangi taştan yapılmış olup neden benzersizdir?',
-        options: ['Siyah bazalt taşından; MS 4. yüzyıldan kalma, 5,5 km uzunluğu ve 72 kulesiyle Anadolu\'nun en iyi korunmuş antik surları olduğu için', 'Beyaz kireçtaşından; Türkiye\'nin en uzun şehir surları olduğu için', 'Tuğladan; Mezopotamya geleneğini yaşattığı için', 'Gri granit taşından; 10 km uzunluğuyla Çin Seddi\'nden sonra en uzun sur olduğu için'],
-        correct: 0,
-        wikiTitle: 'Diyarbakır',
-        imageCaption: 'Diyarbakır Surları — siyah bazalt (UNESCO, 2015)',
-        explanation: 'Diyarbakır surları, bölgeye özgü siyah bazalt taşından MS 4. yüzyılda inşa edilmiştir. Yaklaşık 5,5 km uzunluğu ve 72 kulesiyle Anadolu\'nun en iyi korunmuş antik kentsel surlarından biridir. Hevsel Bahçeleri ile birlikte 2015\'te UNESCO listesine alındı.'
-      },
-      {
-        text: 'Zeugma Mozaik Müzesi\'ndeki "Çingene Kız" hangi döneme aittir ve neden önemlidir?',
-        options: ['MÖ 5. yüzyıl Yunan dönemi; ilk renkli mozaik tekniği kullanıldığı için', 'MS 2. yüzyıl Roma dönemi; olağanüstü duygu ifadesi ve gerçekçiliğiyle dünyanın en ünlü portre mozaiklerinden biri olduğu için', '12. yüzyıl Bizans dönemi; altın fon üzerine yapılmış tek örnek olduğu için', '15. yüzyıl Osmanlı dönemi; çini tekniğiyle yapılmış ender eser olduğu için'],
-        correct: 1,
-        wikiTitle: 'Zeugma Mosaic Museum',
-        imageCaption: '"Çingene Kız" mozaiği — Zeugma Müzesi, Gaziantep (MS 2. yy)',
-        explanation: 'Zeugma Mozaik Müzesi\'ndeki "Çingene Kız" (MS 2. yüzyıl), gerçekçi yüz ifadesi ve derinlik hissiyle dünyanın en çarpıcı antik portre mozaiklerinden biridir. Gaziantep\'te 2011\'de açılan müze, dünyada en büyük in situ mozaik koleksiyonlarından birine sahiptir.'
-      },
-      {
-        text: 'Mardin\'in tarihi kentsel dokusunu oluşturan yapı malzemesi ve mimari özellik nedir?',
-        options: ['Kırmızı tuğla ve Mezopotamya tarzı düz çatılı yapılar', 'Ahşap ve kerpiç; geleneksel Osmanlı konak mimarisi', 'Siyah bazalt taş; Diyarbakır geleneğinin devamı olarak monoton cepheler', 'Bal-sarı kireçtaşından inşa edilmiş, ince oyma motifli taş evler ve eğimli araziyi kullanan basamaklı yerleşim dokusu'],
-        correct: 3,
-        wikiTitle: 'Mardin',
-        imageCaption: 'Mardin tarihi kent dokusu — bal sarısı kireçtaşı evler',
-        explanation: 'Mardin, bölgeye özgü sarı-bal renkli kireçtaşıyla inşa edilmiştir. Yumuşak olan bu taş ince oyma motiflerine olanak tanır. Yüksek bir tepe üzerine kurulu şehrin basamaklı, terasa yerleşim dokusu ve süslü taş cepheleri UNESCO Geçici Listesi\'ndedir.'
-      },
-      {
-        text: 'Şanlıurfa Balıklıgöl\'ün kültürel önemi nedir?',
-        options: ['Fırat Nehri\'nin kaynağı olup antik sulama kanallarının başlangıç noktasıdır', 'Asur uygarlığına ait en erken çivi yazısı tabletlerinin bulunduğu arkeolojik alan', 'İbrahimî geleneğe göre Hz. İbrahim\'in ateşe atıldığı ve Allah\'ın mucizesiyle gölün oluştuğuna inanılan kutsal mekân', 'Roma döneminde kutsal Diana tapınağının sunak havuzu olarak kullanılan yer'],
-        correct: 2,
-        wikiTitle: 'Balıklıgöl',
-        imageCaption: 'Balıklıgöl — Şanlıurfa; "Peygamberler Şehri"nin kutsal mekânı',
-        explanation: 'Balıklıgöl, İbrahimî geleneğe göre Hz. İbrahim\'in Nemrut Kral tarafından ateşe atıldığı ve Allah\'ın ateşi suya, odunları balığa çevirdiğine inanılan kutsal bir mekândır. Bu inanç Şanlıurfa\'ya "Peygamberler Şehri" unvanını kazandırmıştır.'
-      }
-    ]
-  }
-];
+  <script src="game.js"></script>
+  <script>
+    /* ── PWA Kaydı ── */
+    const PWA = {
+      deferredPrompt: null,
+      reg: null,
 
+      init() {
+        if (!('serviceWorker' in navigator)) return;
 
-// ── YARDIMCILAR ──────────────────────────────────────────────
-function shuffle(arr){
-  const a=[...arr];
-  for(let i=a.length-1;i>0;i--){
-    const j=Math.floor(Math.random()*(i+1));
-    [a[i],a[j]]=[a[j],a[i]];
-  }
-  return a;
-}
-const _wc={};
-async function wikiThumb(title){
-  if(_wc[title]!==undefined)return _wc[title];
-  try{
-    const r=await fetch('https://en.wikipedia.org/api/rest_v1/page/summary/'+encodeURIComponent(title),{headers:{Accept:'application/json'}});
-    const d=await r.json();
-    _wc[title]=d.thumbnail?.source||null;
-  }catch{_wc[title]=null;}
-  return _wc[title];
-}
+        // Service Worker kaydet
+        navigator.serviceWorker.register('./sw.js', { scope: './' })
+          .then(reg => {
+            this.reg = reg;
+            console.log('[PWA] Service Worker kayıtlı:', reg.scope);
 
-const LS='tk_miras_v3';
-function loadSt(){try{return JSON.parse(localStorage.getItem(LS)||'{}')}catch{return{}}}
-function saveSt(s){try{localStorage.setItem(LS,JSON.stringify(s))}catch{}}
+            // Yeni SW bekliyorsa güncelleme bildirimi göster
+            reg.addEventListener('updatefound', () => {
+              const newSW = reg.installing;
+              newSW.addEventListener('statechange', () => {
+                if (newSW.state === 'installed' && navigator.serviceWorker.controller) {
+                  this.showUpdateBanner();
+                }
+              });
+            });
+          })
+          .catch(err => console.warn('[PWA] SW kaydı başarısız:', err));
 
-// ── DURUM ──────────────────────────────────────────────────
-let ST={playerName:'',grade:5,completedRegions:{},sessionScore:0,...loadSt()};
-let selectedGrade=ST.grade||5;
-let activeRegion=null,quizQuestions=[],qi=0,qScore=0,qCorrect=0,qAnswered=false,qSelected=-1;
-let leafletMap=null,regionLayers={};
-
-// ── EKRAN YÖNETİMİ ─────────────────────────────────────────
-function show(id){
-  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-}
-
-// ── KONFETI ────────────────────────────────────────────────
-function confetti(){
-  const colors=['#C62828','#558B2F','#1565C0','#B8862F','#7CB342','#E65100','#4527A0'];
-  for(let i=0;i<55;i++){
-    const el=document.createElement('div');
-    el.className='cfti';
-    const sz=8+Math.random()*10;
-    el.style.cssText=`width:${sz}px;height:${sz*(Math.random()>.5?1:.4)}px;`+
-      `left:${Math.random()*100}%;top:-20px;`+
-      `background:${colors[i%colors.length]};`+
-      `border-radius:${Math.random()>.5?'50%':'2px'};`+
-      `animation-duration:${2.5+Math.random()*2}s;`+
-      `animation-delay:${Math.random()*2}s;z-index:999;`;
-    document.body.appendChild(el);
-    setTimeout(()=>el.remove(),(4.5+Math.random()*2)*1000);
-  }
-}
-
-// ── HARİTA ────────────────────────────────────────────────
-function getLayerStyle(rid){
-  const r=REGIONS.find(x=>x.id===rid);
-  const done=ST.completedRegions[rid];
-  return{color:'#fff',weight:1.5,fillColor:done?'#558B2F':(r?r.color:'#888'),fillOpacity:done?.85:.55};
-}
-function initMap(){
-  if(leafletMap){
-    Object.entries(regionLayers).forEach(([rid,l])=>l.setStyle(getLayerStyle(rid)));
-    setTimeout(()=>leafletMap.invalidateSize(),200);
-    return;
-  }
-  const el=document.getElementById('map-el');
-  leafletMap=L.map(el,{center:[39,35.5],zoom:6,scrollWheelZoom:true,dragging:true,attributionControl:true});
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png',
-    {attribution:'© OpenStreetMap © CARTO',subdomains:'abcd',maxZoom:10,minZoom:4}).addTo(leafletMap);
-  fetch('regions.geojson').then(r=>r.json()).then(geo=>{
-    L.geoJSON(geo,{
-      style:f=>getLayerStyle(f.properties.id),
-      onEachFeature:(feature,layer)=>{
-        const rid=feature.properties.id;
-        const reg=REGIONS.find(x=>x.id===rid);
-        regionLayers[rid]=layer;
-        layer.on('mouseover',()=>{
-          if(!ST.completedRegions[rid])layer.setStyle({fillOpacity:.8,weight:3});
-          showTooltip(reg);
+        // SW güncellendikten sonra sayfayı yenile
+        navigator.serviceWorker.addEventListener('controllerchange', () => {
+          window.location.reload();
         });
-        layer.on('mouseout',()=>{
-          layer.setStyle(getLayerStyle(rid));
-          document.getElementById('map-tooltip').style.display='none';
+
+        // Yükleme prompt'unu yakala
+        window.addEventListener('beforeinstallprompt', e => {
+          e.preventDefault();
+          this.deferredPrompt = e;
+          const btn = document.getElementById('btn-install');
+          if (btn) btn.style.display = 'flex';
         });
-        layer.on('click',()=>enterRegion(rid));
-        if(reg){
-          const c=layer.getBounds().getCenter();
-          L.marker(c,{icon:L.divIcon({className:'rl-label',
-            html:'<span>'+reg.icon+' '+reg.name.replace(' Bölgesi','')+'</span>',
-            iconSize:[140,22],iconAnchor:[70,11]}),interactive:false}).addTo(leafletMap);
+
+        // Yüklenince butonu gizle
+        window.addEventListener('appinstalled', () => {
+          this.deferredPrompt = null;
+          const btn = document.getElementById('btn-install');
+          if (btn) btn.style.display = 'none';
+          console.log('[PWA] Uygulama yüklendi!');
+        });
+
+        // İkon oluşturma
+        this.generateIcons();
+      },
+
+      async install() {
+        if (!this.deferredPrompt) return;
+        this.deferredPrompt.prompt();
+        const { outcome } = await this.deferredPrompt.userChoice;
+        console.log('[PWA] Kullanıcı seçimi:', outcome);
+        this.deferredPrompt = null;
+      },
+
+      showUpdateBanner() {
+        const banner = document.getElementById('pwa-update-banner');
+        if (banner) banner.style.display = 'flex';
+      },
+
+      applyUpdate() {
+        if (this.reg?.waiting) {
+          this.reg.waiting.postMessage({ type: 'SKIP_WAITING' });
         }
+      },
+
+      // Canvas ile PNG ikonları oluştur ve önbelleğe al
+      generateIcons() {
+        const sizes = [192, 512];
+        sizes.forEach(size => {
+          try {
+            const canvas = document.createElement('canvas');
+            canvas.width = canvas.height = size;
+            const ctx = canvas.getContext('2d');
+
+            // Arkaplan
+            const r = size * 0.188;
+            ctx.beginPath();
+            ctx.moveTo(r, 0);
+            ctx.lineTo(size - r, 0);
+            ctx.quadraticCurveTo(size, 0, size, r);
+            ctx.lineTo(size, size - r);
+            ctx.quadraticCurveTo(size, size, size - r, size);
+            ctx.lineTo(r, size);
+            ctx.quadraticCurveTo(0, size, 0, size - r);
+            ctx.lineTo(0, r);
+            ctx.quadraticCurveTo(0, 0, r, 0);
+            ctx.closePath();
+            const bg = ctx.createLinearGradient(0, 0, size, size);
+            bg.addColorStop(0, '#0d1b4b');
+            bg.addColorStop(1, '#060b1a');
+            ctx.fillStyle = bg;
+            ctx.fill();
+
+            // Harita emoji
+            ctx.font = `${size * 0.45}px serif`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('🗺️', size / 2, size * 0.42);
+
+            // Metin
+            ctx.font = `900 ${size * 0.1}px Arial`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'alphabetic';
+            const grad = ctx.createLinearGradient(0, 0, size, 0);
+            grad.addColorStop(0, '#4facfe');
+            grad.addColorStop(1, '#43e97b');
+            ctx.fillStyle = grad;
+            ctx.fillText('TÜRKİYE\'Yİ KEŞFET', size / 2, size * 0.88);
+
+            // Cache'e kaydet
+            canvas.toBlob(blob => {
+              if (!blob || !navigator.serviceWorker.controller) return;
+              const path = `./icons/icon-${size}.png`;
+              caches.open('tkf-v1').then(cache => {
+                cache.put(path, new Response(blob, {
+                  headers: { 'Content-Type': 'image/png' }
+                }));
+              });
+            }, 'image/png');
+          } catch (e) { /* canvas erişim hatası yoksay */ }
+        });
       }
-    }).addTo(leafletMap);
-    setTimeout(()=>leafletMap.invalidateSize(),150);
-  });
-}
-function showTooltip(reg){
-  if(!reg)return;
-  const done=ST.completedRegions[reg.id];
-  let h='<div style="display:flex;align-items:center;gap:10px;margin-bottom:'+(reg.cities?'8px':'0')+'">'
-    +'<span style="font-size:22px">'+reg.icon+'</span>'
-    +'<div><div style="font-family:var(--fh);font-size:16px;">'+reg.name+'</div>'
-    +'<div style="font-size:13px;color:'+(done?'var(--green)':'var(--ink3)')+';">'+(done?'✓ '+reg.badge:'Keşfedilmedi — tıkla!')+'</div></div></div>';
-  if(reg.cities){
-    h+='<ul style="margin:0;padding:0;list-style:none;border-top:1px solid var(--rule2);padding-top:8px;">';
-    reg.cities.forEach(c=>{
-      h+='<li style="margin-bottom:5px;"><span style="font-weight:700;font-size:12px;">📍 '+c.name+'</span>'
-        +'<span style="font-size:11px;color:var(--ink3);margin-left:6px;">'+c.il+'</span>'
-        +'<div style="font-size:11px;color:var(--gold);margin-left:18px;">'+c.heritage+'</div></li>';
-    });
-    h+='</ul>';
-  }
-  const tt=document.getElementById('map-tooltip');
-  tt.innerHTML=h;tt.style.display='block';
-}
-function updateMapUI(){
-  const done=Object.keys(ST.completedRegions).length;
-  document.getElementById('map-player-name').textContent=ST.playerName+(ST.grade?' · '+ST.grade+'. Sınıf':'');
-  document.getElementById('map-progress').textContent=done+'/7 Bölge';
-  document.getElementById('map-score').textContent=ST.sessionScore.toLocaleString('tr-TR');
-  Object.entries(regionLayers).forEach(([rid,l])=>l.setStyle(getLayerStyle(rid)));
-  // Rozet kuşağı
-  const strip=document.getElementById('badge-strip');
-  strip.innerHTML='<span class="tl" style="font-size:10px;flex-shrink:0;">ROZETLER</span>';
-  REGIONS.forEach(r=>{
-    const d=ST.completedRegions[r.id];
-    const dot=document.createElement('div');
-    dot.className='badge-dot';
-    dot.style.background=d?r.color:'#D7C9A6';
-    dot.style.opacity=d?'1':'.4';
-    dot.style.boxShadow=d?'0 2px 8px rgba(0,0,0,.2)':'none';
-    dot.textContent=d?r.icon:'?';
-    dot.title=d?r.badge:r.name;
-    strip.appendChild(dot);
-  });
-  if(done===7){
-    const sp=document.createElement('span');
-    sp.style.cssText='margin-left:auto;font-family:var(--fh);font-size:14px;color:var(--green);flex-shrink:0;';
-    sp.textContent='🏆 Tümü tamamlandı!';
-    strip.appendChild(sp);
-  }
-}
+    };
 
-// ── BÖLGE GİRİŞ ──────────────────────────────────────────
-function enterRegion(rid){
-  activeRegion=rid;
-  const r=REGIONS.find(x=>x.id===rid);
-  if(!r)return;
-  document.getElementById('ri-header').innerHTML=
-    '<div style="width:68px;height:68px;border-radius:50%;background:'+r.color+';display:grid;place-items:center;font-size:32px;box-shadow:0 4px 14px rgba(0,0,0,.22);flex-shrink:0;">'+r.icon+'</div>'
-    +'<div><div class="td" style="font-size:32px;line-height:1;">'+r.name+'</div>'
-    +'<div class="th" style="font-size:15px;color:var(--ink2);margin-top:4px;">'+r.mission+'</div></div>';
-  document.getElementById('ri-header').style.cssText+='background:'+r.color+'18;border-color:'+r.color+'55;';
-  document.getElementById('ri-story').textContent=r.story;
-  document.getElementById('ri-fact').textContent=r.funFact;
-  const cards=document.getElementById('ri-cards');
-  cards.innerHTML=r.infoCards.map(c=>'<div class="card" style="padding:10px 14px;">'
-    +'<div class="tl" style="font-size:10px;margin-bottom:3px;">'+c.label+'</div>'
-    +'<div class="th" style="font-size:16px;color:var(--title);">'+c.value+'</div></div>').join('');
-  document.getElementById('btn-start-quiz').textContent='🗺️ Göreve Başla ('+r.questions.length+' soru)';
-  show('s-ri');
-}
+    // Install butonu
+    document.getElementById('btn-install')?.addEventListener('click', () => PWA.install());
 
-// ── QUIZ ─────────────────────────────────────────────────
-function startQuiz(){
-  const r=REGIONS.find(x=>x.id===activeRegion);
-  quizQuestions=shuffle(r.questions).map(q=>{
-    const ct=q.options[q.correct];
-    const so=shuffle(q.options);
-    return{...q,options:so,correct:so.indexOf(ct)};
-  });
-  qi=0;qScore=0;qCorrect=0;
-  show('s-quiz');
-  renderQ();
-}
-function renderQ(){
-  const q=quizQuestions[qi];
-  const r=REGIONS.find(x=>x.id===activeRegion);
-  const letters=['A','B','C','D'];
-  qAnswered=false;qSelected=-1;
-  document.getElementById('q-region-lbl').textContent=r.icon+' '+r.name;
-  document.getElementById('q-counter').textContent=(qi+1)+'/'+quizQuestions.length;
-  document.getElementById('q-prog').style.width=(qi/quizQuestions.length*100)+'%';
-  document.getElementById('q-score-lbl').textContent=qScore+' puan';
-  document.getElementById('q-num-lbl').textContent='SORU '+(qi+1);
-  document.getElementById('q-text').textContent=q.text;
-  document.getElementById('q-feedback').style.display='none';
-  document.getElementById('q-next-wrap').style.display='none';
-  // Görsel
-  const iw=document.getElementById('q-img-wrap');
-  iw.style.display='none';
-  if(q.wikiTitle){
-    wikiThumb(q.wikiTitle).then(url=>{
-      if(url){
-        document.getElementById('q-img').src=url;
-        document.getElementById('q-img-cap').textContent=q.imageCaption||'';
-        iw.style.display='block';
-      }
-    });
-  }
-  // Seçenekler
-  const opts=document.getElementById('q-opts');
-  opts.innerHTML='';
-  q.options.forEach((opt,i)=>{
-    const btn=document.createElement('button');
-    btn.className='opt';
-    btn.innerHTML='<div class="opt-l">'+letters[i]+'</div><span style="flex:1">'+opt+'</span>';
-    btn.addEventListener('click',()=>pickAnswer(i));
-    opts.appendChild(btn);
-  });
-}
-function pickAnswer(i){
-  if(qAnswered)return;
-  qAnswered=true;qSelected=i;
-  const q=quizQuestions[qi];
-  const btns=document.querySelectorAll('#q-opts .opt');
-  btns[i].classList.add(i===q.correct?'ok':'ng');
-  if(i===q.correct){
-    btns[i].querySelector('.opt-l').style.background='var(--green)';
-    qScore+=100;qCorrect++;
-  } else {
-    btns[q.correct].classList.add('ok');
-  }
-  document.getElementById('q-score-lbl').textContent=qScore+' puan';
-  // Açıklama
-  const fb=document.getElementById('q-feedback');
-  fb.style.display='block';
-  fb.style.background=i===q.correct?'rgba(85,139,47,.08)':'rgba(198,40,40,.06)';
-  fb.style.border='1.5px solid '+(i===q.correct?'var(--green)':'var(--red)');
-  fb.style.borderRadius='10px';
-  fb.innerHTML='<div class="th" style="font-weight:700;font-size:15px;margin-bottom:4px;color:'+(i===q.correct?'var(--green)':'var(--red)')+';">'+(i===q.correct?'🎉 Doğru!':'❌ Yanlış')+'</div>'
-    +'<div style="font-size:13px;color:var(--ink2);line-height:1.55;">'+q.explanation+'</div>';
-  // Next butonu
-  const nw=document.getElementById('q-next-wrap');
-  const nb=document.getElementById('btn-next-q');
-  nb.textContent=qi+1>=quizQuestions.length?'🏅 Sonuçları Gör':'Sonraki Soru →';
-  nw.style.display='block';
-}
-function nextQ(){
-  qi++;
-  if(qi>=quizQuestions.length)showBadge();
-  else renderQ();
-}
-
-// ── ROZET ────────────────────────────────────────────────
-function showBadge(){
-  const r=REGIONS.find(x=>x.id===activeRegion);
-  ST.completedRegions[activeRegion]={score:qScore,correctCount:qCorrect,badge:r.badge};
-  ST.sessionScore=(ST.sessionScore||0)+qScore;
-  saveSt(ST);
-  confetti();
-  document.getElementById('badge-circle').style.background=r.color;
-  document.getElementById('badge-circle').textContent=r.icon;
-  document.getElementById('badge-name').textContent=r.badge;
-  document.getElementById('b-correct').textContent=qCorrect+'/'+quizQuestions.length;
-  document.getElementById('b-score').textContent=qScore;
-  const stars=qCorrect>=quizQuestions.length*.9?3:qCorrect>=quizQuestions.length*.6?2:1;
-  document.getElementById('b-stars').textContent='⭐'.repeat(stars);
-  document.getElementById('b-fact').textContent=r.funFact;
-  show('s-badge');
-  setTimeout(()=>{
-    const w=document.getElementById('badge-icon-wrap');
-    w.style.transform='scale(1)';w.style.opacity='1';
-  },200);
-}
-
-// ── FİNAL ────────────────────────────────────────────────
-function showFinal(){
-  confetti();
-  document.getElementById('final-name').textContent=ST.playerName+', tüm 7 bölgeyi keşfettin!';
-  document.getElementById('final-score').textContent=ST.sessionScore.toLocaleString('tr-TR');
-  const fb=document.getElementById('final-badges');
-  fb.innerHTML=REGIONS.map(r=>{
-    const d=ST.completedRegions[r.id];
-    return '<div style="width:50px;height:50px;border-radius:50%;background:'+(d?r.color:'#D7C9A6')+';display:grid;place-items:center;font-size:22px;box-shadow:0 3px 10px rgba(0,0,0,.2);" title="'+r.badge+'">'+r.icon+'</div>';
-  }).join('');
-  show('s-final');
-}
-
-// ── OLAYLAR ──────────────────────────────────────────────
-// Sınıf seçici
-function pickGrade(g){
-  selectedGrade=g;
-  document.querySelectorAll('.grade-btn').forEach(b=>{
-    b.classList.toggle('active',parseInt(b.dataset.g)===g);
-  });
-}
-
-document.getElementById('btn-start').addEventListener('click',()=>{
-  const name=document.getElementById('name-input').value.trim();
-  if(!name)return;
-  ST.playerName=name;ST.grade=selectedGrade;ST.startedAt=new Date().toISOString();saveSt(ST);
-  updateMapUI();initMap();show('s-map');
-});
-document.getElementById('btn-continue').addEventListener('click',()=>{
-  updateMapUI();initMap();show('s-map');
-});
-document.getElementById('name-input').addEventListener('input',e=>{
-  const btn=document.getElementById('btn-start');
-  const has=e.target.value.trim().length>0;
-  btn.disabled=!has;
-  btn.style.opacity=has?'1':'.45';
-  btn.style.cursor=has?'pointer':'not-allowed';
-});
-document.getElementById('name-input').addEventListener('keydown',e=>{
-  if(e.key==='Enter')document.getElementById('btn-start').click();
-});
-document.getElementById('btn-ri-back').addEventListener('click',()=>{updateMapUI();show('s-map');});
-document.getElementById('btn-start-quiz').addEventListener('click',startQuiz);
-document.getElementById('btn-quiz-back').addEventListener('click',()=>{updateMapUI();show('s-map');});
-document.getElementById('btn-next-q').addEventListener('click',nextQ);
-document.getElementById('btn-badge-cont').addEventListener('click',()=>{
-  document.getElementById('badge-icon-wrap').style.transform='scale(.3)';
-  document.getElementById('badge-icon-wrap').style.opacity='0';
-  updateMapUI();
-  show('s-map');
-  if(Object.keys(ST.completedRegions).length>=7)setTimeout(showFinal,700);
-});
-document.getElementById('btn-play-again').addEventListener('click',()=>{
-  ST.completedRegions={};ST.sessionScore=0;saveSt(ST);
-  show('s-welcome');
-});
-
-// ── BAŞLANGIÇ ─────────────────────────────────────────────
-(function init(){
-  if(ST.playerName){
-    document.getElementById('name-input').value=ST.playerName;
-    const btn=document.getElementById('btn-start');
-    btn.disabled=false;btn.style.opacity='1';btn.style.cursor='pointer';
-    if(Object.keys(ST.completedRegions).length>0)
-      document.getElementById('btn-continue').style.display='inline-flex';
-  }
-  // Kayıtlı sınıfı geri yükle
-  if(ST.grade){
-    selectedGrade=ST.grade;
-    document.querySelectorAll('.grade-btn').forEach(b=>{
-      b.classList.toggle('active',parseInt(b.dataset.g)===selectedGrade);
-    });
-  }
-  // Eski service worker'ları temizle
-  if('serviceWorker' in navigator){
-    navigator.serviceWorker.getRegistrations().then(regs=>regs.forEach(r=>r.unregister()));
-  }
-})();
-</script>
+    // PWA'yı başlat
+    PWA.init();
+  </script>
 </body>
 </html>
