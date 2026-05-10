@@ -13,6 +13,7 @@ const GAME_ASSETS = [
   './style.css',
   './game.js',
   './manifest.json',
+  './regions.geojson',
   './icons/icon.svg',
   './icons/icon-192.png',
   './icons/icon-512.png',

@@ -517,34 +517,100 @@ function createParticles(){
   }
 }
 
-// ── HARİTA ──────────────────────────────────────────────────
+// ── HARİTA (Leaflet) ────────────────────────────────────────
+let _leafletMap = null;
+let _regionLayers = {};
+
 function initMap(){
+  if(_leafletMap){
+    // Already initialized: refresh layer styles
+    _refreshLayerStyles();
+    return;
+  }
+
+  _leafletMap = L.map('leaflet-map',{
+    center:[39.0,35.5],
+    zoom:6,
+    zoomControl:true,
+    attributionControl:false,
+    scrollWheelZoom:true,
+    dragging:true,
+  });
+
+  // OSM tile layer
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+    maxZoom:10,
+    minZoom:5,
+    attribution:'© OpenStreetMap contributors',
+  }).addTo(_leafletMap);
+
+  // Atıf küçük köşede
+  L.control.attribution({position:'bottomright',prefix:false})
+    .addAttribution('© <a href="https://openstreetmap.org">OSM</a>')
+    .addTo(_leafletMap);
+
   const hoverCard=$('region-hover-card');
   const rcIcon=$('rc-icon'),rcName=$('rc-name'),rcStatus=$('rc-status');
 
-  document.querySelectorAll('.region-polygon').forEach(el=>{
-    const rid=el.dataset.region;
-    const region=REGIONS.find(r=>r.id===rid);
-    if(!region)return;
+  fetch('regions.geojson')
+    .then(r=>r.json())
+    .then(geojson=>{
+      L.geoJSON(geojson,{
+        style(feature){
+          return _layerStyle(feature.properties.id,false);
+        },
+        onEachFeature(feature,layer){
+          const rid=feature.properties.id;
+          const region=REGIONS.find(r=>r.id===rid);
+          _regionLayers[rid]=layer;
 
-    if(State.completedRegions[rid]) el.classList.add('completed');
+          layer.on('mouseover',()=>{
+            const done=State.completedRegions[rid];
+            rcIcon.textContent=region.icon;
+            rcName.textContent=`${region.number}. ${region.name}`;
+            rcStatus.textContent=done?` — ${region.badge} ✓ (${done.score} puan)`:' — Keşfedilmedi';
+            rcStatus.style.color=done?'var(--accent)':'var(--text-dim)';
+            hoverCard.style.display='flex';
+            if(!State.completedRegions[rid])
+              layer.setStyle({fillOpacity:0.75,weight:3});
+          });
+          layer.on('mouseout',()=>{
+            hoverCard.style.display='none';
+            layer.setStyle(_layerStyle(rid,!!State.completedRegions[rid]));
+          });
+          layer.on('click',()=>{ SFX.click(); enterRegion(rid); });
 
-    el.addEventListener('mouseenter',()=>{
-      const done=State.completedRegions[rid];
-      rcIcon.textContent=region.icon;
-      rcName.textContent=`${region.number}. ${region.name}`;
-      rcStatus.textContent=done?` — ${region.badge} ✓ (${done.score} puan)`:' — Keşfedilmedi';
-      rcStatus.style.color=done?'var(--accent)':'var(--text-dim)';
-      hoverCard.style.display='flex';
+          // Region name label in center
+          const center=layer.getBounds().getCenter();
+          L.marker(center,{
+            icon:L.divIcon({
+              className:'leaflet-region-label',
+              html:`<span data-region="${rid}">${region.icon} ${region.name}</span>`,
+              iconSize:[120,24],
+              iconAnchor:[60,12],
+            }),
+            interactive:false,
+          }).addTo(_leafletMap);
+        }
+      }).addTo(_leafletMap);
     });
-    el.addEventListener('mouseleave',()=>{ hoverCard.style.display='none'; });
-    el.addEventListener('click',()=>{ SFX.click(); enterRegion(rid); });
-  });
+}
 
-  // Etiket tıklaması
-  document.querySelectorAll('.region-label').forEach(t=>{
-    t.style.cursor='pointer';
-    t.addEventListener('click',()=>{ SFX.click(); enterRegion(t.dataset.region); });
+function _layerStyle(rid,completed){
+  const region=REGIONS.find(r=>r.id===rid);
+  const color=region?region.color:'#888';
+  return {
+    color:'#fff',
+    weight:1.5,
+    fillColor: completed ? '#4ade80' : color,
+    fillOpacity: completed ? 0.9 : 0.55,
+    dashArray: completed ? null : null,
+  };
+}
+
+function _refreshLayerStyles(){
+  Object.entries(_regionLayers).forEach(([rid,layer])=>{
+    layer.setStyle(_layerStyle(rid,!!State.completedRegions[rid]));
   });
 }
 
@@ -554,9 +620,7 @@ function updateMapUI(){
   $('progress-text').textContent=`${done}/7 Bölge Tamamlandı`;
   $('total-score').textContent=State.sessionScore.toLocaleString('tr-TR');
 
-  document.querySelectorAll('.region-polygon').forEach(el=>{
-    el.classList.toggle('completed',!!State.completedRegions[el.dataset.region]);
-  });
+  _refreshLayerStyles();
 
   // Rozetler
   const strip=$('badges-strip');strip.innerHTML='';
@@ -574,6 +638,7 @@ function updateMapUI(){
   if(Object.keys(State.completedRegions).length===REGIONS.length)
     setTimeout(showFinalScreen,800);
 }
+
 
 // ── BÖLGE GİRİŞ ─────────────────────────────────────────────
 function enterRegion(rid){
