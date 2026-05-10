@@ -126,6 +126,13 @@ body{-webkit-font-smoothing:antialiased}
 /* Progress bar */
 .prog-bar{height:6px;background:var(--deep);border-radius:999;overflow:hidden;}
 .prog-fill{height:100%;border-radius:999;background:var(--red);transition:width .4s;}
+
+/* Sınıf butonu */
+.grade-btn{flex:1;padding:10px 6px;border-radius:10px;border:2px solid var(--ink3);
+  background:var(--cream);color:var(--title);font-family:var(--fh);font-size:20px;
+  font-weight:700;cursor:pointer;transition:all .15s;}
+.grade-btn.active{background:var(--red);border-color:var(--red2);color:#FFF7EB;
+  box-shadow:0 2px 0 var(--red2);}
   </style>
 </head>
 <body>
@@ -161,9 +168,20 @@ body{-webkit-font-smoothing:antialiased}
       </p>
     </div>
 
-    <div style="margin-top:22px;width:360px;max-width:100%;">
-      <label class="tl" style="display:block;font-size:11px;margin-bottom:6px;text-align:left;">Kaşifin adı</label>
-      <input class="input" id="name-input" placeholder="örn. Ahmet Kaşif" autocomplete="off"/>
+    <div style="margin-top:22px;width:560px;max-width:100%;display:flex;gap:16px;flex-wrap:wrap;align-items:flex-end;">
+      <div style="flex:1 1 240px;min-width:200px;">
+        <label class="tl" style="display:block;font-size:11px;margin-bottom:6px;text-align:left;">Kaşifin adı</label>
+        <input class="input" id="name-input" placeholder="örn. Ahmet Kaşif" autocomplete="off"/>
+      </div>
+      <div style="flex:0 1 240px;min-width:220px;">
+        <label class="tl" style="display:block;font-size:11px;margin-bottom:6px;text-align:left;">Hangi sınıftasın?</label>
+        <div style="display:flex;gap:6px;" id="grade-btns">
+          <button class="grade-btn active" data-g="5">5</button>
+          <button class="grade-btn" data-g="6">6</button>
+          <button class="grade-btn" data-g="7">7</button>
+          <button class="grade-btn" data-g="8">8</button>
+        </div>
+      </div>
     </div>
 
     <div style="margin-top:18px;display:flex;gap:12px;flex-wrap:wrap;justify-content:center;">
@@ -775,7 +793,8 @@ function loadSt(){try{return JSON.parse(localStorage.getItem(LS)||'{}')}catch{re
 function saveSt(s){try{localStorage.setItem(LS,JSON.stringify(s))}catch{}}
 
 // ── DURUM ──────────────────────────────────────────────────
-let ST={playerName:'',completedRegions:{},sessionScore:0,...loadSt()};
+let ST={playerName:'',grade:5,completedRegions:{},sessionScore:0,...loadSt()};
+let selectedGrade=ST.grade||5;
 let activeRegion=null,quizQuestions=[],qi=0,qScore=0,qCorrect=0,qAnswered=false,qSelected=-1;
 let leafletMap=null,regionLayers={};
 
@@ -867,7 +886,7 @@ function showTooltip(reg){
 }
 function updateMapUI(){
   const done=Object.keys(ST.completedRegions).length;
-  document.getElementById('map-player-name').textContent=ST.playerName;
+  document.getElementById('map-player-name').textContent=ST.playerName+(ST.grade?' · '+ST.grade+'. Sınıf':'');
   document.getElementById('map-progress').textContent=done+'/7 Bölge';
   document.getElementById('map-score').textContent=ST.sessionScore.toLocaleString('tr-TR');
   Object.entries(regionLayers).forEach(([rid,l])=>l.setStyle(getLayerStyle(rid)));
@@ -1030,10 +1049,18 @@ function showFinal(){
 }
 
 // ── OLAYLAR ──────────────────────────────────────────────
+// Sınıf butonları
+document.getElementById('grade-btns').addEventListener('click',e=>{
+  const btn=e.target.closest('.grade-btn');
+  if(!btn)return;
+  selectedGrade=parseInt(btn.dataset.g);
+  document.querySelectorAll('.grade-btn').forEach(b=>b.classList.toggle('active',b===btn));
+});
+
 document.getElementById('btn-start').addEventListener('click',()=>{
   const name=document.getElementById('name-input').value.trim();
   if(!name)return;
-  ST.playerName=name;ST.startedAt=new Date().toISOString();saveSt(ST);
+  ST.playerName=name;ST.grade=selectedGrade;ST.startedAt=new Date().toISOString();saveSt(ST);
   updateMapUI();initMap();show('s-map');
 });
 document.getElementById('btn-continue').addEventListener('click',()=>{
@@ -1064,6 +1091,13 @@ document.getElementById('btn-play-again').addEventListener('click',()=>{
     document.getElementById('name-input').value=ST.playerName;
     if(Object.keys(ST.completedRegions).length>0)
       document.getElementById('btn-continue').style.display='inline-flex';
+  }
+  // Kayıtlı sınıfı geri yükle
+  if(ST.grade){
+    selectedGrade=ST.grade;
+    document.querySelectorAll('.grade-btn').forEach(b=>{
+      b.classList.toggle('active',parseInt(b.dataset.g)===selectedGrade);
+    });
   }
   if('serviceWorker' in navigator)navigator.serviceWorker.register('./sw.js').catch(()=>{});
 })();
