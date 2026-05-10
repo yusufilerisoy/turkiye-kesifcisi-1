@@ -60,11 +60,32 @@ self.addEventListener('fetch', event => {
     return;
   }
 
-  // Oyun varlıkları — Cache First, Network Fallback
+  // HTML dosyaları — Network First (her zaman taze HTML)
+  if (event.request.method === 'GET' && (url.endsWith('.html') || url.endsWith('/'))) {
+    event.respondWith(networkFirst(event.request));
+    return;
+  }
+
+  // Diğer oyun varlıkları — Cache First, Network Fallback
   if (event.request.method === 'GET') {
     event.respondWith(cacheFirst(event.request));
   }
 });
+
+// ── NETWORK-FIRST stratejisi (HTML için) ─────────────────────
+async function networkFirst(request) {
+  try {
+    const response = await fetch(request);
+    if (response.ok) {
+      const cache = await caches.open(CACHE_VERSION);
+      cache.put(request, response.clone());
+    }
+    return response;
+  } catch {
+    const cached = await caches.match(request);
+    return cached || caches.match('./index.html');
+  }
+}
 
 // ── CACHE-FIRST stratejisi ───────────────────────────────────
 async function cacheFirst(request) {
