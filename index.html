@@ -1108,11 +1108,9 @@ document.getElementById('btn-play-again').addEventListener('click',()=>{
       b.classList.toggle('active',parseInt(b.dataset.g)===selectedGrade);
     });
   }
+  // Eski service worker'ları temizle
   if('serviceWorker' in navigator){
-    // Eski SW'leri temizle, sonra yenisini kaydet
-    navigator.serviceWorker.getRegistrations().then(regs=>{
-      regs.forEach(r=>r.unregister());
-    }).then(()=>navigator.serviceWorker.register('./sw.js')).catch(()=>{});
+    navigator.serviceWorker.getRegistrations().then(regs=>regs.forEach(r=>r.unregister()));
   }
 })();
 </script>
