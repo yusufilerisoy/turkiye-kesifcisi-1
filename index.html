@@ -176,10 +176,10 @@ body{-webkit-font-smoothing:antialiased}
       <div style="flex:0 1 240px;min-width:220px;">
         <label class="tl" style="display:block;font-size:11px;margin-bottom:6px;text-align:left;">Hangi sınıftasın?</label>
         <div style="display:flex;gap:6px;" id="grade-btns">
-          <button class="grade-btn active" data-g="5">5</button>
-          <button class="grade-btn" data-g="6">6</button>
-          <button class="grade-btn" data-g="7">7</button>
-          <button class="grade-btn" data-g="8">8</button>
+          <button type="button" class="grade-btn active" data-g="5" onclick="pickGrade(5)">5</button>
+          <button type="button" class="grade-btn" data-g="6" onclick="pickGrade(6)">6</button>
+          <button type="button" class="grade-btn" data-g="7" onclick="pickGrade(7)">7</button>
+          <button type="button" class="grade-btn" data-g="8" onclick="pickGrade(8)">8</button>
         </div>
       </div>
     </div>
@@ -1049,13 +1049,13 @@ function showFinal(){
 }
 
 // ── OLAYLAR ──────────────────────────────────────────────
-// Sınıf butonları
-document.getElementById('grade-btns').addEventListener('click',e=>{
-  const btn=e.target.closest('.grade-btn');
-  if(!btn)return;
-  selectedGrade=parseInt(btn.dataset.g);
-  document.querySelectorAll('.grade-btn').forEach(b=>b.classList.toggle('active',b===btn));
-});
+// Sınıf seçici
+function pickGrade(g){
+  selectedGrade=g;
+  document.querySelectorAll('.grade-btn').forEach(b=>{
+    b.classList.toggle('active',parseInt(b.dataset.g)===g);
+  });
+}
 
 document.getElementById('btn-start').addEventListener('click',()=>{
   const name=document.getElementById('name-input').value.trim();
