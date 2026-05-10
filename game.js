@@ -532,7 +532,7 @@ function initMap(){
     center:[39.0,35.5],
     zoom:6,
     zoomControl:true,
-    attributionControl:false,
+    attributionControl:true,
     scrollWheelZoom:true,
     dragging:true,
   });
@@ -543,11 +543,6 @@ function initMap(){
     minZoom:5,
     attribution:'© OpenStreetMap contributors',
   }).addTo(_leafletMap);
-
-  // Atıf küçük köşede
-  L.control.attribution({position:'bottomright',prefix:false})
-    .addAttribution('© <a href="https://openstreetmap.org">OSM</a>')
-    .addTo(_leafletMap);
 
   const hoverCard=$('region-hover-card');
   const rcIcon=$('rc-icon'),rcName=$('rc-name'),rcStatus=$('rc-status');
@@ -860,12 +855,12 @@ window.addEventListener('DOMContentLoaded',()=>{
     }
     SFX.click();
     State.reset();State.playerName=name;State.save();
-    initMap();updateMapUI();showScreen('map');
+    initMap();updateMapUI();showScreen('map');setTimeout(()=>_leafletMap&&_leafletMap.invalidateSize(),200);
   });
   $('btn-start-quiz').addEventListener('click',()=>{ SFX.click(); startQuiz(); });
-  $('btn-back-map').addEventListener('click',()=>{ SFX.click(); showScreen('map'); });
+  $('btn-back-map').addEventListener('click',()=>{ SFX.click(); showScreen('map'); setTimeout(()=>_leafletMap&&_leafletMap.invalidateSize(),200); });
   $('btn-next-q').addEventListener('click',()=>{ SFX.click(); nextQuestion(); });
-  $('btn-continue-map').addEventListener('click',()=>{ SFX.click(); updateMapUI(); showScreen('map'); });
+  $('btn-continue-map').addEventListener('click',()=>{ SFX.click(); updateMapUI(); showScreen('map'); setTimeout(()=>_leafletMap&&_leafletMap.invalidateSize(),200); });
   $('btn-print-cert').addEventListener('click',()=>{ SFX.click(); window.print(); });
   $('btn-play-again').addEventListener('click',()=>{ SFX.click(); State.reset(); $('player-name-input').value=''; showScreen('intro'); });
   $('btn-install')?.addEventListener('click',()=>PWA.install());
