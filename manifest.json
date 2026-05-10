@@ -6,10 +6,13 @@
   "scope": "./",
   "display": "standalone",
   "orientation": "landscape",
-  "background_color": "#040812",
-  "theme_color": "#facc15",
+  "background_color": "#F5F0E1",
+  "theme_color": "#5D2E2E",
   "lang": "tr",
-  "categories": ["education", "games"],
+  "categories": [
+    "education",
+    "games"
+  ],
   "icons": [
     {
       "src": "icons/icon-192.png",
