@@ -185,7 +185,7 @@ body{-webkit-font-smoothing:antialiased}
     </div>
 
     <div style="margin-top:18px;display:flex;gap:12px;flex-wrap:wrap;justify-content:center;">
-      <button class="btn btn-primary btn-lg" id="btn-start">🎒 Maceraya Başla</button>
+      <button class="btn btn-primary btn-lg" id="btn-start" disabled style="opacity:.45;cursor:not-allowed;">🎒 Maceraya Başla</button>
       <button class="btn btn-secondary btn-lg" id="btn-continue" style="display:none;">📖 Devam Et</button>
     </div>
 
@@ -1066,6 +1066,13 @@ document.getElementById('btn-start').addEventListener('click',()=>{
 document.getElementById('btn-continue').addEventListener('click',()=>{
   updateMapUI();initMap();show('s-map');
 });
+document.getElementById('name-input').addEventListener('input',e=>{
+  const btn=document.getElementById('btn-start');
+  const has=e.target.value.trim().length>0;
+  btn.disabled=!has;
+  btn.style.opacity=has?'1':'.45';
+  btn.style.cursor=has?'pointer':'not-allowed';
+});
 document.getElementById('name-input').addEventListener('keydown',e=>{
   if(e.key==='Enter')document.getElementById('btn-start').click();
 });
@@ -1089,6 +1096,8 @@ document.getElementById('btn-play-again').addEventListener('click',()=>{
 (function init(){
   if(ST.playerName){
     document.getElementById('name-input').value=ST.playerName;
+    const btn=document.getElementById('btn-start');
+    btn.disabled=false;btn.style.opacity='1';btn.style.cursor='pointer';
     if(Object.keys(ST.completedRegions).length>0)
       document.getElementById('btn-continue').style.display='inline-flex';
   }
