@@ -8,218 +8,83 @@
   <link rel="manifest" href="manifest.json"/>
   <meta name="theme-color" content="#5D2E2E"/>
   <meta name="apple-mobile-web-app-capable" content="yes"/>
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
   <meta name="apple-mobile-web-app-title" content="Miras Avcısı"/>
   <link rel="apple-touch-icon" href="icons/apple-touch-icon.png"/>
-
-  <!-- Fontlar -->
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Patrick+Hand&family=Quicksand:wght@400;500;600;700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet"/>
-
-  <!-- Leaflet -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
-  <!-- React 18 + Babel -->
   <script crossorigin src="https://unpkg.com/react@18.3.1/umd/react.development.js"></script>
   <script crossorigin src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-
   <style>
-/* ===== TASARIM SİSTEMİ ===== */
 :root {
-  --bg-paper:   #F5F0E1;
-  --bg-cream:   #FAF6EC;
-  --bg-deep:    #ECE2C9;
-  --ink:        #3E2723;
-  --ink-soft:   #5C463E;
-  --ink-mute:   #8C7567;
-  --title:      #5D2E2E;
-  --rule:       #C9B68A;
-  --rule-soft:  #E1D2AA;
-  --gold:       #B8862F;
-  --gold-soft:  #DCC084;
-  --accent:     #C62828;
-  --accent-ink: #8B1C1C;
-  --success:    #558B2F;
-  --warn:       #F9A825;
-  --r-karadeniz:   #2E7D32;
-  --r-akdeniz:     #E65100;
-  --r-icanadolu:   #795548;
-  --r-ege:         #7CB342;
-  --r-marmara:     #1565C0;
-  --r-doguanadolu: #4527A0;
-  --r-guneydogu:   #AD1457;
-  --font-display: 'Caveat', cursive;
-  --font-hand:    'Patrick Hand', cursive;
-  --font-body:    'Quicksand', system-ui, sans-serif;
-  --font-label:   'Source Sans 3', system-ui, sans-serif;
-  --r-sm:4px; --r-md:10px; --r-lg:14px; --r-xl:20px;
-  --shadow-sm: 0 1px 3px rgba(62,39,35,.09), 0 2px 8px rgba(62,39,35,.06);
-  --shadow-md: 0 2px 8px rgba(62,39,35,.11), 0 8px 28px rgba(62,39,35,.07);
-  --shadow-lg: 0 6px 18px rgba(62,39,35,.13), 0 24px 56px rgba(62,39,35,.10);
+  --bg-paper:#F5F0E1; --bg-cream:#FAF6EC; --bg-deep:#ECE2C9;
+  --ink:#3E2723; --ink-soft:#5C463E; --ink-mute:#8C7567;
+  --title:#5D2E2E; --rule:#C9B68A; --rule-soft:#E1D2AA;
+  --gold:#B8862F; --accent:#C62828; --accent-ink:#8B1C1C;
+  --success:#558B2F; --warn:#F9A825;
+  --font-display:'Caveat',cursive; --font-hand:'Patrick Hand',cursive;
+  --font-body:'Quicksand',system-ui,sans-serif;
+  --font-label:'Source Sans 3',system-ui,sans-serif;
+  --shadow-sm:0 1px 3px rgba(62,39,35,.09),0 2px 8px rgba(62,39,35,.06);
+  --shadow-md:0 2px 8px rgba(62,39,35,.11),0 8px 28px rgba(62,39,35,.07);
+  --shadow-lg:0 6px 18px rgba(62,39,35,.13),0 24px 56px rgba(62,39,35,.10);
 }
-*, *::before, *::after { box-sizing: border-box; }
-html, body { margin: 0; padding: 0; height: 100%; }
-body {
-  font-family: var(--font-body);
-  color: var(--ink);
-  background: var(--bg-paper);
-  -webkit-font-smoothing: antialiased;
-}
-#root { height: 100%; }
-#root:empty::before {
-  content: "Yükleniyor…";
-  display: flex; align-items: center; justify-content: center;
-  min-height: 100vh;
-  font-family: var(--font-hand); font-size: 24px; color: var(--title);
-  background: var(--bg-paper);
-}
-
-/* Kâğıt dokusu */
-.paper {
-  background-color: var(--bg-paper);
-  background-image:
-    radial-gradient(at 20% 15%, rgba(212,188,154,.28) 0%, transparent 45%),
-    radial-gradient(at 80% 85%, rgba(184,134,47,.14) 0%, transparent 50%),
-    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='320' height='320'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' seed='3'/><feColorMatrix values='0 0 0 0 0.55 0 0 0 0 0.42 0 0 0 0 0.28 0 0 0 0.08 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
-  background-size: auto, auto, 320px 320px;
-}
-.paper-cream {
-  background-color: var(--bg-cream);
-  background-image:
-    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='280' height='280'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.95' numOctaves='2' seed='7'/><feColorMatrix values='0 0 0 0 0.55 0 0 0 0 0.42 0 0 0 0 0.28 0 0 0 0.06 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
-  background-size: 280px 280px;
-}
-
-/* Genel bileşenler */
-.card {
-  background: var(--bg-cream); border: 1.5px solid var(--rule-soft);
-  border-radius: var(--r-lg); padding: 18px 20px; box-shadow: var(--shadow-sm);
-}
-.deckle {
-  box-shadow: var(--shadow-md);
-  position: relative;
-}
-.deckle::before {
-  content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
-  box-shadow: inset 0 0 0 1px rgba(184,134,47,.16), inset 0 0 60px rgba(184,134,47,.06);
-}
-.btn {
-  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-  min-height: 46px; padding: 11px 22px;
-  border-radius: var(--r-md);
-  font-family: var(--font-body); font-size: 16px; font-weight: 700;
-  cursor: pointer; border: 1.5px solid transparent;
-  transition: transform .15s, filter .15s, box-shadow .15s;
-  user-select: none;
-}
-.btn:hover { transform: translateY(-1px); filter: brightness(1.05); }
-.btn:active { transform: translateY(0); }
-.btn-primary {
-  background: var(--accent); color: #FFF7EB; border-color: var(--accent-ink);
-  box-shadow: 0 2px 0 var(--accent-ink), 0 8px 20px rgba(198,40,40,.24);
-}
-.btn-secondary {
-  background: var(--bg-cream); color: var(--title); border-color: var(--ink-mute);
-  box-shadow: 0 2px 0 rgba(140,117,103,.45);
-}
-.btn-ghost {
-  background: transparent; color: var(--accent); border-color: transparent;
-  text-decoration: underline; text-underline-offset: 4px;
-}
-.btn-disabled { background: #E8DEC9; color: #A89880; border-color: #D7C9A6; cursor: not-allowed; box-shadow: none; }
-.btn-lg { min-height: 54px; padding: 14px 28px; font-size: 18px; }
-.btn-sm { min-height: 36px; padding: 7px 14px; font-size: 14px; }
-
-.input {
-  width: 100%; font-family: var(--font-body); font-size: 17px; color: var(--ink);
-  background: var(--bg-cream); border: 1.5px solid var(--ink-mute);
-  border-radius: var(--r-sm); padding: 13px 16px; outline: none;
-  transition: border-color .15s, box-shadow .15s;
-}
-.input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(198,40,40,.12); }
-.input::placeholder { color: var(--ink-mute); font-style: italic; }
-
-.t-display { font-family: var(--font-display); font-weight: 700; color: var(--title); }
-.t-hand { font-family: var(--font-hand); color: var(--title); }
-.t-label { font-family: var(--font-label); color: var(--ink-soft); text-transform: uppercase; letter-spacing: .13em; font-weight: 600; }
-
-/* Harita */
-#leaflet-map { width: 100%; height: 100%; }
-.leaflet-container { background: #D9EAF7 !important; }
-.leaflet-region-label {
-  background: none; border: none; box-shadow: none; pointer-events: none;
-}
-.leaflet-region-label span {
-  font-family: var(--font-hand); font-size: 12px; font-weight: 700;
-  color: #fff; white-space: nowrap; pointer-events: none;
-  text-shadow: 0 1px 4px rgba(0,0,0,.75), 0 0 8px rgba(0,0,0,.5);
-}
-
-/* Animasyonlar */
-@keyframes float-y { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
-@keyframes spin-slow { to { transform: rotate(360deg); } }
-@keyframes shimmer { 0%,100% { opacity: .55; } 50% { opacity: 1; } }
-@keyframes confetti-fall {
-  0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
-  100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
-}
-@keyframes pop-in {
-  0% { transform: scale(.4); opacity: 0; }
-  70% { transform: scale(1.1); }
-  100% { transform: scale(1); opacity: 1; }
-}
-@keyframes shake {
-  0%,100% { transform: translateX(0); }
-  25% { transform: translateX(-8px); }
-  75% { transform: translateX(8px); }
-}
-.float { animation: float-y 4s ease-in-out infinite; }
-.shimmer { animation: shimmer 2.4s ease-in-out infinite; }
-
-/* Rozet */
-.badge-circle {
-  border-radius: 50%; display: grid; place-items: center;
-  box-shadow: inset 0 0 0 3px rgba(255,247,235,.7), 0 4px 0 rgba(62,39,35,.18), 0 8px 20px rgba(62,39,35,.2);
-}
-
-/* Köşe süsleri */
-.corner { position: absolute; width: 44px; height: 44px; color: var(--gold); opacity: .8; }
-.corner.tl { top: 14px; left: 14px; }
-.corner.tr { top: 14px; right: 14px; transform: scaleX(-1); }
-.corner.bl { bottom: 14px; left: 14px; transform: scaleY(-1); }
-.corner.br { bottom: 14px; right: 14px; transform: scale(-1,-1); }
-
-/* Soru seçeneği */
-.option-btn {
-  display: flex; align-items: center; gap: 14px; text-align: left;
-  width: 100%; padding: 15px 18px; border-radius: var(--r-md);
-  border: 2px solid var(--rule-soft); background: var(--bg-cream);
-  font-family: var(--font-body); font-size: 16px; color: var(--ink);
-  cursor: pointer; transition: all .15s; box-shadow: var(--shadow-sm);
-}
-.option-btn:hover { border-color: var(--accent); background: #FFF3E5; }
-.option-btn.selected { border-color: var(--accent); background: #FFF3E5; box-shadow: 0 4px 14px rgba(198,40,40,.18); }
-.option-btn.correct { border-color: var(--success); background: #E9F4DC; box-shadow: 0 4px 14px rgba(85,139,47,.22); }
-.option-btn.wrong { border-color: #D32F2F; background: #FFEBEE; }
-.option-letter {
-  width: 30px; height: 30px; border-radius: 50%; flex-shrink: 0;
-  display: grid; place-items: center;
-  font-family: var(--font-hand); font-size: 15px; font-weight: 700;
-  border: 2px solid var(--ink-mute); color: var(--ink-soft);
-}
-.option-btn.selected .option-letter { background: var(--accent); border-color: var(--accent-ink); color: #FFF7EB; }
-.option-btn.correct .option-letter { background: var(--success); border-color: var(--success); color: #FFF7EB; }
-.option-btn.wrong .option-letter { background: #D32F2F; border-color: #D32F2F; color: #FFF7EB; }
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0;height:100%}
+body{font-family:var(--font-body);color:var(--ink);background:var(--bg-paper);-webkit-font-smoothing:antialiased}
+#root{height:100%}
+#root:empty::before{content:"Yükleniyor…";display:flex;align-items:center;justify-content:center;min-height:100vh;font-family:var(--font-hand);font-size:24px;color:var(--title)}
+.paper{background-color:var(--bg-paper);background-image:radial-gradient(at 20% 15%,rgba(212,188,154,.28) 0%,transparent 45%),radial-gradient(at 80% 85%,rgba(184,134,47,.14) 0%,transparent 50%),url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='320' height='320'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' seed='3'/><feColorMatrix values='0 0 0 0 0.55 0 0 0 0 0.42 0 0 0 0 0.28 0 0 0 0.08 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");background-size:auto,auto,320px 320px}
+.paper-cream{background-color:var(--bg-cream);background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='280' height='280'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.95' numOctaves='2' seed='7'/><feColorMatrix values='0 0 0 0 0.55 0 0 0 0 0.42 0 0 0 0 0.28 0 0 0 0.06 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");background-size:280px 280px}
+.card{background:var(--bg-cream);border:1.5px solid var(--rule-soft);border-radius:12px;padding:18px 20px;box-shadow:var(--shadow-sm)}
+.deckle{box-shadow:var(--shadow-md);position:relative}
+.deckle::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;box-shadow:inset 0 0 0 1px rgba(184,134,47,.16),inset 0 0 60px rgba(184,134,47,.06)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;padding:11px 22px;border-radius:10px;font-family:var(--font-body);font-size:16px;font-weight:700;cursor:pointer;border:1.5px solid transparent;transition:transform .15s,filter .15s,box-shadow .15s;user-select:none}
+.btn:hover{transform:translateY(-1px);filter:brightness(1.05)}
+.btn:active{transform:translateY(0)}
+.btn-primary{background:var(--accent);color:#FFF7EB;border-color:var(--accent-ink);box-shadow:0 2px 0 var(--accent-ink),0 8px 20px rgba(198,40,40,.24)}
+.btn-secondary{background:var(--bg-cream);color:var(--title);border-color:var(--ink-mute);box-shadow:0 2px 0 rgba(140,117,103,.45)}
+.btn-ghost{background:transparent;color:var(--accent);border-color:transparent;text-decoration:underline;text-underline-offset:4px}
+.btn-lg{min-height:54px;padding:14px 28px;font-size:18px}
+.btn-sm{min-height:36px;padding:7px 14px;font-size:14px}
+.input{width:100%;font-family:var(--font-body);font-size:17px;color:var(--ink);background:var(--bg-cream);border:1.5px solid var(--ink-mute);border-radius:6px;padding:13px 16px;outline:none;transition:border-color .15s,box-shadow .15s}
+.input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(198,40,40,.12)}
+.input::placeholder{color:var(--ink-mute);font-style:italic}
+.t-display{font-family:var(--font-display);font-weight:700;color:var(--title)}
+.t-hand{font-family:var(--font-hand);color:var(--title)}
+.t-label{font-family:var(--font-label);color:var(--ink-soft);text-transform:uppercase;letter-spacing:.13em;font-weight:600}
+#leaflet-map{width:100%;height:100%}
+.leaflet-container{background:#D9EAF7 !important}
+.leaflet-region-label{background:none;border:none;box-shadow:none;pointer-events:none}
+.leaflet-region-label span{font-family:var(--font-hand);font-size:12px;font-weight:700;color:#fff;white-space:nowrap;pointer-events:none;text-shadow:0 1px 4px rgba(0,0,0,.75),0 0 8px rgba(0,0,0,.5)}
+.option-btn{display:flex;align-items:center;gap:14px;text-align:left;width:100%;padding:14px 18px;border-radius:10px;border:2px solid var(--rule-soft);background:var(--bg-cream);font-family:var(--font-body);font-size:16px;color:var(--ink);cursor:pointer;transition:all .15s;box-shadow:var(--shadow-sm)}
+.option-btn:hover{border-color:var(--accent);background:#FFF3E5}
+.option-btn.selected{border-color:var(--accent);background:#FFF3E5;box-shadow:0 4px 14px rgba(198,40,40,.18)}
+.option-btn.correct{border-color:var(--success);background:#E9F4DC;box-shadow:0 4px 14px rgba(85,139,47,.22)}
+.option-btn.wrong{border-color:#D32F2F;background:#FFEBEE}
+.option-letter{width:30px;height:30px;border-radius:50%;flex-shrink:0;display:grid;place-items:center;font-family:var(--font-hand);font-size:15px;font-weight:700;border:2px solid var(--ink-mute);color:var(--ink-soft)}
+.option-btn.selected .option-letter{background:var(--accent);border-color:var(--accent-ink);color:#FFF7EB}
+.option-btn.correct .option-letter{background:var(--success);border-color:var(--success);color:#FFF7EB}
+.option-btn.wrong .option-letter{background:#D32F2F;border-color:#D32F2F;color:#FFF7EB}
+.corner{position:absolute;width:44px;height:44px;color:var(--gold);opacity:.8}
+.corner.tl{top:14px;left:14px}
+.corner.tr{top:14px;right:14px;transform:scaleX(-1)}
+.corner.bl{bottom:14px;left:14px;transform:scaleY(-1)}
+.corner.br{bottom:14px;right:14px;transform:scale(-1,-1)}
+@keyframes float-y{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+@keyframes confetti-fall{0%{transform:translateY(-20px) rotate(0deg);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
+@keyframes pop-in{0%{transform:scale(.4);opacity:0}70%{transform:scale(1.1)}100%{transform:scale(1);opacity:1}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+.float{animation:float-y 4s ease-in-out infinite}
   </style>
 </head>
 <body>
 <div id="root"></div>
-
-<!-- ====== VERİ: BÖLGELER ====== -->
 <script type="text/babel" data-presets="react">
+const { useState, useEffect, useRef } = React;
 const REGIONS = [
   {
     id: 'karadeniz', number: 1,
@@ -665,198 +530,104 @@ const REGIONS = [
 ];
 
 
-// Region renk haritası (bölge id'den CSS değişkeni)
-const REGION_CSS = {
-  'karadeniz':    '#2E7D32',
-  'akdeniz':      '#E65100',
-  'ic-anadolu':   '#795548',
-  'ege':          '#7CB342',
-  'marmara':      '#1565C0',
-  'dogu-anadolu': '#4527A0',
-  'guneydogu':    '#AD1457',
-};
-
-const SCREENS = {
-  WELCOME: 'welcome', MAP: 'map', REGION_INTRO: 'region_intro',
-  QUIZ: 'quiz', BADGE: 'badge', FINAL: 'final',
-};
-
-// Wikipedia görseli önbelleği
-const _wikiCache = {};
-async function fetchWikiThumb(title) {
-  if (_wikiCache[title] !== undefined) return _wikiCache[title];
-  try {
-    const r = await fetch(
-      `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(title)}`,
-      { headers: { Accept: 'application/json' } }
-    );
-    const d = await r.json();
-    _wikiCache[title] = d.thumbnail?.source || null;
-  } catch { _wikiCache[title] = null; }
-  return _wikiCache[title];
-}
-
-function shuffle(arr) {
-  const a = [...arr];
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
+// Yardımcılar
+function shuffle(arr){
+  const a=[...arr];
+  for(let i=a.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [a[i],a[j]]=[a[j],a[i]];
   }
   return a;
 }
 
-// LocalStorage state yönetimi
-const LS_KEY = 'tk_miras_state';
-const initialState = () => {
-  try {
-    const s = JSON.parse(localStorage.getItem(LS_KEY) || '{}');
-    return { playerName: '', completedRegions: {}, sessionScore: 0, ...s };
-  } catch { return { playerName: '', completedRegions: {}, sessionScore: 0 }; }
-};
-const saveState = (s) => {
-  try { localStorage.setItem(LS_KEY, JSON.stringify(s)); } catch {}
-};
+const _wikiCache={};
+async function fetchWikiThumb(title){
+  if(_wikiCache[title]!==undefined)return _wikiCache[title];
+  try{
+    const r=await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(title)}`,{headers:{Accept:'application/json'}});
+    const d=await r.json();
+    _wikiCache[title]=d.thumbnail?.source||null;
+  }catch{_wikiCache[title]=null;}
+  return _wikiCache[title];
+}
 
-Object.assign(window, { REGIONS, REGION_CSS, SCREENS, fetchWikiThumb, shuffle });
-</script>
+const SCREENS={WELCOME:'welcome',MAP:'map',REGION_INTRO:'ri',QUIZ:'quiz',BADGE:'badge',FINAL:'final'};
+const LS_KEY='tk_miras_v2';
+function initialState(){
+  try{const s=JSON.parse(localStorage.getItem(LS_KEY)||'{}');return{playerName:'',completedRegions:{},sessionScore:0,...s};}
+  catch{return{playerName:'',completedRegions:{},sessionScore:0};}
+}
+function saveState(s){try{localStorage.setItem(LS_KEY,JSON.stringify(s));}catch{}}
 
-<!-- ====== KOMPONENTLEr ====== -->
-<script type="text/babel" data-presets="react">
-const { useState, useEffect, useRef, useCallback, useMemo } = React;
-
-/* ── Köşe süsü SVG ── */
-const CornerOrnament = ({ className }) => (
+/* ── Köşe süsü ── */
+const Corner=({className})=>(
   <svg className={className} viewBox="0 0 44 44" fill="none">
-    <path d="M4 40 L4 4 L40 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" fill="none" opacity=".6"/>
+    <path d="M4 40 L4 4 L40 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" opacity=".6"/>
     <circle cx="4" cy="4" r="2.5" fill="currentColor" opacity=".8"/>
     <path d="M12 4 Q4 12 4 20" stroke="currentColor" strokeWidth="1.2" fill="none" opacity=".4" strokeDasharray="3 4"/>
   </svg>
 );
 
-/* ── Logo SVG ── */
-const Logo = ({ size = 200 }) => (
-  <svg width={size} height={size * 0.55} viewBox="0 0 220 120">
-    <defs>
-      <filter id="logo-shadow">
-        <feDropShadow dx="0" dy="3" stdDeviation="4" floodColor="rgba(62,39,35,.22)"/>
-      </filter>
-    </defs>
-    <rect x="8" y="8" width="204" height="104" rx="14" fill="#FAF6EC" stroke="#C9B68A" strokeWidth="2" filter="url(#logo-shadow)"/>
+/* ── Logo ── */
+const Logo=({size=200})=>(
+  <svg width={size} height={size*0.55} viewBox="0 0 220 120">
+    <rect x="8" y="8" width="204" height="104" rx="14" fill="#FAF6EC" stroke="#C9B68A" strokeWidth="2"/>
     <text x="110" y="44" textAnchor="middle" fontFamily="Caveat,cursive" fontSize="30" fontWeight="700" fill="#5D2E2E">TÜRKİYE</text>
-    <text x="110" y="70" textAnchor="middle" fontFamily="Patrick Hand,cursive" fontSize="14" fill="#8C7567">KÜLTÜREL MİRAS</text>
+    <text x="110" y="68" textAnchor="middle" fontFamily="Patrick Hand,cursive" fontSize="14" fill="#8C7567">KÜLTÜREL MİRAS</text>
     <text x="110" y="92" textAnchor="middle" fontFamily="Caveat,cursive" fontSize="22" fontWeight="700" fill="#C62828">AVCISI</text>
     <text x="110" y="112" textAnchor="middle" fontFamily="Source Sans 3,sans-serif" fontSize="9" fill="#8C7567" letterSpacing="3">TÜBİTAK 4006</text>
   </svg>
 );
 
 /* ── Konfeti ── */
-const Confetti = () => {
-  const colors = ['#C62828','#558B2F','#1565C0','#B8862F','#7CB342','#E65100','#4527A0'];
-  return (
-    <div style={{ position:'fixed', inset:0, pointerEvents:'none', overflow:'hidden', zIndex:999 }}>
-      {Array.from({length:60},(_,i)=>{
-        const c = colors[i % colors.length];
-        const left = Math.random()*100;
-        const delay = Math.random()*2;
-        const dur = 2.5 + Math.random()*2;
-        const sz = 8 + Math.random()*10;
-        return (
-          <div key={i} style={{
-            position:'absolute', left:`${left}%`, top:'-20px',
-            width:sz, height:sz*(Math.random()>.5?1:0.4),
-            background:c, borderRadius: Math.random()>.5?'50%':'2px',
-            animation:`confetti-fall ${dur}s ${delay}s ease-in forwards`,
-          }}/>
-        );
+const Confetti=()=>{
+  const colors=['#C62828','#558B2F','#1565C0','#B8862F','#7CB342','#E65100','#4527A0'];
+  return(
+    <div style={{position:'fixed',inset:0,pointerEvents:'none',overflow:'hidden',zIndex:999}}>
+      {Array.from({length:55},(_,i)=>{
+        const c=colors[i%colors.length];
+        const left=Math.random()*100,delay=Math.random()*2,dur=2.5+Math.random()*2,sz=8+Math.random()*10;
+        return <div key={i} style={{position:'absolute',left:`${left}%`,top:'-20px',width:sz,height:sz*(Math.random()>.5?1:.4),background:c,borderRadius:Math.random()>.5?'50%':'2px',animation:`confetti-fall ${dur}s ${delay}s ease-in forwards`}}/>;
       })}
     </div>
   );
 };
 
-/* ── WELCOME EKRANI ── */
-const WelcomeScreen = ({ onStart, hasSaved, savedName }) => {
-  const [name, setName] = useState(savedName || '');
-  const canStart = name.trim().length > 0;
-  return (
-    <div className="paper" style={{
-      minHeight:'100vh', position:'relative', overflow:'hidden',
-      display:'flex', flexDirection:'column', alignItems:'center',
-      padding:'48px 24px', fontFamily:'var(--font-body)', color:'var(--ink)',
-    }}>
-      <CornerOrnament className="corner tl"/>
-      <CornerOrnament className="corner tr"/>
-      <CornerOrnament className="corner bl"/>
-      <CornerOrnament className="corner br"/>
-
-      <div style={{ maxWidth:640, width:'100%', display:'flex', flexDirection:'column', alignItems:'center', textAlign:'center' }}>
-        <div className="float" style={{ marginTop:8 }}>
-          <Logo size={260}/>
+/* ═══════════════════════════════════════════
+   WELCOME EKRANI
+═══════════════════════════════════════════ */
+const WelcomeScreen=({onStart,hasSaved,savedName})=>{
+  const [name,setName]=useState(savedName||'');
+  const ok=name.trim().length>0;
+  return(
+    <div className="paper" style={{minHeight:'100vh',position:'relative',overflow:'hidden',display:'flex',flexDirection:'column',alignItems:'center',padding:'48px 24px'}}>
+      <Corner className="corner tl"/><Corner className="corner tr"/>
+      <Corner className="corner bl"/><Corner className="corner br"/>
+      <div style={{maxWidth:640,width:'100%',display:'flex',flexDirection:'column',alignItems:'center',textAlign:'center'}}>
+        <div className="float" style={{marginTop:8}}><Logo size={260}/></div>
+        <div style={{marginTop:16}}>
+          <div className="t-display" style={{fontSize:68,lineHeight:.9,textShadow:'1px 2px 0 rgba(184,134,47,.2)'}}>Türkiye'yi Keşfet</div>
+          <div style={{fontFamily:'var(--font-hand)',fontSize:22,color:'var(--ink-soft)',fontStyle:'italic',marginTop:6}}>✦ Kültürel Miras Macerası ✦</div>
         </div>
-
-        <div style={{ marginTop:16 }}>
-          <div className="t-display" style={{ fontSize:72, lineHeight:.9, textShadow:'1px 2px 0 rgba(184,134,47,.2)' }}>
-            Türkiye'yi Keşfet
-          </div>
-          <div style={{ fontFamily:'var(--font-hand)', fontSize:22, color:'var(--ink-soft)', fontStyle:'italic', marginTop:6 }}>
-            ✦ Kültürel Miras Macerası ✦
-          </div>
-        </div>
-
-        <div className="card deckle" style={{ maxWidth:560, marginTop:28, position:'relative', borderColor:'var(--rule)' }}>
-          <div style={{
-            position:'absolute', top:-14, left:24,
-            background:'var(--accent)', color:'#FFF7EB',
-            padding:'3px 14px', fontFamily:'var(--font-hand)', fontSize:13,
-            letterSpacing:'.15em', borderRadius:6, transform:'rotate(-2deg)',
-          }}>GÖREV BRİFİ</div>
-          <p style={{ margin:0, fontSize:16, lineHeight:1.65, color:'var(--ink)', marginTop:8 }}>
+        <div className="card deckle" style={{maxWidth:560,marginTop:28,position:'relative',borderColor:'var(--rule)'}}>
+          <div style={{position:'absolute',top:-14,left:24,background:'var(--accent)',color:'#FFF7EB',padding:'3px 14px',fontFamily:'var(--font-hand)',fontSize:13,letterSpacing:'.15em',borderRadius:6,transform:'rotate(-2deg)'}}>GÖREV BRİFİ</div>
+          <p style={{margin:'8px 0 0',fontSize:16,lineHeight:1.65,color:'var(--ink)'}}>
             Türkiye Kültürel Miras Akademisi seni <b style={{color:'var(--accent)'}}>«Miras Avcısı»</b> adayı olarak seçti.
             7 bölgeyi keşfedip her birinden bir <b>uzmanlık rozeti</b> kazanman gerekiyor!
-            UNESCO alanları, antik kentler ve Osmanlı mirasını keşfe hazır mısın?
           </p>
         </div>
-
-        <div style={{ marginTop:24, width:360, maxWidth:'100%' }}>
-          <label className="t-label" style={{ display:'block', fontSize:11, marginBottom:6, textAlign:'left' }}>
-            Kaşifin adı
-          </label>
-          <input
-            className="input"
-            placeholder="örn. Ahmet Kaşif"
-            value={name}
-            onChange={e=>setName(e.target.value)}
-            onKeyDown={e=>e.key==='Enter' && canStart && onStart(name.trim())}
-            autoFocus
-          />
+        <div style={{marginTop:24,width:360,maxWidth:'100%'}}>
+          <label className="t-label" style={{display:'block',fontSize:11,marginBottom:6,textAlign:'left'}}>Kaşifin adı</label>
+          <input className="input" placeholder="örn. Ahmet Kaşif" value={name} onChange={e=>setName(e.target.value)} onKeyDown={e=>e.key==='Enter'&&ok&&onStart(name.trim())} autoFocus/>
         </div>
-
-        <div style={{ marginTop:18, display:'flex', gap:12, flexWrap:'wrap', justifyContent:'center' }}>
-          <button
-            className={`btn btn-primary btn-lg ${!canStart?'btn-disabled':''}`}
-            onClick={()=>canStart && onStart(name.trim())}
-            disabled={!canStart}
-          >🎒 Maceraya Başla</button>
-          {hasSaved && (
-            <button className="btn btn-secondary btn-lg" onClick={()=>onStart(savedName||name.trim()||'Kaşif')}>
-              📖 Devam Et
-            </button>
-          )}
+        <div style={{marginTop:18,display:'flex',gap:12,flexWrap:'wrap',justifyContent:'center'}}>
+          <button className="btn btn-primary btn-lg" onClick={()=>ok&&onStart(name.trim())} style={{opacity:ok?1:.55}}>🎒 Maceraya Başla</button>
+          {hasSaved&&<button className="btn btn-secondary btn-lg" onClick={()=>onStart(savedName||name.trim()||'Kaşif')}>📖 Devam Et</button>}
         </div>
-
-        <div style={{ marginTop:18, fontFamily:'var(--font-hand)', fontSize:15, color:'var(--ink-mute)' }}>
-          Anadolu'nun her bölgesinde seni bir kültürel miras sırrı bekliyor…
-        </div>
-
-        <div style={{
-          marginTop:20, display:'flex', gap:10, flexWrap:'wrap', justifyContent:'center',
-        }}>
+        <div style={{marginTop:16,fontFamily:'var(--font-hand)',fontSize:15,color:'var(--ink-mute)'}}>Anadolu'nun her bölgesinde seni bir kültürel miras sırrı bekliyor…</div>
+        <div style={{marginTop:18,display:'flex',gap:10,flexWrap:'wrap',justifyContent:'center'}}>
           {[['🏛️','Osmanlı Mirası'],['🗿','Antik Kentler'],['🏺','UNESCO Alanları'],['⛰️','7 Bölge']].map(([em,lb])=>(
-            <span key={lb} style={{
-              display:'inline-flex', alignItems:'center', gap:5,
-              padding:'5px 12px', borderRadius:999, background:'var(--bg-cream)',
-              border:'1.5px solid var(--rule)', fontFamily:'var(--font-label)',
-              fontSize:12, fontWeight:600, letterSpacing:'.1em', color:'var(--ink-soft)',
-            }}>{em} {lb}</span>
+            <span key={lb} style={{display:'inline-flex',alignItems:'center',gap:5,padding:'5px 12px',borderRadius:999,background:'var(--bg-cream)',border:'1.5px solid var(--rule)',fontFamily:'var(--font-label)',fontSize:12,fontWeight:600,letterSpacing:'.1em',color:'var(--ink-soft)'}}>{em} {lb}</span>
           ))}
         </div>
       </div>
@@ -864,678 +635,382 @@ const WelcomeScreen = ({ onStart, hasSaved, savedName }) => {
   );
 };
 
-/* ── HARİTA EKRANI ── */
-const MapScreen = ({ playerName, completedRegions, sessionScore, onRegionClick }) => {
-  const mapRef = useRef(null);
-  const leafletRef = useRef(null);
-  const layersRef = useRef({});
-  const [hovered, setHovered] = useState(null);
-  const doneCount = Object.keys(completedRegions).length;
+/* ═══════════════════════════════════════════
+   HARİTA EKRANI
+═══════════════════════════════════════════ */
+const MapScreen=({playerName,completedRegions,sessionScore,onRegionClick})=>{
+  const mapRef=useRef(null);
+  const leafletRef=useRef(null);
+  const layersRef=useRef({});
+  const [hovered,setHovered]=useState(null);
+  const done=Object.keys(completedRegions).length;
 
-  useEffect(() => {
-    if (leafletRef.current) {
-      // Sadece stilleri güncelle
-      Object.entries(layersRef.current).forEach(([rid, layer]) => {
-        layer.setStyle(getLayerStyle(rid));
-      });
-      return;
-    }
-    const map = L.map(mapRef.current, {
-      center: [39.0, 35.5], zoom: 6,
-      scrollWheelZoom: true, dragging: true,
-      attributionControl: true, zoomControl: true,
-    });
-    leafletRef.current = map;
-
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png', {
-      attribution: '© OpenStreetMap © CARTO',
-      subdomains: 'abcd', maxZoom: 10, minZoom: 5,
-    }).addTo(map);
-
-    fetch('regions.geojson')
-      .then(r => r.json())
-      .then(geojson => {
-        L.geoJSON(geojson, {
-          style: f => getLayerStyle(f.properties.id),
-          onEachFeature: (feature, layer) => {
-            const rid = feature.properties.id;
-            const region = REGIONS.find(r => r.id === rid);
-            layersRef.current[rid] = layer;
-
-            layer.on('mouseover', () => {
-              setHovered(rid);
-              if (!completedRegions[rid])
-                layer.setStyle({ fillOpacity: .8, weight: 3 });
-            });
-            layer.on('mouseout', () => {
-              setHovered(null);
-              layer.setStyle(getLayerStyle(rid));
-            });
-            layer.on('click', () => onRegionClick(rid));
-
-            if (region) {
-              const center = layer.getBounds().getCenter();
-              L.marker(center, {
-                icon: L.divIcon({
-                  className: 'leaflet-region-label',
-                  html: `<span>${region.icon} ${region.name.replace(' Bölgesi','')}</span>`,
-                  iconSize: [140, 22], iconAnchor: [70, 11],
-                }),
-                interactive: false,
-              }).addTo(map);
-            }
-          }
-        }).addTo(map);
-        setTimeout(() => map.invalidateSize(), 100);
-      });
-  }, []);
-
-  // Stil hesaplama — completedRegions güncel versiyonunu closure dışından al
-  const getLayerStyle = (rid) => {
-    const region = REGIONS.find(r => r.id === rid);
-    const color = region ? region.color : '#888';
-    const done = completedRegions[rid];
-    return {
-      color: '#fff', weight: 1.5,
-      fillColor: done ? '#558B2F' : color,
-      fillOpacity: done ? .85 : .55,
-    };
+  const getStyle=(rid)=>{
+    const r=REGIONS.find(x=>x.id===rid);
+    const color=r?r.color:'#888';
+    const isDone=completedRegions[rid];
+    return{color:'#fff',weight:1.5,fillColor:isDone?'#558B2F':color,fillOpacity:isDone?.85:.55};
   };
 
-  // completedRegions değiştiğinde katmanları güncelle
-  useEffect(() => {
-    Object.entries(layersRef.current).forEach(([rid, layer]) => {
-      layer.setStyle(getLayerStyle(rid));
+  useEffect(()=>{
+    if(!mapRef.current||leafletRef.current)return;
+    const map=L.map(mapRef.current,{center:[39,35.5],zoom:6,scrollWheelZoom:true,dragging:true,attributionControl:true,zoomControl:true});
+    leafletRef.current=map;
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png',{attribution:'© OpenStreetMap © CARTO',subdomains:'abcd',maxZoom:10,minZoom:4}).addTo(map);
+    fetch('regions.geojson').then(r=>r.json()).then(geo=>{
+      L.geoJSON(geo,{
+        style:f=>getStyle(f.properties.id),
+        onEachFeature:(feature,layer)=>{
+          const rid=feature.properties.id;
+          const region=REGIONS.find(r=>r.id===rid);
+          layersRef.current[rid]=layer;
+          layer.on('mouseover',()=>{setHovered(rid);if(!completedRegions[rid])layer.setStyle({fillOpacity:.8,weight:3});});
+          layer.on('mouseout',()=>{setHovered(null);layer.setStyle(getStyle(rid));});
+          layer.on('click',()=>onRegionClick(rid));
+          if(region){
+            const c=layer.getBounds().getCenter();
+            L.marker(c,{icon:L.divIcon({className:'leaflet-region-label',html:`<span>${region.icon} ${region.name.replace(' Bölgesi','')}</span>`,iconSize:[140,22],iconAnchor:[70,11]}),interactive:false}).addTo(map);
+          }
+        }
+      }).addTo(map);
+      setTimeout(()=>map.invalidateSize(),150);
     });
-  }, [completedRegions]);
+  },[]);
 
-  useEffect(() => {
-    setTimeout(() => leafletRef.current?.invalidateSize(), 200);
-  }, []);
+  useEffect(()=>{
+    Object.entries(layersRef.current).forEach(([rid,layer])=>layer.setStyle(getStyle(rid)));
+  },[completedRegions]);
 
-  const hoveredRegion = hovered ? REGIONS.find(r => r.id === hovered) : null;
+  useEffect(()=>{setTimeout(()=>leafletRef.current?.invalidateSize(),200);},[]);
 
-  return (
-    <div style={{
-      height: '100vh', display: 'flex', flexDirection: 'column',
-      background: 'var(--bg-paper)', fontFamily: 'var(--font-body)',
-    }}>
-      {/* Üst Bar */}
-      <div className="paper-cream" style={{
-        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        padding: '10px 20px', borderBottom: '1.5px solid var(--rule-soft)',
-        boxShadow: '0 2px 8px rgba(62,39,35,.08)',
-      }}>
-        <div style={{ display:'flex', alignItems:'center', gap:10 }}>
-          <span style={{ fontSize:20 }}>🎒</span>
-          <span className="t-hand" style={{ fontSize:18 }}>{playerName}</span>
+  const hovR=hovered?REGIONS.find(r=>r.id===hovered):null;
+
+  return(
+    <div style={{height:'100vh',display:'flex',flexDirection:'column',background:'var(--bg-paper)'}}>
+      {/* TopBar */}
+      <div className="paper-cream" style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'10px 20px',borderBottom:'1.5px solid var(--rule-soft)',boxShadow:'0 2px 8px rgba(62,39,35,.08)',flexShrink:0}}>
+        <div style={{display:'flex',alignItems:'center',gap:10}}>
+          <span style={{fontSize:20}}>🎒</span>
+          <span className="t-hand" style={{fontSize:18}}>{playerName}</span>
         </div>
-        <div style={{ textAlign:'center' }}>
-          <div className="t-label" style={{ fontSize:10 }}>İLERLEME</div>
-          <div className="t-hand" style={{ fontSize:17, color:'var(--title)' }}>{doneCount}/7 Bölge</div>
+        <div style={{textAlign:'center'}}>
+          <div className="t-label" style={{fontSize:10}}>İLERLEME</div>
+          <div className="t-hand" style={{fontSize:17,color:'var(--title)'}}>{done}/7 Bölge</div>
         </div>
-        <div style={{ textAlign:'right' }}>
-          <div className="t-label" style={{ fontSize:10 }}>PUAN</div>
-          <div className="t-hand" style={{ fontSize:17, color:'var(--accent)' }}>
-            {sessionScore.toLocaleString('tr-TR')}
-          </div>
+        <div style={{textAlign:'right'}}>
+          <div className="t-label" style={{fontSize:10}}>PUAN</div>
+          <div className="t-hand" style={{fontSize:17,color:'var(--accent)'}}>{sessionScore.toLocaleString('tr-TR')}</div>
         </div>
       </div>
-
-      {/* Harita alanı */}
-      <div style={{ flex:1, position:'relative', overflow:'hidden' }}>
-        <div ref={mapRef} style={{ width:'100%', height:'100%' }}/>
-
-        {/* Hover tooltip */}
-        {hoveredRegion && (
-          <div style={{
-            position:'absolute', bottom:20, left:'50%', transform:'translateX(-50%)',
-            background:'rgba(250,246,236,.97)', border:'1.5px solid var(--rule)',
-            borderRadius:14, padding:'12px 20px', zIndex:1000,
-            boxShadow:'var(--shadow-lg)', fontFamily:'var(--font-body)',
-            minWidth:300, maxWidth:420, pointerEvents:'none',
-          }}>
-            <div style={{ display:'flex', alignItems:'center', gap:10, marginBottom:8 }}>
-              <span style={{ fontSize:24 }}>{hoveredRegion.icon}</span>
+      {/* Harita */}
+      <div style={{flex:1,position:'relative',overflow:'hidden'}}>
+        <div ref={mapRef} style={{width:'100%',height:'100%'}}/>
+        {hovR&&(
+          <div style={{position:'absolute',bottom:16,left:'50%',transform:'translateX(-50%)',background:'rgba(250,246,236,.97)',border:'1.5px solid var(--rule)',borderRadius:14,padding:'12px 18px',zIndex:1000,boxShadow:'var(--shadow-lg)',minWidth:300,maxWidth:420,pointerEvents:'none'}}>
+            <div style={{display:'flex',alignItems:'center',gap:10,marginBottom:hovR.cities?8:0}}>
+              <span style={{fontSize:22}}>{hovR.icon}</span>
               <div>
-                <div className="t-hand" style={{ fontSize:17 }}>{hoveredRegion.name}</div>
-                <div style={{ fontSize:13, color: completedRegions[hoveredRegion.id] ? 'var(--success)' : 'var(--ink-mute)' }}>
-                  {completedRegions[hoveredRegion.id] ? `✓ ${hoveredRegion.badge}` : 'Keşfedilmedi — tıkla!'}
-                </div>
+                <div className="t-hand" style={{fontSize:16}}>{hovR.name}</div>
+                <div style={{fontSize:13,color:completedRegions[hovR.id]?'var(--success)':'var(--ink-mute)'}}>{completedRegions[hovR.id]?`✓ ${hovR.badge}`:'Keşfedilmedi — tıkla!'}</div>
               </div>
             </div>
-            {hoveredRegion.cities && (
-              <ul style={{ margin:0, padding:0, listStyle:'none', borderTop:'1px solid var(--rule-soft)', paddingTop:8 }}>
-                {hoveredRegion.cities.map((c,i)=>(
-                  <li key={i} style={{ marginBottom:5 }}>
-                    <span style={{ fontWeight:700, fontSize:13 }}>📍 {c.name}</span>
-                    <span style={{ fontSize:11, color:'var(--ink-mute)', marginLeft:6 }}>{c.il}</span>
-                    <div style={{ fontSize:12, color:'var(--gold)', marginLeft:18 }}>{c.heritage}</div>
-                  </li>
-                ))}
-              </ul>
-            )}
+            {hovR.cities&&<ul style={{margin:0,padding:0,listStyle:'none',borderTop:'1px solid var(--rule-soft)',paddingTop:8}}>
+              {hovR.cities.map((c,i)=>(
+                <li key={i} style={{marginBottom:5}}>
+                  <span style={{fontWeight:700,fontSize:12}}>📍 {c.name}</span>
+                  <span style={{fontSize:11,color:'var(--ink-mute)',marginLeft:6}}>{c.il}</span>
+                  <div style={{fontSize:11,color:'var(--gold)',marginLeft:18}}>{c.heritage}</div>
+                </li>
+              ))}
+            </ul>}
           </div>
         )}
       </div>
-
-      {/* Alt rozet kuşağı */}
-      <div className="paper-cream" style={{
-        padding:'8px 20px', borderTop:'1.5px solid var(--rule-soft)',
-        display:'flex', alignItems:'center', gap:10, overflowX:'auto',
-      }}>
-        <span className="t-label" style={{ fontSize:10, flexShrink:0 }}>ROZETLER</span>
-        {REGIONS.map(r => {
-          const done = completedRegions[r.id];
-          return (
-            <div key={r.id} title={done ? r.badge : r.name} style={{
-              width:38, height:38, borderRadius:'50%',
-              background: done ? r.color : '#D7C9A6',
-              display:'grid', placeItems:'center',
-              fontSize:18, flexShrink:0, opacity: done ? 1 : .45,
-              boxShadow: done ? '0 2px 8px rgba(0,0,0,.2)' : 'none',
-              transition:'all .3s',
-            }}>{done ? r.icon : '?'}</div>
-          );
+      {/* Rozet kuşağı */}
+      <div className="paper-cream" style={{padding:'8px 20px',borderTop:'1.5px solid var(--rule-soft)',display:'flex',alignItems:'center',gap:10,overflowX:'auto',flexShrink:0}}>
+        <span className="t-label" style={{fontSize:10,flexShrink:0}}>ROZETLER</span>
+        {REGIONS.map(r=>{
+          const d=completedRegions[r.id];
+          return <div key={r.id} title={d?r.badge:r.name} style={{width:38,height:38,borderRadius:'50%',background:d?r.color:'#D7C9A6',display:'grid',placeItems:'center',fontSize:18,flexShrink:0,opacity:d?1:.4,boxShadow:d?'0 2px 8px rgba(0,0,0,.2)':'none',transition:'all .3s'}}>{d?r.icon:'?'}</div>;
         })}
-        {doneCount===7 && (
-          <span style={{ marginLeft:'auto', fontFamily:'var(--font-hand)', fontSize:15, color:'var(--success)', flexShrink:0 }}>
-            🏆 Tüm bölgeler tamamlandı!
-          </span>
-        )}
+        {done===7&&<span style={{marginLeft:'auto',fontFamily:'var(--font-hand)',fontSize:14,color:'var(--success)',flexShrink:0}}>🏆 Tümü tamamlandı!</span>}
       </div>
     </div>
   );
 };
 
-/* ── BÖLGE GİRİŞ EKRANI ── */
-const RegionIntroScreen = ({ regionId, onStart, onBack }) => {
-  const region = REGIONS.find(r => r.id === regionId);
-  if (!region) return null;
-
-  return (
-    <div className="paper" style={{
-      minHeight:'100vh', padding:'40px 24px', fontFamily:'var(--font-body)',
-      display:'flex', flexDirection:'column', alignItems:'center',
-    }}>
-      <div style={{ maxWidth:680, width:'100%' }}>
-        {/* Geri */}
-        <button className="btn btn-ghost btn-sm" onClick={onBack} style={{ marginBottom:16 }}>
-          ← Haritaya Dön
-        </button>
-
-        {/* Başlık */}
-        <div className="card deckle" style={{
-          background: region.color + '18',
-          borderColor: region.color + '55',
-          marginBottom:20,
-          display:'flex', alignItems:'center', gap:16,
-        }}>
-          <div style={{
-            width:72, height:72, borderRadius:'50%',
-            background: region.color,
-            display:'grid', placeItems:'center',
-            fontSize:34,
-            boxShadow:'0 4px 14px rgba(0,0,0,.22)',
-          }}>{region.icon}</div>
+/* ═══════════════════════════════════════════
+   BÖLGE GİRİŞ EKRANI
+═══════════════════════════════════════════ */
+const RegionIntroScreen=({regionId,onStart,onBack})=>{
+  const r=REGIONS.find(x=>x.id===regionId);
+  if(!r)return null;
+  return(
+    <div className="paper" style={{minHeight:'100vh',padding:'32px 24px',display:'flex',flexDirection:'column',alignItems:'center'}}>
+      <div style={{maxWidth:680,width:'100%'}}>
+        <button className="btn btn-ghost btn-sm" onClick={onBack} style={{marginBottom:16}}>← Haritaya Dön</button>
+        <div className="card deckle" style={{background:r.color+'18',borderColor:r.color+'55',marginBottom:18,display:'flex',alignItems:'center',gap:16}}>
+          <div style={{width:68,height:68,borderRadius:'50%',background:r.color,display:'grid',placeItems:'center',fontSize:32,boxShadow:'0 4px 14px rgba(0,0,0,.22)',flexShrink:0}}>{r.icon}</div>
           <div>
-            <div className="t-display" style={{ fontSize:38, lineHeight:1 }}>{region.name}</div>
-            <div style={{ fontFamily:'var(--font-hand)', fontSize:16, color:'var(--ink-soft)', marginTop:4 }}>
-              {region.mission}
-            </div>
+            <div className="t-display" style={{fontSize:34,lineHeight:1}}>{r.name}</div>
+            <div style={{fontFamily:'var(--font-hand)',fontSize:15,color:'var(--ink-soft)',marginTop:4}}>{r.mission}</div>
           </div>
         </div>
-
-        {/* Hikâye */}
-        <div className="card" style={{ marginBottom:16, position:'relative' }}>
-          <div style={{
-            position:'absolute', top:-12, left:20,
-            background:'var(--gold)', color:'#FFF7EB',
-            padding:'2px 12px', fontFamily:'var(--font-hand)', fontSize:13,
-            letterSpacing:'.12em', borderRadius:6,
-          }}>GÖREV BRİFİ</div>
-          <p style={{ margin:'8px 0 0', fontSize:15, lineHeight:1.7, color:'var(--ink)', fontStyle:'italic' }}>
-            {region.story}
-          </p>
+        <div className="card" style={{marginBottom:14,position:'relative'}}>
+          <div style={{position:'absolute',top:-12,left:20,background:'var(--gold)',color:'#FFF7EB',padding:'2px 12px',fontFamily:'var(--font-hand)',fontSize:13,letterSpacing:'.12em',borderRadius:6}}>GÖREV BRİFİ</div>
+          <p style={{margin:'8px 0 0',fontSize:14,lineHeight:1.7,color:'var(--ink)',fontStyle:'italic'}}>{r.story}</p>
         </div>
-
-        {/* Bilgi Kartları */}
-        <div style={{ display:'grid', gridTemplateColumns:'repeat(2,1fr)', gap:10, marginBottom:16 }}>
-          {region.infoCards.map((card, i) => (
-            <div key={i} className="card" style={{ padding:'12px 14px' }}>
-              <div className="t-label" style={{ fontSize:10, marginBottom:3 }}>{card.label}</div>
-              <div style={{ fontFamily:'var(--font-hand)', fontSize:17, color:'var(--title)' }}>{card.value}</div>
+        <div style={{display:'grid',gridTemplateColumns:'repeat(2,1fr)',gap:10,marginBottom:14}}>
+          {r.infoCards.map((c,i)=>(
+            <div key={i} className="card" style={{padding:'10px 14px'}}>
+              <div className="t-label" style={{fontSize:10,marginBottom:3}}>{c.label}</div>
+              <div style={{fontFamily:'var(--font-hand)',fontSize:16,color:'var(--title)'}}>{c.value}</div>
             </div>
           ))}
         </div>
-
-        {/* Eğlenceli Bilgi */}
-        <div style={{
-          background:'rgba(184,134,47,.08)', border:'1px dashed var(--rule)',
-          borderRadius:10, padding:'12px 16px', marginBottom:24,
-        }}>
-          <span style={{ fontFamily:'var(--font-hand)', fontSize:14, color:'var(--gold)' }}>💡 </span>
-          <span style={{ fontSize:14, color:'var(--ink-soft)', fontStyle:'italic' }}>{region.funFact}</span>
+        <div style={{background:'rgba(184,134,47,.08)',border:'1px dashed var(--rule)',borderRadius:10,padding:'10px 14px',marginBottom:22}}>
+          <span style={{fontFamily:'var(--font-hand)',fontSize:13,color:'var(--gold)'}}>💡 </span>
+          <span style={{fontSize:13,color:'var(--ink-soft)',fontStyle:'italic'}}>{r.funFact}</span>
         </div>
-
-        {/* Başlat */}
-        <div style={{ textAlign:'center' }}>
-          <button className="btn btn-primary btn-lg" onClick={onStart}>
-            🗺️ Göreve Başla ({region.questions.length} soru)
-          </button>
+        <div style={{textAlign:'center'}}>
+          <button className="btn btn-primary btn-lg" onClick={onStart}>🗺️ Göreve Başla ({r.questions.length} soru)</button>
         </div>
       </div>
     </div>
   );
 };
 
-/* ── QUIZ EKRANI ── */
-const QuizScreen = ({ regionId, onComplete, onBack }) => {
-  const region = REGIONS.find(r => r.id === regionId);
-  const [questions] = useState(() => {
-    return shuffle(region.questions).map(q => {
-      const correctText = q.options[q.correct];
-      const shuffledOpts = shuffle(q.options);
-      return { ...q, options: shuffledOpts, correct: shuffledOpts.indexOf(correctText) };
-    });
-  });
-  const [qi, setQi] = useState(0);
-  const [selected, setSelected] = useState(null);
-  const [answered, setAnswered] = useState(false);
-  const [score, setScore] = useState(0);
-  const [correct, setCorrect] = useState(0);
-  const [wikiImg, setWikiImg] = useState(null);
-  const [shake, setShake] = useState(false);
+/* ═══════════════════════════════════════════
+   QUIZ EKRANI
+═══════════════════════════════════════════ */
+const QuizScreen=({regionId,onComplete,onBack})=>{
+  const region=REGIONS.find(x=>x.id===regionId);
+  const [questions]=useState(()=>shuffle(region.questions).map(q=>{
+    const ct=q.options[q.correct];
+    const so=shuffle(q.options);
+    return{...q,options:so,correct:so.indexOf(ct)};
+  }));
+  const [qi,setQi]=useState(0);
+  const [selected,setSelected]=useState(null);
+  const [answered,setAnswered]=useState(false);
+  const [score,setScore]=useState(0);
+  const [correct,setCorrect]=useState(0);
+  const [img,setImg]=useState(null);
 
-  const q = questions[qi];
-  const letters = ['A','B','C','D'];
+  const q=questions[qi];
+  const letters=['A','B','C','D'];
 
-  useEffect(() => {
-    setWikiImg(null);
-    if (q.wikiTitle) fetchWikiThumb(q.wikiTitle).then(setWikiImg);
-  }, [qi]);
+  useEffect(()=>{
+    setImg(null);
+    if(q?.wikiTitle)fetchWikiThumb(q.wikiTitle).then(setImg);
+  },[qi]);
 
-  const handleSelect = (i) => {
-    if (answered) return;
+  const pick=(i)=>{
+    if(answered)return;
     setSelected(i);
     setAnswered(true);
-    if (i === q.correct) {
-      setScore(s => s + 100);
-      setCorrect(c => c + 1);
-    } else {
-      setShake(true);
-      setTimeout(() => setShake(false), 500);
-    }
+    if(i===q.correct){setScore(s=>s+100);setCorrect(c=>c+1);}
   };
 
-  const handleNext = () => {
-    const finalScore = score;
-    const finalCorrect = correct;
-    if (qi + 1 >= questions.length) {
-      onComplete(finalScore, finalCorrect);
-    } else {
-      setQi(qi + 1);
-      setSelected(null);
-      setAnswered(false);
-    }
+  const next=()=>{
+    if(qi+1>=questions.length){onComplete(score+(selected===q.correct?100:0),correct+(selected===q.correct?1:0));}
+    else{setQi(qi+1);setSelected(null);setAnswered(false);}
   };
 
-  const progressPct = ((qi) / questions.length) * 100;
+  const pct=(qi/questions.length)*100;
 
-  return (
-    <div className="paper" style={{
-      minHeight:'100vh', padding:'0', fontFamily:'var(--font-body)',
-      display:'flex', flexDirection:'column',
-    }}>
-      {/* Üst Bar */}
-      <div className="paper-cream" style={{
-        padding:'10px 20px', borderBottom:'1.5px solid var(--rule-soft)',
-        display:'flex', alignItems:'center', gap:14,
-      }}>
+  return(
+    <div className="paper" style={{minHeight:'100vh',display:'flex',flexDirection:'column'}}>
+      <div className="paper-cream" style={{padding:'10px 20px',borderBottom:'1.5px solid var(--rule-soft)',display:'flex',alignItems:'center',gap:14,flexShrink:0}}>
         <button className="btn btn-ghost btn-sm" onClick={onBack}>← Harita</button>
-        <div style={{ flex:1 }}>
-          <div style={{ display:'flex', justifyContent:'space-between', marginBottom:4 }}>
-            <span className="t-hand" style={{ fontSize:15 }}>{region.icon} {region.name}</span>
-            <span className="t-label" style={{ fontSize:11 }}>{qi+1}/{questions.length}</span>
+        <div style={{flex:1}}>
+          <div style={{display:'flex',justifyContent:'space-between',marginBottom:4}}>
+            <span className="t-hand" style={{fontSize:14}}>{region.icon} {region.name}</span>
+            <span className="t-label" style={{fontSize:11}}>{qi+1}/{questions.length}</span>
           </div>
-          <div style={{
-            height:6, background:'var(--bg-deep)', borderRadius:999, overflow:'hidden',
-          }}>
-            <div style={{
-              height:'100%', width:`${progressPct}%`,
-              background:'var(--accent)', borderRadius:999, transition:'width .4s',
-            }}/>
+          <div style={{height:6,background:'var(--bg-deep)',borderRadius:999,overflow:'hidden'}}>
+            <div style={{height:'100%',width:`${pct}%`,background:'var(--accent)',borderRadius:999,transition:'width .4s'}}/>
           </div>
         </div>
-        <div className="t-hand" style={{ fontSize:16, color:'var(--accent)', flexShrink:0 }}>
-          {score} puan
-        </div>
+        <div className="t-hand" style={{fontSize:15,color:'var(--accent)',flexShrink:0}}>{score} puan</div>
       </div>
-
-      {/* Soru */}
-      <div style={{ flex:1, padding:'24px', maxWidth:760, margin:'0 auto', width:'100%', display:'flex', flexDirection:'column', gap:20 }}>
-
-        {/* Görsel + Soru */}
-        <div style={{ display:'flex', gap:18, alignItems:'flex-start' }}>
-          {wikiImg && (
-            <div style={{
-              flex:'0 0 180px', borderRadius:12, overflow:'hidden',
-              border:'2px solid var(--rule-soft)', boxShadow:'var(--shadow-sm)',
-            }}>
-              <img src={wikiImg} alt="" style={{ width:'100%', height:130, objectFit:'cover', display:'block' }}/>
-              <div style={{ padding:'4px 8px', fontSize:11, color:'var(--ink-mute)', textAlign:'center', fontStyle:'italic' }}>
-                {q.imageCaption}
-              </div>
+      <div style={{flex:1,padding:'20px',maxWidth:760,margin:'0 auto',width:'100%',display:'flex',flexDirection:'column',gap:18}}>
+        <div style={{display:'flex',gap:16,alignItems:'flex-start'}}>
+          {img&&(
+            <div style={{flex:'0 0 170px',borderRadius:10,overflow:'hidden',border:'2px solid var(--rule-soft)',boxShadow:'var(--shadow-sm)'}}>
+              <img src={img} alt="" style={{width:'100%',height:120,objectFit:'cover',display:'block'}}/>
+              <div style={{padding:'4px 8px',fontSize:10,color:'var(--ink-mute)',textAlign:'center',fontStyle:'italic'}}>{q.imageCaption}</div>
             </div>
           )}
-          <div style={{ flex:1 }}>
-            <div style={{ fontFamily:'var(--font-hand)', fontSize:12, color:'var(--ink-mute)', marginBottom:6 }}>
-              SORU {qi+1}
-            </div>
-            <div className="t-display" style={{
-              fontSize:20, lineHeight:1.45, color:'var(--ink)',
-              animation: shake ? 'shake 400ms ease' : 'none',
-            }}>
-              {q.text}
-            </div>
+          <div style={{flex:1}}>
+            <div className="t-label" style={{fontSize:10,marginBottom:6}}>SORU {qi+1}</div>
+            <div className="t-display" style={{fontSize:19,lineHeight:1.45,color:'var(--ink)'}}>{q.text}</div>
           </div>
         </div>
-
-        {/* Seçenekler */}
-        <div style={{ display:'flex', flexDirection:'column', gap:10 }}>
-          {q.options.map((opt, i) => {
-            let cls = 'option-btn';
-            if (answered) {
-              if (i === q.correct) cls += ' correct';
-              else if (i === selected) cls += ' wrong';
-            } else if (i === selected) cls += ' selected';
-            return (
-              <button key={i} className={cls} onClick={() => handleSelect(i)}>
+        <div style={{display:'flex',flexDirection:'column',gap:10}}>
+          {q.options.map((opt,i)=>{
+            let cls='option-btn';
+            if(answered){if(i===q.correct)cls+=' correct';else if(i===selected)cls+=' wrong';}
+            else if(i===selected)cls+=' selected';
+            return(
+              <button key={i} className={cls} onClick={()=>pick(i)}>
                 <div className="option-letter">{letters[i]}</div>
-                <span style={{ flex:1 }}>{opt}</span>
-                {answered && i === q.correct && <span style={{ color:'var(--success)', fontWeight:700 }}>✓</span>}
+                <span style={{flex:1}}>{opt}</span>
+                {answered&&i===q.correct&&<span style={{color:'var(--success)',fontWeight:700,fontSize:18}}>✓</span>}
               </button>
             );
           })}
         </div>
-
-        {/* Açıklama */}
-        {answered && (
-          <div style={{
-            background: selected === q.correct ? 'rgba(85,139,47,.08)' : 'rgba(198,40,40,.06)',
-            border: `1.5px solid ${selected===q.correct?'var(--success)':'var(--accent)'}`,
-            borderRadius:10, padding:'12px 16px',
-          }}>
-            <div style={{
-              fontFamily:'var(--font-hand)', fontWeight:700, fontSize:15, marginBottom:4,
-              color: selected===q.correct ? 'var(--success)' : 'var(--accent)',
-            }}>
-              {selected === q.correct ? '🎉 Doğru!' : '❌ Yanlış'}
-            </div>
-            <div style={{ fontSize:14, color:'var(--ink-soft)', lineHeight:1.55 }}>{q.explanation}</div>
+        {answered&&(
+          <div style={{background:selected===q.correct?'rgba(85,139,47,.08)':'rgba(198,40,40,.06)',border:`1.5px solid ${selected===q.correct?'var(--success)':'var(--accent)'}`,borderRadius:10,padding:'12px 16px'}}>
+            <div style={{fontFamily:'var(--font-hand)',fontWeight:700,fontSize:15,marginBottom:4,color:selected===q.correct?'var(--success)':'var(--accent)'}}>{selected===q.correct?'🎉 Doğru!':'❌ Yanlış'}</div>
+            <div style={{fontSize:13,color:'var(--ink-soft)',lineHeight:1.55}}>{q.explanation}</div>
           </div>
         )}
-
-        {/* İleri */}
-        {answered && (
-          <div style={{ textAlign:'center', marginTop:4 }}>
-            <button className="btn btn-primary btn-lg" onClick={handleNext}>
-              {qi+1 >= questions.length ? '🏅 Sonuçları Gör' : 'Sonraki Soru →'}
-            </button>
-          </div>
-        )}
+        {answered&&<div style={{textAlign:'center',paddingBottom:20}}>
+          <button className="btn btn-primary btn-lg" onClick={next}>{qi+1>=questions.length?'🏅 Sonuçları Gör':'Sonraki Soru →'}</button>
+        </div>}
       </div>
     </div>
   );
 };
 
-/* ── ROZET EKRANI ── */
-const BadgeScreen = ({ regionId, score, correctCount, totalCount, onContinue }) => {
-  const region = REGIONS.find(r => r.id === regionId);
-  const [show, setShow] = useState(false);
-  const pct = Math.round((correctCount / totalCount) * 100);
-  const stars = correctCount >= totalCount * .9 ? 3 : correctCount >= totalCount * .6 ? 2 : 1;
-
-  useEffect(() => {
-    setTimeout(() => setShow(true), 200);
-  }, []);
-
-  return (
-    <div className="paper" style={{
-      minHeight:'100vh', display:'flex', flexDirection:'column',
-      alignItems:'center', justifyContent:'center', padding:'40px 24px',
-      fontFamily:'var(--font-body)', textAlign:'center', position:'relative', overflow:'hidden',
-    }}>
+/* ═══════════════════════════════════════════
+   ROZET EKRANI
+═══════════════════════════════════════════ */
+const BadgeScreen=({regionId,score,correctCount,totalCount,onContinue})=>{
+  const r=REGIONS.find(x=>x.id===regionId);
+  const [show,setShow]=useState(false);
+  const stars=correctCount>=totalCount*.9?3:correctCount>=totalCount*.6?2:1;
+  useEffect(()=>{setTimeout(()=>setShow(true),200);},[]);
+  return(
+    <div className="paper" style={{minHeight:'100vh',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',padding:'40px 24px',textAlign:'center',position:'relative',overflow:'hidden'}}>
       <Confetti/>
-      <CornerOrnament className="corner tl"/>
-      <CornerOrnament className="corner br"/>
-
-      <div style={{
-        transition:'all .6s cubic-bezier(.34,1.56,.64,1)',
-        transform: show ? 'scale(1)' : 'scale(.3)',
-        opacity: show ? 1 : 0,
-      }}>
-        <div className="badge-circle" style={{
-          width:130, height:130, fontSize:60,
-          background: region.color, margin:'0 auto',
-        }}>{region.icon}</div>
+      <Corner className="corner tl"/><Corner className="corner br"/>
+      <div style={{transition:'all .6s cubic-bezier(.34,1.56,.64,1)',transform:show?'scale(1)':'scale(.3)',opacity:show?1:0}}>
+        <div style={{width:130,height:130,borderRadius:'50%',background:r.color,display:'grid',placeItems:'center',fontSize:60,margin:'0 auto',boxShadow:'inset 0 0 0 3px rgba(255,247,235,.7),0 4px 0 rgba(62,39,35,.18),0 8px 20px rgba(62,39,35,.2)'}}>{r.icon}</div>
       </div>
-
-      <div className="t-display" style={{ fontSize:52, marginTop:20 }}>Rozet Kazandın!</div>
-      <div style={{ fontFamily:'var(--font-hand)', fontSize:20, color:'var(--ink-soft)', marginTop:4 }}>
-        {region.badge}
-      </div>
-
-      <div className="card" style={{ maxWidth:480, marginTop:24, padding:'16px 24px' }}>
-        <div style={{ display:'flex', justifyContent:'space-around', gap:16 }}>
-          <div>
-            <div className="t-label" style={{ fontSize:10 }}>DOĞRU</div>
-            <div className="t-display" style={{ fontSize:36, color:'var(--success)' }}>{correctCount}/{totalCount}</div>
-          </div>
-          <div>
-            <div className="t-label" style={{ fontSize:10 }}>PUAN</div>
-            <div className="t-display" style={{ fontSize:36, color:'var(--accent)' }}>{score}</div>
-          </div>
-          <div>
-            <div className="t-label" style={{ fontSize:10 }}>BAŞARI</div>
-            <div className="t-display" style={{ fontSize:36 }}>{'⭐'.repeat(stars)}</div>
-          </div>
+      <div className="t-display" style={{fontSize:50,marginTop:20}}>Rozet Kazandın!</div>
+      <div style={{fontFamily:'var(--font-hand)',fontSize:20,color:'var(--ink-soft)',marginTop:4}}>{r.badge}</div>
+      <div className="card" style={{maxWidth:420,marginTop:22,padding:'16px 24px'}}>
+        <div style={{display:'flex',justifyContent:'space-around',gap:16}}>
+          <div><div className="t-label" style={{fontSize:10}}>DOĞRU</div><div className="t-display" style={{fontSize:34,color:'var(--success)'}}>{correctCount}/{totalCount}</div></div>
+          <div><div className="t-label" style={{fontSize:10}}>PUAN</div><div className="t-display" style={{fontSize:34,color:'var(--accent)'}}>{score}</div></div>
+          <div><div className="t-label" style={{fontSize:10}}>BAŞARI</div><div className="t-display" style={{fontSize:30}}>{'⭐'.repeat(stars)}</div></div>
         </div>
       </div>
-
-      <div style={{
-        fontFamily:'var(--font-hand)', fontSize:15, color:'var(--ink-mute)',
-        marginTop:16, maxWidth:420, fontStyle:'italic',
-      }}>
-        💡 {region.funFact}
-      </div>
-
-      <button className="btn btn-primary btn-lg" onClick={onContinue} style={{ marginTop:28 }}>
-        🗺️ Haritaya Dön
-      </button>
+      <div style={{fontFamily:'var(--font-hand)',fontSize:14,color:'var(--ink-mute)',marginTop:14,maxWidth:400,fontStyle:'italic'}}>💡 {r.funFact}</div>
+      <button className="btn btn-primary btn-lg" onClick={onContinue} style={{marginTop:24}}>🗺️ Haritaya Dön</button>
     </div>
   );
 };
 
-/* ── FİNAL EKRANI ── */
-const FinalScreen = ({ playerName, sessionScore, completedRegions, onPlayAgain }) => {
-  return (
-    <div className="paper" style={{
-      minHeight:'100vh', display:'flex', flexDirection:'column',
-      alignItems:'center', justifyContent:'center', padding:'40px 24px',
-      fontFamily:'var(--font-body)', textAlign:'center', position:'relative', overflow:'hidden',
-    }}>
-      <Confetti/>
-      <CornerOrnament className="corner tl"/>
-      <CornerOrnament className="corner tr"/>
-      <CornerOrnament className="corner bl"/>
-      <CornerOrnament className="corner br"/>
-
-      <div className="float">
-        <div className="t-display" style={{ fontSize:80, lineHeight:1 }}>🏆</div>
+/* ═══════════════════════════════════════════
+   FİNAL EKRANI
+═══════════════════════════════════════════ */
+const FinalScreen=({playerName,sessionScore,completedRegions,onPlayAgain})=>(
+  <div className="paper" style={{minHeight:'100vh',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',padding:'40px 24px',textAlign:'center',position:'relative',overflow:'hidden'}}>
+    <Confetti/>
+    <Corner className="corner tl"/><Corner className="corner tr"/>
+    <Corner className="corner bl"/><Corner className="corner br"/>
+    <div className="float" style={{fontSize:72}}>🏆</div>
+    <div className="t-display" style={{fontSize:58,marginTop:8,lineHeight:.95}}>Tebrikler!</div>
+    <div style={{fontFamily:'var(--font-hand)',fontSize:22,color:'var(--ink-soft)',marginTop:6}}>{playerName}, tüm 7 bölgeyi keşfettin!</div>
+    <div className="card deckle" style={{maxWidth:540,marginTop:26}}>
+      <div className="t-label" style={{fontSize:11,marginBottom:12}}>KAZANILAN ROZETLER</div>
+      <div style={{display:'flex',gap:12,flexWrap:'wrap',justifyContent:'center'}}>
+        {REGIONS.map(r=>(
+          <div key={r.id} style={{width:50,height:50,borderRadius:'50%',background:completedRegions[r.id]?r.color:'#D7C9A6',display:'grid',placeItems:'center',fontSize:22,boxShadow:'0 3px 10px rgba(0,0,0,.2)'}} title={r.badge}>{r.icon}</div>
+        ))}
       </div>
-      <div className="t-display" style={{ fontSize:60, marginTop:8, lineHeight:.95 }}>
-        Tebrikler!
-      </div>
-      <div style={{ fontFamily:'var(--font-hand)', fontSize:24, color:'var(--ink-soft)', marginTop:6 }}>
-        {playerName}, tüm 7 bölgeyi keşfettin!
-      </div>
-
-      <div className="card deckle" style={{ maxWidth:560, marginTop:28 }}>
-        <div className="t-label" style={{ fontSize:11, marginBottom:12 }}>KAZANILAN ROZETLER</div>
-        <div style={{ display:'flex', gap:12, flexWrap:'wrap', justifyContent:'center' }}>
-          {REGIONS.map(r => (
-            <div key={r.id} style={{
-              width:52, height:52, borderRadius:'50%',
-              background: completedRegions[r.id] ? r.color : '#D7C9A6',
-              display:'grid', placeItems:'center', fontSize:24,
-              boxShadow:'0 3px 10px rgba(0,0,0,.2)',
-            }} title={r.badge}>{r.icon}</div>
-          ))}
-        </div>
-        <div style={{ marginTop:18, display:'flex', justifyContent:'space-around' }}>
-          <div>
-            <div className="t-label" style={{ fontSize:10 }}>TOPLAM PUAN</div>
-            <div className="t-display" style={{ fontSize:36, color:'var(--accent)' }}>
-              {sessionScore.toLocaleString('tr-TR')}
-            </div>
-          </div>
-          <div>
-            <div className="t-label" style={{ fontSize:10 }}>BÖLGE</div>
-            <div className="t-display" style={{ fontSize:36, color:'var(--success)' }}>7/7</div>
-          </div>
-        </div>
-      </div>
-
-      <div style={{
-        marginTop:20, padding:'12px 20px',
-        background:'rgba(184,134,47,.09)', border:'1px dashed var(--rule)',
-        borderRadius:10, maxWidth:480, fontSize:14, color:'var(--ink-soft)', fontStyle:'italic',
-      }}>
-        🎓 Türkiye'nin kültürel mirasını öğrendin! Bu bilgileri arkadaşlarınla paylaş.
-      </div>
-
-      <div style={{ marginTop:24, display:'flex', gap:12, flexWrap:'wrap', justifyContent:'center' }}>
-        <button className="btn btn-primary btn-lg" onClick={onPlayAgain}>🔄 Yeniden Oyna</button>
-        <button className="btn btn-secondary btn-lg" onClick={()=>window.print()}>🖨️ Sertifika Yazdır</button>
+      <div style={{marginTop:18,display:'flex',justifyContent:'space-around'}}>
+        <div><div className="t-label" style={{fontSize:10}}>TOPLAM PUAN</div><div className="t-display" style={{fontSize:34,color:'var(--accent)'}}>{sessionScore.toLocaleString('tr-TR')}</div></div>
+        <div><div className="t-label" style={{fontSize:10}}>BÖLGE</div><div className="t-display" style={{fontSize:34,color:'var(--success)'}}>7/7</div></div>
       </div>
     </div>
-  );
+    <div style={{marginTop:18,padding:'10px 18px',background:'rgba(184,134,47,.09)',border:'1px dashed var(--rule)',borderRadius:10,maxWidth:440,fontSize:13,color:'var(--ink-soft)',fontStyle:'italic'}}>
+      🎓 Türkiye'nin kültürel mirasını öğrendin! Bu bilgileri arkadaşlarınla paylaş.
+    </div>
+    <div style={{marginTop:22,display:'flex',gap:12,flexWrap:'wrap',justifyContent:'center'}}>
+      <button className="btn btn-primary btn-lg" onClick={onPlayAgain}>🔄 Yeniden Oyna</button>
+      <button className="btn btn-secondary btn-lg" onClick={()=>window.print()}>🖨️ Sertifika Yazdır</button>
+    </div>
+  </div>
+);
+
+/* ═══════════════════════════════════════════
+   UYGULAMA
+═══════════════════════════════════════════ */
+const App=()=>{
+  const [st,setSt]=useState(()=>initialState());
+  const [screen,setScreen]=useState(SCREENS.WELCOME);
+  const [activeRegion,setActiveRegion]=useState(null);
+  const [quizResult,setQuizResult]=useState(null);
+
+  const upd=(updates)=>setSt(prev=>{const next={...prev,...updates};saveState(next);return next;});
+
+  const go=s=>setScreen(s);
+
+  return(()=>{
+    switch(screen){
+      case SCREENS.WELCOME:
+        return <WelcomeScreen
+          hasSaved={!!(st.playerName&&Object.keys(st.completedRegions||{}).length>0)}
+          savedName={st.playerName}
+          onStart={name=>{upd({playerName:name,startedAt:new Date().toISOString()});go(SCREENS.MAP);}}
+        />;
+      case SCREENS.MAP:
+        return <MapScreen
+          playerName={st.playerName}
+          completedRegions={st.completedRegions||{}}
+          sessionScore={st.sessionScore||0}
+          onRegionClick={rid=>{setActiveRegion(rid);go(SCREENS.REGION_INTRO);}}
+        />;
+      case SCREENS.REGION_INTRO:
+        return <RegionIntroScreen
+          regionId={activeRegion}
+          onStart={()=>go(SCREENS.QUIZ)}
+          onBack={()=>go(SCREENS.MAP)}
+        />;
+      case SCREENS.QUIZ:
+        return <QuizScreen
+          regionId={activeRegion}
+          onComplete={(score,corr)=>{
+            const region=REGIONS.find(r=>r.id===activeRegion);
+            const newCompleted={...st.completedRegions,[activeRegion]:{score,correctCount:corr,badge:region.badge}};
+            setQuizResult({score,correctCount:corr});
+            upd({completedRegions:newCompleted,sessionScore:(st.sessionScore||0)+score});
+            go(SCREENS.BADGE);
+          }}
+          onBack={()=>go(SCREENS.MAP)}
+        />;
+      case SCREENS.BADGE:{
+        const region=REGIONS.find(r=>r.id===activeRegion);
+        return <BadgeScreen
+          regionId={activeRegion}
+          score={quizResult?.score||0}
+          correctCount={quizResult?.correctCount||0}
+          totalCount={region?.questions?.length||5}
+          onContinue={()=>{
+            const doneCount=Object.keys(st.completedRegions||{}).length;
+            go(SCREENS.MAP);
+            if(doneCount>=7)setTimeout(()=>go(SCREENS.FINAL),700);
+          }}
+        />;
+      }
+      case SCREENS.FINAL:
+        return <FinalScreen
+          playerName={st.playerName}
+          sessionScore={st.sessionScore||0}
+          completedRegions={st.completedRegions||{}}
+          onPlayAgain={()=>{upd({completedRegions:{},sessionScore:0});go(SCREENS.WELCOME);}}
+        />;
+      default:return null;
+    }
+  })();
 };
 
-Object.assign(window, { WelcomeScreen, MapScreen, RegionIntroScreen, QuizScreen, BadgeScreen, FinalScreen, Confetti, Logo, CornerOrnament });
-</script>
-
-<!-- ====== UYGULAMA ====== -->
-<script type="text/babel" data-presets="react">
-const { useState: useStateApp, useEffect: useEffectApp } = React;
-
-const App = () => {
-  const [appState, setAppState] = useStateApp(() => initialState());
-  const [screen, setScreen] = useStateApp(window.SCREENS.WELCOME);
-  const [activeRegion, setActiveRegion] = useStateApp(null);
-  const [quizResult, setQuizResult] = useStateApp(null);
-
-  const updateState = (updates) => {
-    setAppState(prev => {
-      const next = { ...prev, ...updates };
-      saveState(next);
-      return next;
-    });
-  };
-
-  const handleStart = (name) => {
-    updateState({ playerName: name, startedAt: new Date().toISOString() });
-    setScreen(window.SCREENS.MAP);
-  };
-
-  const handleRegionClick = (rid) => {
-    setActiveRegion(rid);
-    setScreen(window.SCREENS.REGION_INTRO);
-  };
-
-  const handleStartQuiz = () => setScreen(window.SCREENS.QUIZ);
-
-  const handleQuizComplete = (score, correctCount) => {
-    setQuizResult({ score, correctCount });
-    const region = REGIONS.find(r => r.id === activeRegion);
-    updateState({
-      completedRegions: {
-        ...appState.completedRegions,
-        [activeRegion]: { score, correctCount, badge: region.badge },
-      },
-      sessionScore: appState.sessionScore + score,
-    });
-    setScreen(window.SCREENS.BADGE);
-  };
-
-  const handleBadgeContinue = () => {
-    setScreen(window.SCREENS.MAP);
-    const doneCount = Object.keys(appState.completedRegions).length;
-    if (doneCount >= 7) setTimeout(() => setScreen(window.SCREENS.FINAL), 600);
-  };
-
-  const handlePlayAgain = () => {
-    updateState({ completedRegions: {}, sessionScore: 0 });
-    setScreen(window.SCREENS.WELCOME);
-  };
-
-  const hasSaved = !!(appState.playerName && Object.keys(appState.completedRegions || {}).length > 0);
-  const region = activeRegion ? REGIONS.find(r => r.id === activeRegion) : null;
-
-  switch (screen) {
-    case window.SCREENS.WELCOME:
-      return <WelcomeScreen onStart={handleStart} hasSaved={hasSaved} savedName={appState.playerName}/>;
-
-    case window.SCREENS.MAP:
-      return <MapScreen
-        playerName={appState.playerName}
-        completedRegions={appState.completedRegions}
-        sessionScore={appState.sessionScore}
-        onRegionClick={handleRegionClick}
-      />;
-
-    case window.SCREENS.REGION_INTRO:
-      return <RegionIntroScreen
-        regionId={activeRegion}
-        onStart={handleStartQuiz}
-        onBack={()=>setScreen(window.SCREENS.MAP)}
-      />;
-
-    case window.SCREENS.QUIZ:
-      return <QuizScreen
-        regionId={activeRegion}
-        onComplete={handleQuizComplete}
-        onBack={()=>setScreen(window.SCREENS.MAP)}
-      />;
-
-    case window.SCREENS.BADGE:
-      return <BadgeScreen
-        regionId={activeRegion}
-        score={quizResult?.score || 0}
-        correctCount={quizResult?.correctCount || 0}
-        totalCount={region?.questions?.length || 5}
-        onContinue={handleBadgeContinue}
-      />;
-
-    case window.SCREENS.FINAL:
-      return <FinalScreen
-        playerName={appState.playerName}
-        sessionScore={appState.sessionScore}
-        completedRegions={appState.completedRegions}
-        onPlayAgain={handlePlayAgain}
-      />;
-
-    default:
-      return null;
-  }
-};
-
-// Service Worker kaydı
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('./sw.js').catch(()=>{});
-}
-
+if('serviceWorker' in navigator)navigator.serviceWorker.register('./sw.js').catch(()=>{});
 ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
 </script>
 </body>
