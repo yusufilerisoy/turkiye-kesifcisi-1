@@ -153,32 +153,45 @@ html, body {
 }
 
 .logo-pulse {
-  animation: pulse-scale 2.5s ease-in-out infinite;
+  animation: pulse-scale 3s ease-in-out infinite;
 }
-.logo-icon {
-  font-size: 5rem;
-  filter: drop-shadow(0 0 20px rgba(79,172,254,0.6));
+.logo-map-img {
+  width: clamp(200px, 40vw, 320px);
+  height: auto;
+  filter: drop-shadow(0 0 24px rgba(79,172,254,0.55));
+  border-radius: 20px;
 }
 @keyframes pulse-scale {
   0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.06); }
+  50% { transform: scale(1.04); }
 }
 
 .game-title {
   font-family: 'Poppins', sans-serif;
-  font-size: clamp(2.2rem, 5vw, 4rem);
+  font-size: clamp(1.9rem, 4.5vw, 3.2rem);
   font-weight: 900;
-  background: linear-gradient(90deg, #fff 0%, var(--primary) 50%, var(--primary2) 100%);
+  background: linear-gradient(90deg, #fff 0%, var(--primary) 60%, var(--primary2) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  letter-spacing: 3px;
+  line-height: 1.1;
+  text-align: center;
+}
+.game-title-sub {
+  font-size: clamp(1rem, 2.5vw, 1.6rem);
   letter-spacing: 2px;
+  background: linear-gradient(90deg, #facc15, #4ade80);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  display: block;
 }
 .game-subtitle {
-  font-size: 1.1rem;
+  font-size: 1rem;
   color: var(--text-dim);
   font-weight: 600;
-  letter-spacing: 3px;
+  letter-spacing: 2px;
   text-transform: uppercase;
 }
 

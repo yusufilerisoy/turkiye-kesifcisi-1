@@ -1,13 +1,13 @@
 {
-  "name": "Türkiye'yi Keşfet",
-  "short_name": "TürkiyeKeşfet",
-  "description": "Hikayeleştirilmiş oyun tabanlı coğrafya öğrenme ortamı — TÜBİTAK 4006 Projesi",
+  "name": "Türkiye Kültürel Miras Avcısı",
+  "short_name": "Miras Avcısı",
+  "description": "Türkiye'nin 7 bölgesinde 20+ UNESCO mirasını keşfet — TÜBİTAK 4006 Projesi",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
   "orientation": "landscape",
-  "background_color": "#060b1a",
-  "theme_color": "#4facfe",
+  "background_color": "#040812",
+  "theme_color": "#facc15",
   "lang": "tr",
   "categories": ["education", "games"],
   "icons": [
@@ -35,7 +35,7 @@
     {
       "name": "Oyuna Başla",
       "short_name": "Oyna",
-      "description": "Doğrudan oyuna gir",
+      "description": "Kültürel miras avcılığına başla",
       "url": "./index.html"
     }
   ]
