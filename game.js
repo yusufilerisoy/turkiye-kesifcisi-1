@@ -604,15 +604,30 @@ function enterRegion(rid){
 // ── QUIZ ─────────────────────────────────────────────────────
 const Q_TIME=20;
 
+function shuffle(arr){
+  const a=[...arr];
+  for(let i=a.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [a[i],a[j]]=[a[j],a[i]];
+  }
+  return a;
+}
+
 function startQuiz(){
   const r=State.currentRegion;
+  // Soruları ve şıkları her oyunda karıştır
+  State.shuffledQuestions = shuffle(r.questions).map(q=>{
+    const correctText = q.options[q.correct];
+    const shuffledOpts = shuffle(q.options);
+    return {...q, options: shuffledOpts, correct: shuffledOpts.indexOf(correctText)};
+  });
   State.currentQIdx=0;State.quizScore=0;State.quizCorrect=0;
   $('q-region-name').textContent=`${r.icon} ${r.name}`;
   $('q-score-live').textContent='0';
 
   // Noktalar
   const dots=$('q-dots');dots.innerHTML='';
-  r.questions.forEach((_,i)=>{
+  State.shuffledQuestions.forEach((_,i)=>{
     const d=document.createElement('div');
     d.className='q-dot'+(i===0?' current':'');
     d.id=`q-dot-${i}`;dots.appendChild(d);
@@ -623,9 +638,10 @@ function startQuiz(){
 }
 
 function renderQuestion(){
-  const r=State.currentRegion,qi=State.currentQIdx,q=r.questions[qi];
+  const qi=State.currentQIdx,q=State.shuffledQuestions[qi];
+  const total=State.shuffledQuestions.length;
   $('answer-feedback').style.display='none';
-  $('q-number').textContent=`Soru ${qi+1} / ${r.questions.length}`;
+  $('q-number').textContent=`Soru ${qi+1} / ${total}`;
   $('q-text').textContent=q.text;
 
   // Görsel
@@ -638,7 +654,7 @@ function renderQuestion(){
   }
 
   // Dot güncelle
-  r.questions.forEach((_,i)=>{
+  State.shuffledQuestions.forEach((_,i)=>{
     const d=$(`q-dot-${i}`);if(!d)return;
     if(i===qi) d.className='q-dot current';
   });
@@ -669,7 +685,7 @@ function renderQuestion(){
 
 function selectAnswer(chosen){
   clearInterval(State.timerInterval);
-  const r=State.currentRegion,qi=State.currentQIdx,q=r.questions[qi];
+  const qi=State.currentQIdx,q=State.shuffledQuestions[qi];
   const elapsed=(Date.now()-State.questionStartTime)/1000;
   State.responseTimes.push(Math.min(elapsed,Q_TIME));
   const isOk=chosen===q.correct;
@@ -712,7 +728,7 @@ function selectAnswer(chosen){
 
 function nextQuestion(){
   State.currentQIdx++;
-  if(State.currentQIdx>=State.currentRegion.questions.length) completeRegion();
+  if(State.currentQIdx>=State.shuffledQuestions.length) completeRegion();
   else renderQuestion();
 }
 
