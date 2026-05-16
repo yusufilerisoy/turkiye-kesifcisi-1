@@ -361,8 +361,8 @@ html, body {
   align-items: center;
   justify-content: center;
   width: 100%;
-  flex: 1;
-  padding: 70px 20px 60px;
+  flex: 0 1 auto;          /* içerik kadar yer kapla, gerekirse küçül */
+  padding: 64px 20px 4px;  /* alttaki boşluğu kapattık ki rozetler haritaya yapışsın */
 }
 
 .map-title {
@@ -1283,18 +1283,24 @@ html, body {
    bölge sembollü SVG rozetler, multi/drag/scenario UI
    ============================================================ */
 
-/* ── ŞERIT ROZETLERI (harita ekranı) — daima ortalı ── */
+/* ── ŞERIT ROZETLERI (harita ekranı) — haritanın hemen altında, akış pozisyonu ── */
 .badges-strip {
+  position: static;        /* önceki tanımdaki absolute'u iptal et */
+  bottom: auto; left: auto; right: auto;
+  height: auto;
+  background: transparent;
+  border-top: none;
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
   justify-content: center;
   align-items: center;
-  margin: 16px auto;
+  margin: 8px auto 0;      /* harita ile arada minik nefes */
   width: 100%;
   max-width: 100%;
-  padding: 8px 12px;
+  padding: 6px 12px 4px;
   text-align: center;
+  z-index: 5;
 }
 .strip-badge {
   position: relative;
