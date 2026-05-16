@@ -1299,15 +1299,26 @@ function showFinalScreen(){
   const avg=State.responseTimes.length>0?(State.responseTimes.reduce((a,b)=>a+b,0)/State.responseTimes.length).toFixed(1):0;
   $('fs-time').textContent=`${avg}s`;
 
-  const grid=$('final-badges-grid');grid.innerHTML='';
-  REGIONS.forEach((r,idx)=>{
-    const d=State.completedRegions[r.id];
-    const item=document.createElement('div');
-    item.className='final-badge-item';
-    item.style.animationDelay=`${idx*0.1}s`;
-    item.innerHTML=`<span>${r.icon}</span><span>${r.badge}<br>${d?renderStars(d.stars):''}</span>`;
-    grid.appendChild(item);
-  });
+  const grid=$('final-badges-grid');
+  if(grid){
+    clearEl(grid);
+    REGIONS.forEach((r,idx)=>{
+      const d = State.completedRegions[r.id];
+      const item = el('div', {className:'final-badge-item', style:{animationDelay:`${idx*0.1}s`}});
+      const svgWrap = el('div', {className:'final-badge-svg'});
+      if(typeof REGION_BADGES !== 'undefined' && REGION_BADGES[r.id]){
+        const tpl = new DOMParser().parseFromString(REGION_BADGES[r.id], 'image/svg+xml');
+        const svg = tpl.documentElement;
+        if(svg && svg.nodeName.toLowerCase()==='svg') svgWrap.appendChild(document.importNode(svg, true));
+      } else {
+        svgWrap.textContent = r.icon;
+      }
+      item.appendChild(svgWrap);
+      item.appendChild(el('div', {className:'final-badge-name', text: r.badge}));
+      if(d) item.appendChild(el('div', {className:'final-badge-stars', text: renderStars(d.stars||0)}));
+      grid.appendChild(item);
+    });
+  }
 
   $('cert-name').textContent=State.playerName;
   $('cert-score').textContent=State.sessionScore.toLocaleString('tr-TR');
